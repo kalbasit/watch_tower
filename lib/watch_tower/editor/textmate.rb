@@ -1,5 +1,3 @@
-require 'appscript'
-
 module WatchTower
   module Editor
     class Textmate

@@ -1,4 +1,4 @@
-require 'appscript'
+require 'watch_tower/appscript'
 
 module WatchTower
   module Editor
