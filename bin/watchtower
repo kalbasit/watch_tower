@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+# -*- encoding: utf-8 -*-
+
+ENV['WATCH_TOWER_ENV'] ||= 'production'
+
+$:.push File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
+
+require 'watch_tower'
+
+WatchTower::CLI::Runner.start
