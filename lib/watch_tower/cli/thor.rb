@@ -12,6 +12,13 @@ module WatchTower
       module InstanceMethods
         def self.included(base)
           base.class_eval <<-END, __FILE__, __LINE__ + 1
+            desc "Watch Tower watches over your editors and record your activites per project"
+
+            class_option :foreground,
+              type: :boolean,
+              required: false,
+              aliases: "-f",
+              desc: "Do not run in the background."
           END
         end
       end
