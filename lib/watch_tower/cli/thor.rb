@@ -18,6 +18,7 @@ module WatchTower
               type: :boolean,
               required: false,
               aliases: "-f",
+              default: false,
               desc: "Do not run in the background."
           END
         end
