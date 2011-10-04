@@ -7,7 +7,7 @@ module Editor
     end
 
     it "should initialize @@app" do
-      Textmate.class_variable_get(:@@app).should be_instance_of ::Appscript::Application
+      Textmate.send(:class_variable_get, :@@app).should be_instance_of ::Appscript::Application
     end
 
     it { should respond_to :current_path }
