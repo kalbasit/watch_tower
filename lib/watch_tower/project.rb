@@ -1,6 +1,6 @@
-require 'watch_tower/project/init_based'
+require 'watch_tower/project/init'
 require 'watch_tower/project/git_based'
-require 'watch_tower/project/path'
+require 'watch_tower/project/path_based'
 
 module WatchTower
   class Project
