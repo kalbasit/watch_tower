@@ -17,10 +17,10 @@ module WatchTower
           def self.new_from_path(path)
             if Git.active_for_path?(path)
               include GitBased
-              Project.new Git.base_path_for(path)
+              Project.new Git.base_path_for_path(path)
             else
               include PathBased
-              Project.new Path.base_path_for(path)
+              Project.new Path.base_path_for_path(path)
             end
           end
         END
