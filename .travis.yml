@@ -1,5 +1,5 @@
 script: "rake spec"
-env: JRUBY_OPTS="--1.9 -Dnative.enabled=false"
+env: JRUBY_OPTS="${JRUBY_OPTS} --1.9"
 rvm:
   - 1.9.2
   - 1.9.3
