@@ -12,6 +12,7 @@ platforms :ruby do
       gem 'rb-fsevent', require: false
       gem 'ruby-growl', require: false
       gem 'growl', require: false
+      gem 'rb-appscript', '~>0.6.1'
     end
     if RbConfig::CONFIG['target_os'] =~ /linux/i
       gem 'rb-inotify', require: false
