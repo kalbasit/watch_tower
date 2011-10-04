@@ -7,6 +7,7 @@ require 'active_support/core_ext/process/daemon'
 require "watch_tower/version"
 require "watch_tower/core_ext"
 require "watch_tower/cli"
+require "watch_tower/editor"
 require "watch_tower/project"
 require "watch_tower/eye"
 require "watch_tower/server"
