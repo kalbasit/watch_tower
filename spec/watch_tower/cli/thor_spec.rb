@@ -17,7 +17,7 @@ describe CLI do
     end
 
     describe "foreground" do
-      it "should have a class_option input_format defined" do
+      it "should have a class_option foreground defined" do
         CLI::Runner.class_options.should have_key(:foreground)
       end
 
@@ -34,6 +34,27 @@ describe CLI do
       it "should set options[:foreground] to false" do
         cli = CLI::Runner.new @valid_initialize_options, foreground: false
         cli.options[:foreground].should be_false
+      end
+    end
+
+    describe "server port" do
+      it "should have a class_option server_port defined" do
+        CLI::Runner.class_options.should have_key(:server_port)
+      end
+
+      it "should not be required" do
+        -> { CLI::Runner.new @valid_initialize_options }.should_not
+          raise_error Thor::RequiredArgumentMissingError
+      end
+
+      it "should set options[:server_port] to 3333" do
+        cli = CLI::Runner.new @valid_initialize_options, server_port: 3333
+        cli.options[:server_port].should be_true
+      end
+
+      it "should default options[:server_port] to 9876" do
+        cli = CLI::Runner.new @valid_initialize_options, server_port: 9876
+        cli.options[:server_port].should == 9876
       end
     end
 
