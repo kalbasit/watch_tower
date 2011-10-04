@@ -1,11 +1,12 @@
 module WatchTower
   class Project
-    module GitBased
+    module AnyBased
       def self.included(base)
         base.send :include, InstanceMethods
       end
 
       module InstanceMethods
+        attr_reader :name, :path
       end
     end
   end
