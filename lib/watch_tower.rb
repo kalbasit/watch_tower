@@ -1,5 +1,5 @@
-require "watch_tower/version"
+ROOT_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
-module WatchTower
-  # Your code goes here...
-end
+require "watch_tower/version"
+require "watch_tower/core_ext"
+require "watch_tower/cli"
