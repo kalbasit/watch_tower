@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
 
+ENV['WATCH_TOWER_ENV'] ||= 'test'
+
 require 'rubygems'
 require 'rspec'
 
