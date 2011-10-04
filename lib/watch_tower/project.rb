@@ -1,7 +1,9 @@
-require 'watch_tower/project/git'
+require 'watch_tower/project/init_based'
+require 'watch_tower/project/git_based'
+require 'watch_tower/project/path'
 
 module WatchTower
   class Project
-    include Git
+    include Init
   end
 end

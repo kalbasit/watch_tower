@@ -1,6 +1,6 @@
 module WatchTower
   class Project
-    module Git
+    module GitBased
       def self.included(base)
         base.send :include, InstanceMethods
       end
