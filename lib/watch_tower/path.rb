@@ -13,8 +13,12 @@ module WatchTower
     @@working_cache = Hash.new
 
     # Cache for project_name by path
-    # The key is the path to a file, the value is the projec's name
+    # The key is the path to a file, the value is the project's name
     @@project_name_cache = Hash.new
+
+    # Cache for project path parts
+    # The key is the path to a file, the value is the project's parts
+    @@project_path_part_cache = Hash.new
 
     # TODO: Shouldn't hardcode these, actually they are just for tests
     #       They should be in a haml config file
@@ -87,12 +91,15 @@ module WatchTower
       # @return [Array] The project path's parts
       # @raise [WatchTower::PathNotUnderCodePath] if the path is not nested under code
       def project_path_part(code, path, nested_project_layers = 2)
+        return @@project_path_part_cache[path] if @@project_path_part_cache.key?(path)
+
         regex_suffix = "([^/]+)"
         regex_suffix = [regex_suffix] * nested_project_layers
         regex_suffix = regex_suffix.join("/")
 
         path.scan(%r{(#{code})/#{regex_suffix}}).flatten.collect(&:chomp).
-          tap { |r| raise PathNotUnderCodePath unless r.any? }
+          tap { |r| raise PathNotUnderCodePath unless r.any? }.
+          tap { |ppp| @@project_path_part_cache[path] = ppp }
       end
 
       # Find out the project's name

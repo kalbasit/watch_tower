@@ -31,6 +31,13 @@ describe Path do
       file_path = @file_path.gsub(%r{#{@code}}, '/some/other/path')
       -> { subject.send(:project_path_part, @code, file_path, @nested_project_layers) }.should raise_error PathNotUnderCodePath
     end
+
+    it "should cache the path it" do
+      file_path = @file_path
+      file_path.expects(:scan).never
+
+      subject.send(:project_path_part, @code, file_path, @nested_project_layers).should == @project_path_parts
+    end
   end
 
   describe "#project_name_from_nested_path" do
@@ -72,7 +79,7 @@ describe Path do
       subject.working_directory(@file_path, @options).should == @project_path
     end
 
-    it "should cache the path returned for one path to all pathes" do
+    it "should cache the path it" do
       Path.expects(:project_path_from_nested_path).with(*@args).returns(@project_path).never
 
       subject.working_directory(@file_path, @options).should == @project_path
@@ -88,7 +95,7 @@ describe Path do
       subject.project_name(@file_path, @options).should == @project_name
     end
 
-    it "should cache the path returned for one path to all pathes" do
+    it "should cache the path it" do
       Path.expects(:project_name_from_nested_path).with(*@args).returns(@project_name).never
 
       subject.project_name(@file_path, @options).should == @project_name
