@@ -10,12 +10,11 @@ module WatchTower
     # Cache for working_directory by path
     # The key is the path to a file, the value is the working directory of
     # this path
-    @@working_cache_by_path = Hash.new
+    @@working_cache = Hash.new
 
-    # Cache for working_directory by name
-    # The key is the path to a file, the value is the working directory of
-    # this path
-    @@working_cache_by_name = Hash.new
+    # Cache for project_name by path
+    # The key is the path to a file, the value is the projec's name
+    @@project_name_cache = Hash.new
 
     # TODO: Shouldn't hardcode these, actually they are just for tests
     #       They should be in a haml config file
@@ -28,13 +27,27 @@ module WatchTower
     # @param path The path to look the project path from
     # @return [String] the project's folder
     def working_directory(path, options = {})
-      return @@working_cache_by_path[path] if @@working_cache_by_path.key?(path)
+      return @@working_cache[path] if @@working_cache.key?(path)
 
       code = options[:code] || CODE_PATH
       nested_project_layers = options[:nested_project_layers] || NESTED_PROJECT_LAYERS
 
-      @@working_cache_by_path[path] = project_path_from_nested_path(code, path, nested_project_layers)
-      @@working_cache_by_path[path]
+      @@working_cache[path] = project_path_from_nested_path(code, path, nested_project_layers)
+      @@working_cache[path]
+    end
+
+    # Return the project's name from a path to any file inside the project
+    #
+    # @param path The path to look the project path from
+    # @return [String] the project's name
+    def project_name(path, options = {})
+      return @@project_name_cache[path] if @@project_name_cache.key?(path)
+
+      code = options[:code] || CODE_PATH
+      nested_project_layers = options[:nested_project_layers] || NESTED_PROJECT_LAYERS
+
+      @@project_name_cache[path] = project_name_from_nested_path(code, path, nested_project_layers)
+      @@project_name_cache[path]
     end
 
     protected

@@ -78,4 +78,20 @@ describe Path do
       subject.working_directory(@file_path, @options).should == @project_path
     end
   end
+
+  describe "#project_name" do
+    it { should respond_to :project_name }
+
+    it "should return the project path from nested path of the given path" do
+      Path.expects(:project_name_from_nested_path).with(*@args).returns(@project_name).once
+
+      subject.project_name(@file_path, @options).should == @project_name
+    end
+
+    it "should cache the path returned for one path to all pathes" do
+      Path.expects(:project_name_from_nested_path).with(*@args).returns(@project_name).never
+
+      subject.project_name(@file_path, @options).should == @project_name
+    end
+  end
 end
