@@ -2,6 +2,10 @@ require 'spec_helper'
 
 module Server
   describe TimeEntry do
+    describe "Attributes" do
+      it { should respond_to :mtime }
+    end
+
     describe "Validations" do
       it { should_not be_valid }
 

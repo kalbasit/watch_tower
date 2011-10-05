@@ -2,6 +2,13 @@ require 'spec_helper'
 
 module Server
   describe File do
+    describe "Attributes" do
+      it { should respond_to :path }
+      it { should respond_to :last_id }
+      it { should respond_to :elapsed_time }
+      it { should respond_to :time_entries_count }
+    end
+
     describe "Validations" do
       it { should_not be_valid }
 

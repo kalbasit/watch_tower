@@ -3,6 +3,8 @@ class CreateProjects < ActiveRecord::Migration
     create_table :projects do |t|
       t.string :name, null: false
       t.string :path, null: false
+      t.integer :last_id
+      t.integer :elapsed_time
       t.integer :files_count
 
       t.timestamps
