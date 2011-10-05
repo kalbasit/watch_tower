@@ -29,8 +29,10 @@ RSpec::configure do |config|
   # I wasn't able to replicate what Rails / RSpec does for the test suite
   # I'd appreciate any hints to speed up the test suite.
   config.before(:each) do
-    Server::Project.delete_all
-    Server::File.delete_all
-    Server::TimeEntry.delete_all
+    WatchTower::Server.constants.                         # Collect the defined constants
+      collect { |c| "::WatchTower::Server::#{c}"}.        # Access it under the Server module
+      collect(&:constantize).                             # Make it a constant
+      select { |c| c.superclass == ActiveRecord::Base }.  # Keep only those with superclass ActiveRecord::Base
+      each(&:delete_all)                                  # Run delete_all on each class
   end
 end
