@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
 
   # Development / Test dependencies
   s.add_development_dependency 'rspec', '~>2.6.0'
+  s.add_development_dependency 'rspec-rails', '~>2.6.1'
   s.add_development_dependency 'mocha', '~>0.10.0'
   s.add_development_dependency 'factory_girl', '~>2.1.2'
 
