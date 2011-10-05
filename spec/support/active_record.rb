@@ -8,7 +8,6 @@ require 'rspec/rails/matchers/have_extension'
 # require 'rspec/rails/matchers/relation_match_array'
 require 'rspec/rails/fixture_support'
 require 'rspec/rails/mocks'
-require 'rspec/rails/module_inclusion'
 require 'rspec/rails/example/rails_example_group'
 require 'rspec/rails/example/model_example_group'
 
