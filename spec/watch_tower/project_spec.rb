@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Project do
   describe "Class Methods" do
-    subject { WatchTower::Project }
+    subject { Project }
 
     before(:all) do
       # Arguments

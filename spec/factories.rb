@@ -9,7 +9,7 @@ FactoryGirl.define do
     path
   end
 
-  factory :time_entry, class: TimeEntry do
+  factory :time_entry, class: Server::TimeEntry do
     file
     mtime { Time.now }
   end
