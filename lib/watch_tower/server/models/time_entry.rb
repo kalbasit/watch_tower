@@ -8,10 +8,10 @@ module WatchTower
 
       belongs_to :file, counter_cache: true
 
-      after_create :calculate_work_time
+      after_create :calculate_elapsed_time
 
       protected
-        def calculate_work_time
+        def calculate_elapsed_time
           # Gather information about this and last time entry for this file
           this_time_entry = self
           last_time_entry = file.time_entries.where('id < ?', this_time_entry.id).order('id DESC').first
