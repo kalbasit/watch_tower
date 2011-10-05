@@ -12,10 +12,10 @@ module WatchTower
         def new_from_path(path)
           if Git.active_for_path?(path)
             Project.send :include, Project::GitBased
-            Project.new Git.base_path_for_path(path)
+            Project.new Git.working_directory(path)
           else
             Project.send :include, Project::PathBased
-            Project.new Path.base_path_for_path(path)
+            Project.new Path.working_directory(path)
           end
         end
       end

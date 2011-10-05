@@ -2,7 +2,7 @@ module WatchTower
   module Path
     extend self
 
-    def base_path_for_path(path)
+    def working_directory(path)
       raise NotImplementedError, "Not Implemented yet."
     end
   end
