@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-module WatchTower
-  describe Git do
+class Project
+  describe GitBased do
     before(:all) do
       # Arguments
       @code = '/home/user/Code'
@@ -53,13 +53,13 @@ module WatchTower
       it { should respond_to(:active_for_path?) }
 
       it "should be able to determine if a path is git-ized" do
-        Git.expects(:project_git_folder_path).returns(@project_path)
+        GitBased.expects(:project_git_folder_path).returns(@project_path)
 
         subject.active_for_path?(@file_path).should be_true
       end
 
       it "should be able to determine if a path is not git-ized" do
-        Git.expects(:project_git_folder_path).returns(nil)
+        GitBased.expects(:project_git_folder_path).returns(nil)
 
         subject.active_for_path?(@file_path).should be_false
       end
@@ -69,13 +69,13 @@ module WatchTower
       it { should respond_to(:working_directory) }
 
       it "should return the working directory of a path" do
-        Git.stubs(:project_git_folder_path).returns(@project_git_folder_path)
+        GitBased.stubs(:project_git_folder_path).returns(@project_git_folder_path)
 
         subject.working_directory(@file_path).should == @project_path
       end
 
       it "should cache it" do
-        Git.expects(:project_git_folder_path).never
+        GitBased.expects(:project_git_folder_path).never
 
         subject.working_directory(@file_path).should == @project_path
       end
@@ -85,13 +85,13 @@ module WatchTower
       it { should respond_to(:project_name) }
 
       it "should return the working directory of a path" do
-        Git.stubs(:project_git_folder_path).returns(@project_git_folder_path)
+        GitBased.stubs(:project_git_folder_path).returns(@project_git_folder_path)
 
         subject.project_name(@file_path).should == @project_name
       end
 
       it "should cache it" do
-        Git.expects(:project_git_folder_path).never
+        GitBased.expects(:project_git_folder_path).never
 
         subject.project_name(@file_path).should == @project_name
       end
@@ -99,8 +99,8 @@ module WatchTower
 
     describe "#head" do
       before(:each) do
-        ::WatchTower::Git.stubs(:active_for_path?).returns(true)
-        ::WatchTower::Git.stubs(:working_directory).returns(@project_path)
+        GitBased.stubs(:active_for_path?).returns(true)
+        GitBased.stubs(:working_directory).returns(@project_path)
       end
 
       it { should respond_to :head }

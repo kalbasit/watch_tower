@@ -20,9 +20,9 @@ describe Project do
 
       describe "path based" do
         before(:each) do
-          ::WatchTower::Git.expects(:active_for_path?).returns(false).once
-          ::WatchTower::Path.expects(:working_directory).returns(@project_path).once
-          ::WatchTower::Path.expects(:project_name).returns(@project_name).once
+          Project::GitBased.expects(:active_for_path?).returns(false).once
+          Project::PathBased.expects(:working_directory).returns(@project_path).once
+          Project::PathBased.expects(:project_name).returns(@project_name).once
         end
 
         it "should create a project based off of git" do
@@ -43,9 +43,9 @@ describe Project do
 
       describe "git based" do
         before(:each) do
-          ::WatchTower::Git.expects(:active_for_path?).returns(true).once
-          ::WatchTower::Git.expects(:working_directory).returns(@project_path).once
-          ::WatchTower::Git.expects(:project_name).returns(@project_name).once
+          Project::GitBased.expects(:active_for_path?).returns(true).once
+          Project::GitBased.expects(:working_directory).returns(@project_path).once
+          Project::GitBased.expects(:project_name).returns(@project_name).once
         end
 
         it "should create a project based off of git" do
