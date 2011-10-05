@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Project do
   describe "Class Methods" do
-    subject { Project }
+    subject { WatchTower::Project }
 
     before(:all) do
       # Arguments
@@ -27,7 +27,7 @@ describe Project do
 
         it "should create a project based off of git" do
           p = subject.new_from_path(@file_path)
-          p.should be_instance_of Project
+          p.should be_instance_of subject
         end
 
         it "should return the name of the project" do
@@ -50,7 +50,7 @@ describe Project do
 
         it "should create a project based off of git" do
           p = subject.new_from_path(@file_path)
-          p.should be_instance_of Project
+          p.should be_instance_of subject
         end
 
         it "should return the name of the project" do
