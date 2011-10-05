@@ -30,7 +30,6 @@ describe Project do
         p = subject.new_from_path('/path/to/project/lib/file.rb')
         p.path.should == '/path/to/project'
       end
-
     end
   end
 

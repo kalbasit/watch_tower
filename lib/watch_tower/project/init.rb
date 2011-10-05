@@ -11,10 +11,10 @@ module WatchTower
       module ClassMethods
         def new_from_path(path)
           if Git.active_for_path?(path)
-            include Project::GitBased
+            Project.send :include, Project::GitBased
             Project.new Git.base_path_for_path(path)
           else
-            include Project::PathBased
+            Project.send :include, Project::PathBased
             Project.new Path.base_path_for_path(path)
           end
         end
