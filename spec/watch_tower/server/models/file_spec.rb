@@ -52,6 +52,17 @@ module Server
       end
     end
 
+    describe "Project's last id" do
+      before(:each) do
+        @project = FactoryGirl.create :project
+      end
+
+      it "should update the last_id" do
+        f = FactoryGirl.create :file, project: @project
+        @project.reload.last_id.should == f.id
+      end
+    end
+
     describe "TimeEntries count" do
       before(:each) do
         @file = FactoryGirl.create :file
