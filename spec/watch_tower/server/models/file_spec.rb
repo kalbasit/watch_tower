@@ -32,6 +32,7 @@ module Server
       before(:each) do
         @file = FactoryGirl.create :file
       end
+
       it { should respond_to :project }
       it { should respond_to :time_entries }
 
@@ -48,6 +49,65 @@ module Server
         file = FactoryGirl.create :file, project: project
 
         file.project.should == project
+      end
+    end
+
+    describe "TimeEntries count" do
+      before(:each) do
+        @file = FactoryGirl.create :file
+      end
+
+      it "should calculate elapsed time" do
+        3.times do
+          Timecop.freeze(Time.now + 1)
+          FactoryGirl.create :time_entry, file: @file
+        end
+
+        @file.reload
+        @file.elapsed_time.should == 2
+      end
+
+      it "should record the last id" do
+        3.times do
+          Timecop.freeze(Time.now + 1)
+          FactoryGirl.create :time_entry, file: @file
+        end
+
+        @file.reload
+        @file.last_id.should == @file.time_entries.last.id
+      end
+
+      it "should skip the one with pause time" do
+        3.times do
+          Timecop.freeze(Time.now + 1)
+          FactoryGirl.create :time_entry, file: @file
+        end
+
+        Timecop.freeze(Time.now + TimeEntry::PAUSE_TIME + 1)
+        FactoryGirl.create :time_entry, file: @file
+
+        3.times do
+          Timecop.freeze(Time.now + 1)
+          FactoryGirl.create :time_entry, file: @file
+        end
+
+        @file.reload
+        @file.elapsed_time.should == 5
+      end
+
+      it "should not count the time entries of another file" do
+        3.times do
+          Timecop.freeze(Time.now + 1)
+          FactoryGirl.create :time_entry, file: @file
+        end
+
+        3.times do
+          Timecop.freeze(Time.now + 1)
+          FactoryGirl.create :time_entry
+        end
+
+        @file.reload
+        @file.elapsed_time.should == 2
       end
     end
   end

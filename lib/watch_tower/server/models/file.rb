@@ -1,6 +1,7 @@
 module WatchTower
   module Server
     class File < ::ActiveRecord::Base
+
       validates :project_id, presence: true
       validates :path, presence: true
 
