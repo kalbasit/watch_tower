@@ -16,26 +16,32 @@ module Editor
       it { should respond_to :is_running? }
 
       it "should return wether Textmate is running or not" do
-        ::Appscript::Application.any_instance.expects(:is_running?).returns(true).once
+        app = mock()
+        app.expects(:is_running?).returns(true).once
+        Textmate.send(:class_variable_set, :@@app, app)
 
         subject.is_running?.should be_true
       end
 
       it "should return the current_path if textmate running" do
-        ::Appscript::Application.any_instance.expects(:is_running?).returns(true).once
+        app = mock()
+        app.expects(:is_running?).returns(true).once
         documents = mock
         document = mock
         path = mock
         path.expects(:get).returns('/path/to/file.rb')
         document.expects(:path).returns(path).once
         documents.expects(:get).returns([document]).once
-        ::Appscript::Application.any_instance.expects(:document).returns(documents).once
+        app.expects(:document).returns(documents).once
+        Textmate.send(:class_variable_set, :@@app, app)
 
         subject.current_path.should == '/path/to/file.rb'
       end
 
       it "should return nil if textmate ain't running" do
-        ::Appscript::Application.any_instance.expects(:is_running?).returns(false).once
+        app = mock()
+        app.expects(:is_running?).returns(false).once
+        Textmate.send(:class_variable_set, :@@app, app)
 
         subject.current_path.should be_nil
       end
