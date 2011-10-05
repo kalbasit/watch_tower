@@ -24,5 +24,32 @@ module WatchTower
     describe "#base_path_for_path" do
       it { should respond_to(:base_path_for_path) }
     end
+
+    describe "#head" do
+      before(:each) do
+        ::WatchTower::Git.stubs(:active_for_path?).returns(true)
+        ::WatchTower::Git.stubs(:base_path_for_path).returns('/path/to/project')
+      end
+
+      it { should respond_to :head }
+
+      it "should create a Git::Base object" do
+        commit = mock
+        git_base = mock
+        git_base.stubs(:log).returns([commit])
+        ::Git.expects(:open).with('/path/to/project').returns(git_base).once
+
+        subject.head('/path/to/project')
+      end
+
+      it "should return the head revision" do
+        commit = mock
+        git_base = mock
+        git_base.stubs(:log).returns([commit])
+        ::Git.stubs(:open).with('/path/to/project').returns(git_base)
+
+        subject.head('/path/to/project').should == commit
+      end
+    end
   end
 end

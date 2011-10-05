@@ -13,6 +13,15 @@ module WatchTower
       git_folder_path(path)
     end
 
+    def head(path)
+      log(path)
+    end
+
+    def log(path)
+      g = ::Git.open path
+      g.log.first
+    end
+
     protected
       def git_folder_path(path)
         # Define the start

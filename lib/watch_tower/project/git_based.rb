@@ -1,3 +1,5 @@
+require 'git'
+
 module WatchTower
   class Project
     module GitBased
