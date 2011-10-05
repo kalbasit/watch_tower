@@ -7,6 +7,10 @@ describe Path do
     @file_path = '/home/user/Code/OpenSource/watch_tower/lib/watch_tower/server/models/time_entries.rb'
     @nested_project_layers = 2
     @args = [@code, @file_path, @nested_project_layers]
+    @options = {
+      code: @code,
+      nested_project_layers: @nested_project_layers
+    }
 
     # Expected results
     @project_path = '/home/user/Code/OpenSource/watch_tower'
@@ -56,6 +60,22 @@ describe Path do
     it "should raises PathNotUnderCodePath if the path is not nested under code" do
       file_path = @file_path.gsub(%r{#{@code}}, '/some/other/path')
       -> { subject.send(:project_path_from_nested_path, @code, file_path, @nested_project_layers) }.should raise_error PathNotUnderCodePath
+    end
+  end
+
+  describe "#working_directory" do
+    it { should respond_to :working_directory }
+
+    it "should return the project path from nested path of the given path" do
+      Path.expects(:project_path_from_nested_path).with(*@args).returns(@project_path).once
+
+      subject.working_directory(@file_path, @options).should == @project_path
+    end
+
+    it "should cache the path returned for one path to all pathes" do
+      Path.expects(:project_path_from_nested_path).with(*@args).returns(@project_path).never
+
+      subject.working_directory(@file_path, @options).should == @project_path
     end
   end
 end

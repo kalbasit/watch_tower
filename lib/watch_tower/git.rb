@@ -12,6 +12,11 @@ module WatchTower
       git_folder_path(path).present?
     end
 
+    # Return the working directory (the project's path if you will) from a path
+    # to any file inside the project
+    #
+    # @param path The path to look the project path from
+    # @return [String] the project's folder
     def working_directory(path)
       File.dirname(git_folder_path(path)) if active_for_path?(path)
     end

@@ -1,22 +1,47 @@
 module WatchTower
+
+  # The module contains Path specific project methods, methods like name, path
+  # The module can be included into another module/class or used on it's own,
+  # it does extend itself so any methods defined here is available to both class
+  # and instance level
   module Path
     extend self
+
+    # Cache for working_directory by path
+    # The key is the path to a file, the value is the working directory of
+    # this path
+    @@working_cache_by_path = Hash.new
+
+    # Cache for working_directory by name
+    # The key is the path to a file, the value is the working directory of
+    # this path
+    @@working_cache_by_name = Hash.new
 
     # TODO: Shouldn't hardcode these, actually they are just for tests
     #       They should be in a haml config file
     CODE_PATH = '~/Projects'
+    NESTED_PROJECT_LAYERS = 2
 
     # Return the working directory (the project's path if you will) from a path
     # to any file inside the project
     #
     # @param path The path to look the project path from
     # @return [String] the project's folder
-    def working_directory(path)
-      project_path_from_nested_path(path)
+    def working_directory(path, options = {})
+      return @@working_cache_by_path[path] if @@working_cache_by_path.key?(path)
+
+      code = options[:code] || CODE_PATH
+      nested_project_layers = options[:nested_project_layers] || NESTED_PROJECT_LAYERS
+
+      @@working_cache_by_path[path] = project_path_from_nested_path(code, path, nested_project_layers)
+      @@working_cache_by_path[path]
     end
 
     protected
 
+      # Taken from timetap
+      # https://github.com/elia/timetap/blob/master/lib/time_tap/project.rb#L40
+      #
       # Find out the path parts of the project that's currently being worked on,
       # under the code path, it uses the param nested_project_layers to determine
       # the project name from the entire expanded path to any file under the
@@ -40,8 +65,6 @@ module WatchTower
       # A nested_project_layers setting of 2 would mean we track "AcmeCorp", "BetaCorp", and everything
       #
       # under OpenSource, as their own projects
-      # Taken from timetap
-      # https://github.com/elia/timetap/blob/master/lib/time_tap/project.rb#L40
       #
       # @param code The path you store all the projects under
       # @param path The path to look the project name from
