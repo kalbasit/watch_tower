@@ -25,7 +25,10 @@ RSpec::configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-  config.after(:all) do
+  # This is a hack to empty up the database before each test
+  # I wasn't able to replicate what Rails / RSpec does for the test suite
+  # I'd appreciate any hints to speed up the test suite.
+  config.before(:each) do
     Server::Project.delete_all
     Server::File.delete_all
     Server::TimeEntry.delete_all
