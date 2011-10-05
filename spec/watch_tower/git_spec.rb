@@ -8,8 +8,25 @@ module WatchTower
         -> { subject.send(:git_folder_path) }.should_not raise_error NoMethodError
       end
 
-      it "should return a path if exists"
-      it "should return nil if path does not exist"
+      it "should return a path if exists" do
+        File.stubs(:exists?).with('/path/to/project/lib/file.rb/.git').returns(false)
+        File.stubs(:exists?).with('/path/to/project/lib/.git').returns(false)
+        File.stubs(:exists?).with('/path/to/project/.git').returns(true)
+
+        subject.send(:git_folder_path, '/path/to/project/lib/file.rb').should ==
+          '/path/to/project/.git'
+      end
+
+      it "should return nil if path does not exist" do
+        File.stubs(:exists?).with('/path/to/project/lib/file.rb/.git').returns(false)
+        File.stubs(:exists?).with('/path/to/project/lib/.git').returns(false)
+        File.stubs(:exists?).with('/path/to/project/.git').returns(false)
+        File.stubs(:exists?).with('/path/to/.git').returns(false)
+        File.stubs(:exists?).with('/path/.git').returns(false)
+        File.stubs(:exists?).with('/.git').returns(false)
+
+        subject.send(:git_folder_path, '/path/to/project/lib/file.rb').should be_nil
+      end
     end
 
 
