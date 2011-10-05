@@ -1,6 +1,4 @@
 module WatchTower
-  module Eye
-    extend ::ActiveSupport::Autoload
-
+  class Eye
   end
 end

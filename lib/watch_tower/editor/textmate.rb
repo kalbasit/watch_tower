@@ -3,7 +3,11 @@ module WatchTower
     class Textmate
       include BaseAppscript
 
-      @@app = app 'Textmate'
+      @@app = begin
+        app 'Textmate'
+      rescue
+        nil
+      end
     end
   end
 end

@@ -14,7 +14,7 @@ module WatchTower
             extend ::Appscript
 
             def is_running?
-              @@app.is_running?
+              @@app.try(:is_running?)
             end
 
             def current_path
