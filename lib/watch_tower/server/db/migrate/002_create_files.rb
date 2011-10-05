@@ -3,8 +3,8 @@ class CreateFiles < ActiveRecord::Migration
     create_table :files do |t|
       t.references :project, null: false
       t.string :path, null: false
-      t.integer :last_id
-      t.integer :elapsed_time
+      t.integer :last_id, default: 0
+      t.integer :elapsed_time, default: 0
       t.integer :time_entries_count
 
       t.timestamps
