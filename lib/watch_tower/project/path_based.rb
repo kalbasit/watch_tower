@@ -5,6 +5,7 @@ module WatchTower
     # it does extend itself so any methods defined here is available to both class
     # and instance level
     module PathBased
+      include AnyBased
       extend self
 
       # Cache for working_directory by path
@@ -32,7 +33,7 @@ module WatchTower
       # @param [Hash] options A hash of options
       # @return [String] the project's folder
       def working_directory(path, options = {})
-        # path = expanded_path path
+        path = expand_path path
         return @@working_cache[path] if @@working_cache.key?(path)
 
         code = options[:code] || CODE_PATH
@@ -48,7 +49,7 @@ module WatchTower
       # @param [Hash] options A hash of options
       # @return [String] the project's name
       def project_name(path, options = {})
-        # path = expanded_path path
+        path = expand_path path
         return @@project_name_cache[path] if @@project_name_cache.key?(path)
 
         code = options[:code] || CODE_PATH

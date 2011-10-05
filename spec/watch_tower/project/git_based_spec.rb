@@ -13,6 +13,10 @@ class Project
       @project_name = 'watch_tower'
     end
 
+    before(:each) do
+      # Project.stubs(:expand_path).returns
+    end
+
     describe "#project_git_folder_path" do
       it "should respond to :project_git_folder_path" do
         -> { subject.send(:project_git_folder_path) }.should_not raise_error NoMethodError

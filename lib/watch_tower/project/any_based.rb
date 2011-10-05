@@ -13,7 +13,7 @@ module WatchTower
 
       module ClassMethods
         protected
-          def expanded_path(path)
+          def expand_path(path)
             File.expand_path(path)
           end
       end
