@@ -24,4 +24,10 @@ RSpec::configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  config.after(:all) do
+    Server::Project.delete_all
+    Server::File.delete_all
+    Server::TimeEntry.delete_all
+  end
 end
