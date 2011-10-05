@@ -12,18 +12,18 @@ module WatchTower
         def new_from_path(path)
           if Git.active_for_path?(path)
             Project.send :include, Project::GitBased
-            Project.new Git.working_directory(path)
+            Project.new Git.project_name(path), Git.working_directory(path)
           else
             Project.send :include, Project::PathBased
-            Project.new Path.working_directory(path)
+            Project.new Path.project_name(path), Path.working_directory(path)
           end
         end
       end
 
       module InstanceMethods
-        def initialize(path)
+        def initialize(name, path)
+          @name = name
           @path = path
-          @name = File.basename(path)
         end
       end
     end
