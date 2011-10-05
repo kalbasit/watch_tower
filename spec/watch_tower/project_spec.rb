@@ -9,7 +9,7 @@ describe Project do
 
       it "should create a project based off of git" do
         ::WatchTower::Git.expects(:active_for_path?).returns(true).once
-        ::WatchTower::Git.expects(:base_path_for_path).returns('/path/to/project').once
+        ::WatchTower::Git.expects(:working_directory).returns('/path/to/project').once
 
         p = subject.new_from_path('/path/to/project/lib/file.rb')
         p.should be_instance_of Project
@@ -17,7 +17,7 @@ describe Project do
 
       it "should return the name of the project" do
         ::WatchTower::Git.expects(:active_for_path?).returns(true).once
-        ::WatchTower::Git.expects(:base_path_for_path).returns('/path/to/project').once
+        ::WatchTower::Git.expects(:working_directory).returns('/path/to/project').once
 
         p = subject.new_from_path('/path/to/project/lib/file.rb')
         p.name.should == 'project'
@@ -25,7 +25,7 @@ describe Project do
 
       it "should return the path of the project" do
         ::WatchTower::Git.expects(:active_for_path?).returns(true).once
-        ::WatchTower::Git.expects(:base_path_for_path).returns('/path/to/project').once
+        ::WatchTower::Git.expects(:working_directory).returns('/path/to/project').once
 
         p = subject.new_from_path('/path/to/project/lib/file.rb')
         p.path.should == '/path/to/project'
