@@ -4,6 +4,10 @@ module WatchTower
   module Git
     extend self
 
+    # Check if the path is under Git
+    #
+    # @param path The path we should check if it's under Git control
+    # @return boolean
     def active_for_path?(path)
       git_folder_path(path).present?
     end
