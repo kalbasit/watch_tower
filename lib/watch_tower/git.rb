@@ -5,12 +5,20 @@ module WatchTower
     extend self
 
     def active_for_path?(path)
-      p = git_folder_path(path)
-      p.present?
+      git_folder_path(path).present?
     end
 
-    def base_path_for_path(path)
-      git_folder_path(path)
+    def working_directory(path)
+      File.dirname(git_folder_path(path)) if active_for_path?(path)
+    end
+
+    def head(path)
+      log(path)
+    end
+
+    def log(path)
+      g = ::Git.open path
+      g.log.first
     end
 
     protected
