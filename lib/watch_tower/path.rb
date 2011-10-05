@@ -24,7 +24,8 @@ module WatchTower
     # Return the working directory (the project's path if you will) from a path
     # to any file inside the project
     #
-    # @param path The path to look the project path from
+    # @param [String] path The path to look the project path from
+    # @param [Hash] options A hash of options
     # @return [String] the project's folder
     def working_directory(path, options = {})
       return @@working_cache[path] if @@working_cache.key?(path)
@@ -39,6 +40,7 @@ module WatchTower
     # Return the project's name from a path to any file inside the project
     #
     # @param path The path to look the project path from
+    # @param [Hash] options A hash of options
     # @return [String] the project's name
     def project_name(path, options = {})
       return @@project_name_cache[path] if @@project_name_cache.key?(path)

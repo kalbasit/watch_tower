@@ -7,8 +7,9 @@ module WatchTower
     # Check if the path is under Git
     #
     # @param path The path we should check if it's under Git control
+    # @param [Hash] options A hash of options
     # @return boolean
-    def active_for_path?(path)
+    def active_for_path?(path, options = {})
       git_folder_path(path).present?
     end
 
@@ -16,9 +17,19 @@ module WatchTower
     # to any file inside the project
     #
     # @param path The path to look the project path from
+    # @param [Hash] options A hash of options
     # @return [String] the project's folder
-    def working_directory(path)
-      File.dirname(git_folder_path(path)) if active_for_path?(path)
+    def working_directory(path, options = {})
+      File.dirname(git_folder_path(path))
+    end
+
+    # Return the project's name from a path to any file inside the project
+    #
+    # @param path The path to look the project path from
+    # @param [Hash] options A hash of options
+    # @return [String] the project's name
+    def project_name(path, options = {})
+      File.basename working_directory(path, options)
     end
 
     def head(path)

@@ -50,17 +50,21 @@ module WatchTower
       it { should respond_to(:working_directory) }
 
       it "should return the working directory of a path" do
-        Git.expects(:active_for_path?).returns(true).once
         Git.expects(:git_folder_path).returns('/path/to/project/.git').once
 
         subject.working_directory('/path/to/project/lib/file.rb').should ==
           '/path/to/project'
       end
+    end
 
-      it "should return nil if none found" do
-        Git.expects(:active_for_path?).returns(false).once
+    describe "#project_name" do
+      it { should respond_to(:project_name) }
 
-        subject.working_directory('/path/to/project/lib/file.rb').should be_nil
+      it "should return the working directory of a path" do
+        Git.expects(:git_folder_path).returns('/path/to/project/.git').once
+
+        subject.project_name('/path/to/project/lib/file.rb').should ==
+          'project'
       end
     end
 
