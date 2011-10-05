@@ -27,7 +27,6 @@ module Server
       end
       it { should respond_to :project }
       it { should respond_to :time_entries }
-      it { should respond_to :time_entries_count }
 
       it "should increment the counter cache" do
         10.times do

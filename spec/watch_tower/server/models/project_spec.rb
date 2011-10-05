@@ -26,7 +26,6 @@ module Server
         @project = FactoryGirl.create :project
       end
       it { should respond_to :files }
-      it { should respond_to :files_count }
       it { should respond_to :time_entries }
 
       it "should increment the counter cache" do
