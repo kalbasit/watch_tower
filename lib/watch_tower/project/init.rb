@@ -1,5 +1,3 @@
-require 'watch_tower/git'
-
 module WatchTower
   class Project
     module Init
@@ -10,12 +8,10 @@ module WatchTower
 
       module ClassMethods
         def new_from_path(path)
-          if Git.active_for_path?(path)
-            Project.send :include, Project::GitBased
-            Project.new Git.project_name(path), Git.working_directory(path)
+          if GitBased.active_for_path?(path)
+            Project.new GitBased.project_name(path), GitBased.working_directory(path)
           else
-            Project.send :include, Project::PathBased
-            Project.new Path.project_name(path), Path.working_directory(path)
+            Project.new PathBased.project_name(path), PathBased.working_directory(path)
           end
         end
       end

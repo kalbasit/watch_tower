@@ -2,8 +2,11 @@ module WatchTower
   # Global Error
   WatchTowerError = Class.new Exception
 
+  # Exceptions raised by the Project
+  ProjectError = Class.new WatchTowerError
+
   # Exception used by the Path module
-  PathError = Class.new WatchTowerError
+  PathError = Class.new ProjectError
   PathNotUnderCodePath = Class.new PathError
 
   # Exception used by the editors
