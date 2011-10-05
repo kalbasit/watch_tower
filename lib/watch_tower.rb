@@ -14,6 +14,7 @@ require 'active_support/core_ext/process/daemon'
 
 # Require watch_tower's libraries
 require "watch_tower/version"
+require "watch_tower/errors"
 require "watch_tower/core_ext"
 require "watch_tower/cli"
 require "watch_tower/editor"

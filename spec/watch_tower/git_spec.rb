@@ -2,30 +2,49 @@ require 'spec_helper'
 
 module WatchTower
   describe Git do
+    before(:all) do
+      # Arguments
+      @code = '/home/user/Code'
+      @file_path = '/home/user/Code/OpenSource/watch_tower/lib/watch_tower/server/models/time_entries.rb'
 
-    describe "#git_folder_path" do
-      it "should respond to :git_folder_path" do
-        -> { subject.send(:git_folder_path) }.should_not raise_error NoMethodError
+      # Expected results
+      @project_path = '/home/user/Code/OpenSource/watch_tower'
+      @project_git_folder_path = @project_path + '/.git'
+      @project_name = 'watch_tower'
+    end
+
+    describe "#project_git_folder_path" do
+      it "should respond to :project_git_folder_path" do
+        -> { subject.send(:project_git_folder_path) }.should_not raise_error NoMethodError
       end
 
       it "should return a path if exists" do
-        File.stubs(:exists?).with('/path/to/project/lib/file.rb/.git').returns(false)
-        File.stubs(:exists?).with('/path/to/project/lib/.git').returns(false)
-        File.stubs(:exists?).with('/path/to/project/.git').returns(true)
+        @file_path.split('/').each_index do |i|
+          path = @file_path.split('/')[0..i].join('/') + '/.git'
+          if @project_git_folder_path == path
+            File.stubs(:exists?).with(path).returns(true)
+          else
+            File.stubs(:exists?).with(path).returns(false)
+          end
+        end
 
-        subject.send(:git_folder_path, '/path/to/project/lib/file.rb').should ==
-          '/path/to/project/.git'
+        subject.send(:project_git_folder_path, @file_path).should == @project_git_folder_path
       end
 
       it "should return nil if path does not exist" do
-        File.stubs(:exists?).with('/path/to/project/lib/file.rb/.git').returns(false)
-        File.stubs(:exists?).with('/path/to/project/lib/.git').returns(false)
-        File.stubs(:exists?).with('/path/to/project/.git').returns(false)
-        File.stubs(:exists?).with('/path/to/.git').returns(false)
-        File.stubs(:exists?).with('/path/.git').returns(false)
-        File.stubs(:exists?).with('/.git').returns(false)
+        file_path = @file_path.gsub(%r{#{@code}}, '/some/other/path')
+        file_path.split('/').each_index do |i|
+          path = file_path.split('/')[0..i].join('/')
+          File.stubs(:exists?).with(path + '/.git').returns(false)
+        end
 
-        subject.send(:git_folder_path, '/path/to/project/lib/file.rb').should be_nil
+        subject.send(:project_git_folder_path, file_path).should be_nil
+      end
+
+      it "should cache it" do
+        File.expects(:exists?).never
+
+        subject.send(:project_git_folder_path, @file_path).should == @project_git_folder_path
       end
     end
 
@@ -34,15 +53,15 @@ module WatchTower
       it { should respond_to(:active_for_path?) }
 
       it "should be able to determine if a path is git-ized" do
-        Git.expects(:git_folder_path).returns('/path/to/project')
+        Git.expects(:project_git_folder_path).returns(@project_path)
 
-        subject.active_for_path?('/path/to/project/lib/file.rb').should be_true
+        subject.active_for_path?(@file_path).should be_true
       end
 
       it "should be able to determine if a path is not git-ized" do
-        Git.expects(:git_folder_path).returns(nil)
+        Git.expects(:project_git_folder_path).returns(nil)
 
-        subject.active_for_path?('/path/to/project/lib/file.rb').should be_false
+        subject.active_for_path?(@file_path).should be_false
       end
     end
 
@@ -50,24 +69,38 @@ module WatchTower
       it { should respond_to(:working_directory) }
 
       it "should return the working directory of a path" do
-        Git.expects(:active_for_path?).returns(true).once
-        Git.expects(:git_folder_path).returns('/path/to/project/.git').once
+        Git.stubs(:project_git_folder_path).returns(@project_git_folder_path)
 
-        subject.working_directory('/path/to/project/lib/file.rb').should ==
-          '/path/to/project'
+        subject.working_directory(@file_path).should == @project_path
       end
 
-      it "should return nil if none found" do
-        Git.expects(:active_for_path?).returns(false).once
+      it "should cache it" do
+        Git.expects(:project_git_folder_path).never
 
-        subject.working_directory('/path/to/project/lib/file.rb').should be_nil
+        subject.working_directory(@file_path).should == @project_path
+      end
+    end
+
+    describe "#project_name" do
+      it { should respond_to(:project_name) }
+
+      it "should return the working directory of a path" do
+        Git.stubs(:project_git_folder_path).returns(@project_git_folder_path)
+
+        subject.project_name(@file_path).should == @project_name
+      end
+
+      it "should cache it" do
+        Git.expects(:project_git_folder_path).never
+
+        subject.project_name(@file_path).should == @project_name
       end
     end
 
     describe "#head" do
       before(:each) do
         ::WatchTower::Git.stubs(:active_for_path?).returns(true)
-        ::WatchTower::Git.stubs(:working_directory).returns('/path/to/project')
+        ::WatchTower::Git.stubs(:working_directory).returns(@project_path)
       end
 
       it { should respond_to :head }
@@ -76,18 +109,18 @@ module WatchTower
         commit = mock
         git_base = mock
         git_base.stubs(:log).returns([commit])
-        ::Git.expects(:open).with('/path/to/project').returns(git_base).once
+        ::Git.expects(:open).with(@project_path).returns(git_base).once
 
-        subject.head('/path/to/project')
+        subject.head(@project_path)
       end
 
       it "should return the head revision" do
         commit = mock
         git_base = mock
         git_base.stubs(:log).returns([commit])
-        ::Git.stubs(:open).with('/path/to/project').returns(git_base)
+        ::Git.stubs(:open).with(@project_path).returns(git_base)
 
-        subject.head('/path/to/project').should == commit
+        subject.head(@project_path).should == commit
       end
     end
   end
