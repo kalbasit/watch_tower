@@ -94,6 +94,8 @@ module WatchTower
         # @return [Array] The project path's parts
         # @raise [WatchTower::PathNotUnderCodePath] if the path is not nested under code
         def project_path_part(code, path, nested_project_layers = 2)
+          code = expand_path code
+          path = expand_path path
           return @@project_path_part_cache[path] if @@project_path_part_cache.key?(path)
 
           regex_suffix = "([^/]+)"
