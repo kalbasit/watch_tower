@@ -4,8 +4,8 @@ rvm:
   - 1.9.3
   - jruby
 env:
-  - JRUBY_OPTS="${JRUBY_OPTS} --1.9" ADAPTER="mysql"
-  - JRUBY_OPTS="${JRUBY_OPTS} --1.9" ADAPTER="postgresql"
+  - WATCH_TOWER_ENV=test JRUBY_OPTS="${JRUBY_OPTS} --1.9" ADAPTER="mysql"
+  - WATCH_TOWER_ENV=test JRUBY_OPTS="${JRUBY_OPTS} --1.9" ADAPTER="postgresql"
 notifications:
   recipients:
     - wael.nasreddine@gmail.com

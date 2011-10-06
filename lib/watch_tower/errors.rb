@@ -13,4 +13,8 @@ module WatchTower
   EditorError = Class.new WatchTowerError
   TextmateError = Class.new EditorError
   XcodeError = Class.new EditorError
+
+  # Exceptions used by the server
+  ServerError = Class.new WatchTowerError
+  DatabaseError = Class.new ServerError
 end

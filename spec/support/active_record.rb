@@ -32,6 +32,7 @@ RSpec::configure do |config|
     WatchTower::Server.constants.                         # Collect the defined constants
       collect { |c| "::WatchTower::Server::#{c}"}.        # Access them under the Server module
       collect(&:constantize).                             # Make them a constant
+      select { |c| c.class == Class }.                    # Keep only classes
       select { |c| c.superclass == ActiveRecord::Base }.  # Keep only those with superclass ActiveRecord::Base
       each(&:delete_all)                                  # Run delete_all on each class
   end

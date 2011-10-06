@@ -2,8 +2,10 @@
 ROOT_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 TEMPLATE_PATH = File.join(ROOT_PATH, 'lib', 'watch_tower', 'templates')
 USER_PATH = File.expand_path(File.join(ENV['HOME'], '.watch_tower'))
-DATABASE_PATH = File.join(USER_PATH, 'database')
+DATABASE_PATH = File.join(USER_PATH, 'databases')
 LOG_PATH = File.join(USER_PATH, 'log')
+
+ENV['WATCH_TOWER_ENV'] ||= 'development'
 
 # Make sure the USER_PATH exist
 require 'fileutils'

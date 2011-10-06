@@ -1,21 +1,43 @@
-require 'sqlite3'
 require 'active_record'
-require 'yaml'
 
-ENV['WATCH_TOWER_ENV'] ||= 'development'
+module WatchTower
+  module Server
+    module Database
+      extend self
 
-# Create a connection
-ActiveRecord::Base.establish_connection(
-  adapter: 'sqlite3',
-  database: File.join(DATABASE_PATH, "#{ENV['WATCH_TOWER_ENV']}.sqlite3"),
-  pool: 5,
-  timeout: 5000
-)
+      def connect!
+        # Create a connection
+        ActiveRecord::Base.establish_connection(db_config)
 
-# Create a logger
-log_path = File.join(LOG_PATH, "#{ENV['WATCH_TOWER_ENV']}_database.log")
-ActiveRecord::Base.logger = Logger.new File.open(log_path, 'a') unless
-  ENV['WATCH_TOWER_ENV'] == 'production'
+        # Create a looger
+        logger unless ENV['WATCH_TOWER_ENV'] == 'production'
+      end
 
-# Migrate the database
-ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
+      def migrate!
+        # Connect to the database
+        connect!
+
+        # Migrate the database
+        ActiveRecord::Migrator.migrate(MIGRATIONS_PATH)
+      end
+
+      protected
+        def db_config
+          db_config = Config[:database][ENV['WATCH_TOWER_ENV']]
+          raise DatabaseError unless db_config
+          if db_config[:adapter] == 'sqlite3'
+            db_config[:database] = ::File.expand_path(db_config[:database])
+          end
+          db_config
+        end
+
+        def logger
+          ActiveRecord::Base.logger = Logger.new ::File.open(log_path, 'a')
+        end
+
+        def log_path
+          ::File.join(LOG_PATH, "#{ENV['WATCH_TOWER_ENV']}_database.log")
+        end
+    end
+  end
+end
