@@ -1,0 +1,51 @@
+---
+watch_tower:
+  # Change this to true once you have reviewed the file
+  enabled: true
+
+  # Start WatchTower on boot?
+  launch_on_boot: false
+
+  # Where do you store your code?
+  # This is not needed if all your projects are using Git for versioning control
+  # as the project's name and path would be determined from the folder name that
+  # contains the .git folder, if that's the case, wherever you store your code,
+  # the project name and path can be retrived very easily.
+  code_path: ~/Code
+
+  # How do you nest your code folder?
+  # Again this setting is only effective if not all your projects are using Git
+  # For example consider this layout of the code folder
+  #
+  # ~/Code/
+  #    Clients/
+  #        AcmeCorp/
+  #            website/
+  #            intranet
+  #        BetaCorp/
+  #           skunkworks/
+  #    OpenSource/
+  #        project_one/
+  #        timetap/
+  #
+  # A nested_project_layers setting of 2 would mean we track "AcmeCorp", "BetaCorp", and everything
+  # under OpenSource, as their own projects
+  #
+  nested_project_layers: 2
+
+  # Pause time, default: 30 minutes
+  # The pause time is the time to be considered as a pause time, if you save
+  # a file 31 minutes after your last save, the time passed won't be considered
+  # as a work time and thus won't be counted in the elapsed time of the project
+  pause_time: 30.minutes
+
+  # Database configuration
+  # Uncomment the section best fit for your adapter and edit it
+  database:
+    test:
+      adapter: postgresql
+      encoding: unicode
+      database: watch_tower_test
+      pool: 5
+      username: watch_tower
+      password:

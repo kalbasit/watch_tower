@@ -22,8 +22,20 @@ class Build
 
   def run!(options = {})
     self.options.update(options)
+    create_config_file
     announce(heading)
     rake(*tasks)
+  end
+
+  def create_config_file
+    commands = [
+      "mkdir -p ~/.watch_tower",
+      "cp ci/configs/#{adapter}.yml ~/.watch_tower/config.yml"
+    ]
+
+    commands.each do |command|
+      system("#{command} > /dev/null 2>&1")
+    end
   end
 
   def announce(heading)
@@ -60,10 +72,9 @@ end
 
 results = {}
 
-ENV['ADAPTER'].each do |adapter|
-  build = Build.new(adapter: adapter)
-  results[adapter] = build.run!
-end
+adapter = ENV['ADAPTER']
+build = Build.new(adapter: adapter)
+results[adapter] = build.run!
 
 failures = results.select { |key, value| value == false }
 
