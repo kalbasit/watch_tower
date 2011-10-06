@@ -1,5 +1,5 @@
-- Add a config file, a yaml file to configure watch_tower a section under database/environment should be added to configure the server's database... watch_tower should not be run unless the config file has been edited.
-  (added Thu Oct  6 10:14:43 2011, incomplete, priority medium)
-
 - Add a ci/travis.rb script which runs the tests under Travis-CI, needed because the config file added in todo number 3 won't exist and the current setup (sqlite) does not work with JRuby
   (added Thu Oct  6 10:18:38 2011, incomplete, priority medium)
+
+- The Config module need some tests.
+  (added Thu Oct  6 12:02:34 2011, incomplete, priority medium)
