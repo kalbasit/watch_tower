@@ -8,3 +8,6 @@ env:
 notifications:
   recipients:
     - wael.nasreddine@gmail.com
+  email:
+      on_success: change
+      on_failure: always
