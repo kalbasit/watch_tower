@@ -1,9 +1,12 @@
-script: "rake spec"
-env: JRUBY_OPTS="${JRUBY_OPTS} --1.9"
+script: 'ci/travis.rb'
 rvm:
   - 1.9.2
   - 1.9.3
   - jruby
+env:
+  - JRUBY_OPTS="${JRUBY_OPTS} --1.9"
+  - ADAPTER="mysql"
+  - ADAPTER="postgresql"
 notifications:
   recipients:
     - wael.nasreddine@gmail.com
