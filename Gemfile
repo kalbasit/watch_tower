@@ -3,19 +3,18 @@ source "http://rubygems.org"
 # Specify your gem's dependencies in watch_tower.gemspec
 gemspec
 
-# Travis specific gems
-if ENV['TRAVIS']
-  platforms :ruby do
-    gem 'mysql2'
-    gem 'pg'
-    gem 'sqlite3'
-  end
+# Databases
+# Defined here so they will be used only in development/test mode
+platforms :ruby do
+  gem 'mysql2'
+  gem 'pg'
+  gem 'sqlite3'
+end
 
-  platforms :jruby do
-    gem 'activerecord-jdbcmysql-adapter'
-    gem 'activerecord-jdbcpostgresql-adapter'
-    gem 'activerecord-jdbcsqlite3-adapter'
-  end
+platforms :jruby do
+  gem 'activerecord-jdbcmysql-adapter'
+  gem 'activerecord-jdbcpostgresql-adapter'
+  gem 'activerecord-jdbcsqlite3-adapter'
 end
 
 platforms :ruby do
