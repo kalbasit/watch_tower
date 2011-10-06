@@ -25,7 +25,7 @@ module WatchTower
         def db_config
           db_config = Config[:database][ENV['WATCH_TOWER_ENV']]
           raise DatabaseError unless db_config
-          if db_config[:adapter] == 'sqlite3'
+          if db_config[:adapter] =~ /sqlite/
             db_config[:database] = ::File.expand_path(db_config[:database])
           end
           db_config
