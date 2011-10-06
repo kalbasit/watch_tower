@@ -1,0 +1,6 @@
+  database:
+    test:
+      adapter: postgresql
+      encoding: unicode
+      database: watch_tower_test
+      pool: 5

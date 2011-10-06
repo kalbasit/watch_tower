@@ -5,9 +5,17 @@ gemspec
 
 # Travis specific gems
 if ENV['TRAVIS']
-  gem 'mysql2'
-  gem 'pg'
-  gem 'sqlite3'
+  platforms :ruby do
+    gem 'mysql2'
+    gem 'pg'
+    gem 'sqlite3'
+  end
+
+  platforms :jruby do
+    gem 'activerecord-jdbcmysql-adapter'
+    gem 'activerecord-jdbcpostgresql-adapter'
+    gem 'activerecord-jdbcsqlite3-adapter'
+  end
 end
 
 platforms :ruby do

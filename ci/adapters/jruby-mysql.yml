@@ -1,0 +1,12 @@
+  database:
+    # MySQL adapter
+    # Make sure you have the mysql2 gem
+    # gem install mysql2
+    #
+    test:
+      adapter: jdbcmysql
+      encoding: utf8
+      reconnect: false
+      database: watch_tower_test
+      pool: 5
+      username: root

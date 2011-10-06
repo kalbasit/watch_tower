@@ -30,12 +30,17 @@ class Build
   def create_config_file
     commands = [
       "mkdir -p ~/.watch_tower",
-      "cp ci/configs/#{adapter}.yml ~/.watch_tower/config.yml",
+      "cp lib/watch_tower/templates/config.yml ~/.watch_tower/config.yml",
+      "cat ci/adapters/#{ruby_platform}-#{adapter}.yml >> ~/.watch_tower/config.yml"
     ]
 
     commands.each do |command|
-      system("#{command} > /dev/null 2>&1")
+      system("#{command}")
     end
+  end
+
+  def ruby_platform
+    RUBY_PLATFORM == 'java' ? 'jruby' : 'ruby'
   end
 
   def announce(heading)
@@ -73,14 +78,8 @@ end
 results = {}
 
 ENV['ADAPTERS'].split(':').each do |adapter|
-  if RUBY_PLATFORM == 'java' && adapter == 'sqlite'
-    # Travis currently cannot handle sqlite3 under JRuby
-    # We can assume that all the tests are passing
-    results[adapter] = true
-  else
-    build = Build.new(adapter: adapter)
-    results[adapter] = build.run!
-  end
+  build = Build.new(adapter: adapter)
+  results[adapter] = build.run!
 end
 
 failures = results.select { |key, value| value == false }
