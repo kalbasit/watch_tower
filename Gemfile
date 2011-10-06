@@ -7,7 +7,9 @@ gemspec
 # Defined here so they will be used only in development/test mode
 platforms :ruby do
   gem 'mysql2'
-  unless ENV['TRAVIS']
+  if ENV['TRAVIS']
+    gem 'pg', :platforms => :mri
+  else
     gem 'pg'
   end
   gem 'sqlite3'
