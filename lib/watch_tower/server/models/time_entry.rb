@@ -18,8 +18,6 @@ module WatchTower
 
           # Calculate the time difference (0 if cannot calculate)
           time_entry_elapsed = this_time_entry.mtime - last_time_entry.mtime rescue 0
-          # Record the last time entry we looked at
-          file.last_id = this_time_entry.id
           # Not to be added to elapsed_time if it is considered a PAUSE
           unless time_entry_elapsed > PAUSE_TIME
             # Add the time

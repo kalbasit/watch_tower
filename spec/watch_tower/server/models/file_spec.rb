@@ -4,7 +4,6 @@ module Server
   describe File do
     describe "Attributes" do
       it { should respond_to :path }
-      it { should respond_to :last_id }
       it { should respond_to :elapsed_time }
       it { should respond_to :time_entries_count }
     end
@@ -52,17 +51,6 @@ module Server
       end
     end
 
-    describe "Project's last id" do
-      before(:each) do
-        @project = FactoryGirl.create :project
-      end
-
-      it "should update the last_id" do
-        f = FactoryGirl.create :file, project: @project
-        @project.reload.last_id.should == f.id
-      end
-    end
-
     describe "TimeEntries count" do
       before(:each) do
         @file = FactoryGirl.create :file
@@ -76,16 +64,6 @@ module Server
 
         @file.reload
         @file.elapsed_time.should == 2
-      end
-
-      it "should record the last id" do
-        3.times do
-          Timecop.freeze(Time.now + 1)
-          FactoryGirl.create :time_entry, file: @file
-        end
-
-        @file.reload
-        @file.last_id.should == @file.time_entries.last.id
       end
 
       it "should skip the one with pause time" do
