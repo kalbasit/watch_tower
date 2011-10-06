@@ -7,6 +7,9 @@ include FileUtils
 commands = [
   'mysql -e "create database watch_tower_test;"',
   'psql  -c "create database watch_tower_test;" -U postgres',
+  'gem install mysql2',
+  'gem install pg',
+  'gem install sqlite3'
 ]
 
 commands.each do |command|
@@ -30,7 +33,7 @@ class Build
   def create_config_file
     commands = [
       "mkdir -p ~/.watch_tower",
-      "cp ci/configs/#{adapter}.yml ~/.watch_tower/config.yml"
+      "cp ci/configs/#{adapter}.yml ~/.watch_tower/config.yml",
     ]
 
     commands.each do |command|

@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'i18n', '~>0.6.0'
   s.add_dependency 'haml', '~>3.1.3'
   s.add_dependency 'sinatra', '~> 1.3.0'
-  s.add_dependency 'sqlite3', '~>1.3.4'
   s.add_dependency 'git', '~>1.2.5'
 
   # Development dependencies
