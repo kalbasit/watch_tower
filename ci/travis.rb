@@ -6,10 +6,7 @@ include FileUtils
 
 commands = [
   'mysql -e "create database watch_tower_test;"',
-  'psql  -c "create database watch_tower_test;" -U postgres',
-  'gem install mysql2',
-  'gem install pg',
-  'gem install sqlite3'
+  'psql  -c "create database watch_tower_test;" -U postgres'
 ]
 
 commands.each do |command|

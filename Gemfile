@@ -3,6 +3,13 @@ source "http://rubygems.org"
 # Specify your gem's dependencies in watch_tower.gemspec
 gemspec
 
+# Travis specific gems
+if ENV['TRAVIS']
+  gem 'mysql2'
+  gem 'pg'
+  gem 'sqlite3'
+end
+
 platforms :ruby do
   # Require rbconfig to figure out the target OS
   require 'rbconfig'
