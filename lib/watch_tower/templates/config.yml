@@ -43,8 +43,15 @@ watch_tower:
   # Uncomment the section best fit for your adapter and edit it
   database:
     # MySQL adapter
+    #
+    # Ruby:
     # Make sure you have the mysql2 gem
     # gem install mysql2
+    #
+    # Jruby:
+    # Make sure you have the activerecord-jdbcmysql-adapter gem
+    # gem install activerecord-jdbcmysql-adapter
+    # And replace mysql2 with jdbcmysql
     #
     # development:
     #   adapter: mysql2
@@ -76,8 +83,15 @@ watch_tower:
     #
     #
     # PostgresSQL adapter
+    #
+    # Ruby:
     # Make sure you have the pg adapter installed
     # gem install pg
+    #
+    # Jruby:
+    # Make sure you have the activerecord-jdbcpostgresql-adapter gem
+    # gem install activerecord-jdbcpostgresql-adapter
+    # And replace postgresql with jdbcpostgresql
     #
     # development:
     #   adapter: postgresql
@@ -104,8 +118,15 @@ watch_tower:
     #
     #
     # Sqlite3 Adapter
+    #
+    # Ruby:
     # Make sure you have the sqlite3
     # gem install sqlite3
+    #
+    # Jruby:
+    # Make sure you have the activerecord-jdbcsqlite3-adapter gem
+    # gem install activerecord-jdbcsqlite3-adapter
+    # And replace sqlite3 with jdbcsqlite3
     #
     # development:
     #   adapter: sqlite3
