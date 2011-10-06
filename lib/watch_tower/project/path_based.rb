@@ -85,7 +85,6 @@ module WatchTower
         #        timetap/
         #
         # A nested_project_layers setting of 2 would mean we track "AcmeCorp", "BetaCorp", and everything
-        #
         # under OpenSource, as their own projects
         #
         # @param code The path you store all the projects under
