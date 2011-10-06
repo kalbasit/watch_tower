@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <todo version="0.1.20">
-    <note priority="medium" time="1317884658">
+    <note priority="medium" time="1317884658" done="1317889968">
         Remove the last_id from File and Project as it's not needed.
     </note>
-    <note priority="medium" time="1317884720">
+    <note priority="medium" time="1317884720" done="1317891752">
         Add a default_scope to sort files and projects by their elapsed time
     </note>
     <note priority="medium" time="1317888883">
