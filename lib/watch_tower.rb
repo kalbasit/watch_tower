@@ -8,6 +8,7 @@ LOG_PATH = File.join(USER_PATH, 'log')
 ENV['WATCH_TOWER_ENV'] ||= 'development'
 
 # Make sure the USER_PATH exist
+require 'rubygems'
 require 'fileutils'
 FileUtils.mkdir_p USER_PATH
 FileUtils.mkdir_p DATABASE_PATH
