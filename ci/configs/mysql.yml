@@ -53,5 +53,3 @@ watch_tower:
       database: watch_tower_test
       pool: 5
       username: root
-      password:
-      socket: /tmp/mysql.sock

@@ -47,5 +47,3 @@ watch_tower:
       encoding: unicode
       database: watch_tower_test
       pool: 5
-      username: watch_tower
-      password:
