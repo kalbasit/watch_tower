@@ -1,17 +1,17 @@
 ---
-:watch_tower:
+watch_tower:
   # Change this to true once you have reviewed the file
-  :enabled: false
+  enabled: false
 
   # Start WatchTower on boot?
-  :launch_on_boot: true
+  launch_on_boot: true
 
   # Where do you store your code?
   # This is not needed if all your projects are using Git for versioning control
   # as the project's name and path would be determined from the folder name that
   # contains the .git folder, if that's the case, wherever you store your code,
   # the project name and path can be retrived very easily.
-  :code_path: ~/Code
+  code_path: ~/Code
 
   # How do you nest your code folder?
   # Again this setting is only effective if not all your projects are using Git
@@ -31,95 +31,95 @@
   # A nested_project_layers setting of 2 would mean we track "AcmeCorp", "BetaCorp", and everything
   # under OpenSource, as their own projects
   #
-  :nested_project_layers: 2
+  nested_project_layers: 2
 
   # Pause time, default: 30 minutes
   # The pause time is the time to be considered as a pause time, if you save
   # a file 31 minutes after your last save, the time passed won't be considered
   # as a work time and thus won't be counted in the elapsed time of the project
-  :pause_time: 30.minutes
+  pause_time: 30.minutes
 
   # Database configuration
   # Uncomment the section best fit for your adapter and edit it
-  :database:
+  database:
     # MySQL adapter
     # Make sure you have the mysql2 gem
     # gem install mysql2
     #
-    # :development:
-    #   :adapter: mysql2
-    #   :encoding: utf8
-    #   :reconnect: false
-    #   :database: app_mysql_development
-    #   :pool: 5
-    #   :username: root
-    #   :password:
-    #   :socket: /tmp/mysql.sock
-    # :test:
-    #   :adapter: mysql2
-    #   :encoding: utf8
-    #   :reconnect: false
-    #   :database: app_mysql_test
-    #   :pool: 5
-    #   :username: root
-    #   :password:
-    #   :socket: /tmp/mysql.sock
-    # :production:
-    #   :adapter: mysql2
-    #   :encoding: utf8
-    #   :reconnect: false
-    #   :database: app_mysql_production
-    #   :pool: 5
-    #   :username: root
-    #   :password:
-    #   :socket: /tmp/mysql.sock
+    # development:
+    #   adapter: mysql2
+    #   encoding: utf8
+    #   reconnect: false
+    #   database: app_mysql_development
+    #   pool: 5
+    #   username: root
+    #   password:
+    #   socket: /tmp/mysql.sock
+    # test:
+    #   adapter: mysql2
+    #   encoding: utf8
+    #   reconnect: false
+    #   database: app_mysql_test
+    #   pool: 5
+    #   username: root
+    #   password:
+    #   socket: /tmp/mysql.sock
+    # production:
+    #   adapter: mysql2
+    #   encoding: utf8
+    #   reconnect: false
+    #   database: app_mysql_production
+    #   pool: 5
+    #   username: root
+    #   password:
+    #   socket: /tmp/mysql.sock
     #
     #
     # PostgresSQL adapter
     # Make sure you have the pg adapter installed
     # gem install pg
     #
-    # :development:
-    #   :adapter: postgresql
-    #   :encoding: unicode
-    #   :database: app_postgresql_development
-    #   :pool: 5
-    #   :username: app_postgresql
-    #   :password:
-    # :test:
-    #   :adapter: postgresql
-    #   :encoding: unicode
-    #   :database: app_postgresql_test
-    #   :pool: 5
-    #   :username: app_postgresql
-    #   :password:
+    # development:
+    #   adapter: postgresql
+    #   encoding: unicode
+    #   database: app_postgresql_development
+    #   pool: 5
+    #   username: app_postgresql
+    #   password:
+    # test:
+    #   adapter: postgresql
+    #   encoding: unicode
+    #   database: app_postgresql_test
+    #   pool: 5
+    #   username: app_postgresql
+    #   password:
     #
-    # :production:
-    #   :adapter: postgresql
-    #   :encoding: unicode
-    #   :database: app_postgresql_production
-    #   :pool: 5
-    #   :username: app_postgresql
-    #   :password:
+    # production:
+    #   adapter: postgresql
+    #   encoding: unicode
+    #   database: app_postgresql_production
+    #   pool: 5
+    #   username: app_postgresql
+    #   password:
     #
     #
     # Sqlite3 Adapter
     # Make sure you have the sqlite3
     # gem install sqlite3
     #
-    # :development:
-    #   :adapter: sqlite3
-    #   :database: ~/.watch_tower/databases/development.sqlite3
-    #   :pool: 5
-    #   :timeout: 5000
-    # :test:
-    #   :adapter: sqlite3
-    #   :database: ~/.watch_tower/databases/test.sqlite3
-    #   :pool: 5
-    #   :timeout: 5000
+    # development:
+    #   adapter: sqlite3
+    #   database: ~/.watch_tower/databases/development.sqlite3
+    #   pool: 5
+    #   timeout: 5000
+    # test:
+    #   adapter: sqlite3
+    #   database: ~/.watch_tower/databases/test.sqlite3
+    #   pool: 5
+    #   timeout: 5000
     #
-    # :production:
-    #   :adapter: sqlite3
-    #   :database: ~/.watch_tower/databases/production.sqlite3
-    #   :pool: 5
-    #   :timeout: 5000
+    # production:
+    #   adapter: sqlite3
+    #   database: ~/.watch_tower/databases/production.sqlite3
+    #   pool: 5
+    #   timeout: 5000

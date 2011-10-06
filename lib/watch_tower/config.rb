@@ -1,3 +1,5 @@
+require 'active_support/hash_with_indifferent_access'
+
 module WatchTower
   module Config
     extend self
@@ -15,7 +17,7 @@ module WatchTower
     # @raise [Void]
     def [](config)
       ensure_config_file_exists
-      @@config ||= YAML.parse_file(CONFIG_FILE).to_ruby
+      @@config ||= HashWithIndifferentAccess.new(YAML.parse_file(CONFIG_FILE).to_ruby)
       @@config[:watch_tower].send(:[], config)
     end
 
