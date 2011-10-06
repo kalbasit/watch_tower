@@ -25,7 +25,7 @@ module WatchTower
         def db_config
           db_config = Config.try(:[], :database).try(:[], ENV['WATCH_TOWER_ENV'])
           raise DatabaseConfigNotFoundError unless db_config
-          if db_config[:adapter] =~ /sqlite/
+          if db_config[:adapter] =~ /sqlite/ && db_config[:database] != ":memory:"
             db_config[:database] = ::File.expand_path(db_config[:database])
           end
           db_config
