@@ -99,5 +99,33 @@ module Server
         @file.elapsed_time.should == 2
       end
     end
+
+    describe "scopes" do
+      before(:each) do
+        @files = 3.times.collect{ FactoryGirl.create :file }
+      end
+
+      it "should have the default scope to" do
+        10.times do |n|
+          file = @files.first
+          Timecop.freeze(Time.now + n * 2)
+          FactoryGirl.create :time_entry, file: file
+        end
+
+        10.times do |n|
+          file = @files[1]
+          Timecop.freeze(Time.now + n * 10)
+          FactoryGirl.create :time_entry, file: file
+        end
+
+        10.times do |n|
+          file = @files.last
+          Timecop.freeze(Time.now + n * 5)
+          FactoryGirl.create :time_entry, file: file
+        end
+
+        File.all.first.should == @files[1]
+      end
+    end
   end
 end
