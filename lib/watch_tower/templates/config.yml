@@ -50,7 +50,7 @@ watch_tower:
     #   adapter: mysql2
     #   encoding: utf8
     #   reconnect: false
-    #   database: app_mysql_development
+    #   database: watch_tower_development
     #   pool: 5
     #   username: root
     #   password:
@@ -59,7 +59,7 @@ watch_tower:
     #   adapter: mysql2
     #   encoding: utf8
     #   reconnect: false
-    #   database: app_mysql_test
+    #   database: watch_tower_test
     #   pool: 5
     #   username: root
     #   password:
@@ -68,7 +68,7 @@ watch_tower:
     #   adapter: mysql2
     #   encoding: utf8
     #   reconnect: false
-    #   database: app_mysql_production
+    #   database: watch_tower_production
     #   pool: 5
     #   username: root
     #   password:
@@ -82,24 +82,24 @@ watch_tower:
     # development:
     #   adapter: postgresql
     #   encoding: unicode
-    #   database: app_postgresql_development
+    #   database: watch_tower_development
     #   pool: 5
-    #   username: app_postgresql
+    #   username: watch_tower
     #   password:
     # test:
     #   adapter: postgresql
     #   encoding: unicode
-    #   database: app_postgresql_test
+    #   database: watch_tower_test
     #   pool: 5
-    #   username: app_postgresql
+    #   username: watch_tower
     #   password:
     #
     # production:
     #   adapter: postgresql
     #   encoding: unicode
-    #   database: app_postgresql_production
+    #   database: watch_tower_production
     #   pool: 5
-    #   username: app_postgresql
+    #   username: watch_tower
     #   password:
     #
     #
