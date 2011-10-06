@@ -4,9 +4,8 @@ rvm:
   - 1.9.3
   - jruby
 env:
-  - JRUBY_OPTS="${JRUBY_OPTS} --1.9"
-  - ADAPTER="mysql"
-  - ADAPTER="postgresql"
+  - JRUBY_OPTS="${JRUBY_OPTS} --1.9" ADAPTER="mysql"
+  - JRUBY_OPTS="${JRUBY_OPTS} --1.9" ADAPTER="postgresql"
 notifications:
   recipients:
     - wael.nasreddine@gmail.com
