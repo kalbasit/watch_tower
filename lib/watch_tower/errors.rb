@@ -17,4 +17,5 @@ module WatchTower
   # Exceptions used by the server
   ServerError = Class.new WatchTowerError
   DatabaseError = Class.new ServerError
+  DatabaseConfigNotFoundError = Class.new DatabaseError
 end
