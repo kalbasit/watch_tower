@@ -24,6 +24,7 @@ module WatchTower
             file.elapsed_time += time_entry_elapsed
             file.project.elapsed_time += time_entry_elapsed
 
+            file.project.save
             file.save
           end
         end
