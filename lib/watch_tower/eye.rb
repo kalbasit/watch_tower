@@ -10,6 +10,9 @@ module WatchTower
         # Try getting the mtime of the document opened by each editor in the
         # editors list.
         Editor.editors.each do |editor|
+          # Create an instance of the editor
+          # TODO: Should be used as a class instead
+          editor = editor.new
           # Check if the editor is running
           if editor.is_running?
             # Get the currently being edited file from the editor

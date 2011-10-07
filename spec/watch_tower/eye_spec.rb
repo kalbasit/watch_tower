@@ -12,6 +12,7 @@ describe Eye do
 
     # Mock the editor
     @editor = mock
+    @editor.stubs(:new).returns(@editor)
     @editor.stubs(:is_running?).returns(true)
     @editor.stubs(:current_paths).returns([@file_path])
     Editor.stubs(:editors).returns([@editor])
