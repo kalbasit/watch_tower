@@ -3,3 +3,6 @@
 
 - Convert the Editor module to be Enumerable for easier access to the list of editors
   (added Fri Oct  7 11:47:53 2011, incomplete, priority medium)
+
+- maybe use sinatra-simple-navigation gem
+  (added Fri Oct  7 16:07:44 2011, incomplete, priority medium)
