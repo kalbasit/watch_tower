@@ -36,4 +36,9 @@ RSpec::configure do |config|
       select { |c| c.superclass == ActiveRecord::Base }.  # Keep only those with superclass ActiveRecord::Base
       each(&:delete_all)                                  # Run delete_all on each class
   end
+
+  config.before(:each) do
+    # To get RSpec stubs and mocks working.
+    $rspec_mocks ||= RSpec::Mocks::Space.new
+  end
 end
