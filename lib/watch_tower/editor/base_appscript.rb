@@ -18,11 +18,12 @@ module WatchTower
             end
 
             def current_path
-              if is_running?
-                # Get the document
-                document = @@app.document.get
+              current_paths.try(:first)
+            end
 
-                document.first.path.get rescue nil
+            def current_paths
+              if is_running?
+                @@app.document.get.collect(&:path).collect(&:get)
               end
             end
           END
