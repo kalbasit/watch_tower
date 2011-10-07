@@ -15,6 +15,7 @@ module WatchTower
           editor = editor.new
           # Check if the editor is running
           if editor.is_running?
+            LOG.debug("#{__FILE__}:#{__LINE__}: #{editor.to_s} is running")
             # Get the currently being edited file from the editor
             files_paths = editor.current_paths
             files_paths.each do |file_path|
@@ -29,9 +30,11 @@ module WatchTower
                 file_model.time_entries.create!(mtime: File.stat(file_path).mtime)
               rescue ActiveRecord::RecordInvalid => e
                 # This shouldn't happen!
-                LOG.fatal "#{e}, file: #{__FILE__}, line: #{__LINE__ - 3}"
+                LOG.debug "#{__FILE__}:#{__LINE__ - 3}: #{e}"
               end
             end
+          else
+            LOG.debug("#{__FILE__}:#{__LINE__}: #{editor.to_s} is not running")
           end
         end
 
@@ -39,7 +42,7 @@ module WatchTower
         if $close_eye
           break
         else
-          sleep 30
+          sleep 1
         end
       end
     end

@@ -11,10 +11,10 @@ module WatchTower
         def self.included(base)
           base.class_eval <<-END, __FILE__, __LINE__ + 1
             # Include AppScript
-            extend ::Appscript
+            include ::Appscript
 
             def is_running?
-              @@app.try(:is_running?)
+              editor.is_running? if editor
             end
 
             def current_path
@@ -23,7 +23,7 @@ module WatchTower
 
             def current_paths
               if is_running?
-                @@app.document.get.collect(&:path).collect(&:get)
+                editor.document.get.collect(&:path).collect(&:get)
               end
             end
           END

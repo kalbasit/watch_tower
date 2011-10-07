@@ -2,10 +2,6 @@ require 'spec_helper'
 
 module Editor
   describe Textmate do
-    it "should respond to :app as class methods" do
-      Textmate.should respond_to(:app)
-    end
-
     it { should respond_to :current_path }
 
     describe "#is_running?" do
@@ -14,7 +10,7 @@ module Editor
       it "should return wether Textmate is running or not" do
         app = mock()
         app.expects(:is_running?).returns(true).once
-        Textmate.send(:class_variable_set, :@@app, app)
+        Textmate.any_instance.stubs(:editor).returns(app)
 
         subject.is_running?.should be_true
       end
@@ -29,7 +25,7 @@ module Editor
         document.expects(:path).returns(path).once
         documents.expects(:get).returns([document]).once
         app.expects(:document).returns(documents).once
-        Textmate.send(:class_variable_set, :@@app, app)
+        Textmate.any_instance.stubs(:editor).returns(app)
 
         subject.current_path.should == '/path/to/file.rb'
       end
@@ -37,7 +33,7 @@ module Editor
       it "should return nil if textmate ain't running" do
         app = mock()
         app.expects(:is_running?).returns(false).once
-        Textmate.send(:class_variable_set, :@@app, app)
+        Textmate.any_instance.stubs(:editor).returns(app)
 
         subject.current_path.should be_nil
       end
