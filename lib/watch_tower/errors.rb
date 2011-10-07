@@ -18,4 +18,7 @@ module WatchTower
   ServerError = Class.new WatchTowerError
   DatabaseError = Class.new ServerError
   DatabaseConfigNotFoundError = Class.new DatabaseError
+
+  # Exceptions raised by the Eye module
+  EyeError = Class.new WatchTowerError
 end
