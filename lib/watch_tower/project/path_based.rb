@@ -21,11 +21,6 @@ module WatchTower
       # The key is the path to a file, the value is the project's parts
       @@project_path_part_cache = Hash.new
 
-      # TODO: Shouldn't hardcode these, actually they are just for tests
-      #       They should be in a haml config file
-      CODE_PATH = '~/Projects'
-      NESTED_PROJECT_LAYERS = 2
-
       # Return the working directory (the project's path if you will) from a path
       # to any file inside the project
       #
@@ -36,8 +31,8 @@ module WatchTower
         path = expand_path path
         return @@working_cache[path] if @@working_cache.key?(path)
 
-        code = options[:code] || CODE_PATH
-        nested_project_layers = options[:nested_project_layers] || NESTED_PROJECT_LAYERS
+        code = options[:code] || Config[:code]
+        nested_project_layers = options[:nested_project_layers] || Config[:nested_project_layers]
 
         @@working_cache[path] = project_path_from_nested_path(code, path, nested_project_layers)
         @@working_cache[path]
@@ -52,8 +47,8 @@ module WatchTower
         path = expand_path path
         return @@project_name_cache[path] if @@project_name_cache.key?(path)
 
-        code = options[:code] || CODE_PATH
-        nested_project_layers = options[:nested_project_layers] || NESTED_PROJECT_LAYERS
+        code = options[:code] || Config[:code]
+        nested_project_layers = options[:nested_project_layers] || Config[:nested_project_layers]
 
         @@project_name_cache[path] = project_name_from_nested_path(code, path, nested_project_layers)
         @@project_name_cache[path]
