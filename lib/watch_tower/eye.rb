@@ -21,8 +21,13 @@ module WatchTower
               project_model = Server::Project.find_or_create_by_name_and_path(project.name, project.path)
               # Create (or fetch) a file
               file_model = project_model.files.find_or_create_by_path(file_path)
-              # Create a time entry
-              file_model.time_entries.create(mtime: File.stat(file_path).mtime)
+              begin
+                # Create a time entry
+                file_model.time_entries.create!(mtime: File.stat(file_path).mtime)
+              rescue ActiveRecord::RecordInvalid => e
+                # This shouldn't happen!
+                LOG.fatal "#{e}, file: #{__FILE__}, line: #{__LINE__ - 3}"
+              end
             end
           end
         end

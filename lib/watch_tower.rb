@@ -10,9 +10,13 @@ ENV['WATCH_TOWER_ENV'] ||= 'development'
 # Make sure the USER_PATH exist
 require 'rubygems'
 require 'fileutils'
+require 'logger'
 FileUtils.mkdir_p USER_PATH
 FileUtils.mkdir_p DATABASE_PATH
 FileUtils.mkdir_p LOG_PATH
+
+# Create a logger
+LOG = Logger.new(File.join(LOG_PATH, 'watch_tower.log'))
 
 # Require daemon from active_support's core_ext allows us to fork really quickly
 require 'active_support/core_ext/process/daemon'

@@ -6,6 +6,8 @@ module WatchTower
       # Validations
       validates :file_id, presence: true
       validates :mtime, presence: true
+      validates_uniqueness_of :mtime, scope: :file_id
+
 
       # Associations
       belongs_to :file, counter_cache: true
