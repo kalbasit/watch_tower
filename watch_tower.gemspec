@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mocha', '~>0.10.0'
   s.add_development_dependency 'factory_girl', '~>2.1.2'
   s.add_development_dependency 'timecop', '~>0.3.5'
+  s.add_development_dependency 'capybara', '~>1.1.1'
 
   # Debugging
   s.add_development_dependency 'pry', '~>0.9.6.2'
