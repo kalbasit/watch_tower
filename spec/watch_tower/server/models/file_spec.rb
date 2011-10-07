@@ -98,6 +98,53 @@ module Server
         @file.reload
         @file.elapsed_time.should == 2
       end
+
+      it "should add duration to a different day (2 days)." do
+        # Create initial time entries
+        3.times do
+          Timecop.freeze(Time.now + 1)
+          FactoryGirl.create :time_entry, file: @file
+        end
+
+        # Go ahead one day
+        Timecop.freeze(Time.now + 1.day)
+
+        # Add 3 more time entries
+        3.times do
+          Timecop.freeze(Time.now + 1)
+          FactoryGirl.create :time_entry, file: @file
+        end
+
+        @file.reload
+        @file.elapsed_time.should == 4
+        @file.durations.size.should == 2
+      end
+
+      it "should correctly record dates" do
+        # Record the date of the first day
+        Timecop.freeze(Time.now)
+        current_day = Time.now.to_date
+
+        # Create initial time entries
+        3.times do
+          Timecop.freeze(Time.now + 1)
+          FactoryGirl.create :time_entry, file: @file
+        end
+
+        # Go ahead one day
+        Timecop.freeze(Time.now + 1.day)
+        next_day = Time.now.to_date
+
+        # Add 3 more time entries
+        3.times do
+          Timecop.freeze(Time.now + 1)
+          FactoryGirl.create :time_entry, file: @file
+        end
+
+        @file.reload
+        @file.durations.first.date.should == current_day
+        @file.durations.last.date.should == next_day
+      end
     end
 
     describe "scopes" do

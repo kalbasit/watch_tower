@@ -5,6 +5,7 @@ class CreateFiles < ActiveRecord::Migration
       t.string :path, null: false
       t.integer :elapsed_time, default: 0
       t.integer :time_entries_count
+      t.integer :durations_count
 
       t.timestamps
     end

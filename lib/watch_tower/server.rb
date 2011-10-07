@@ -6,6 +6,7 @@ module WatchTower
   module Server
     extend ::ActiveSupport::Autoload
 
+    autoload :Duration, ::File.join(MODELS_PATH, 'duration.rb')
     autoload :Project, ::File.join(MODELS_PATH, 'project.rb')
     autoload :File, ::File.join(MODELS_PATH, 'file.rb')
     autoload :TimeEntry, ::File.join(MODELS_PATH, 'time_entry.rb')

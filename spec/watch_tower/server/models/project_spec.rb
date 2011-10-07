@@ -5,8 +5,11 @@ module Server
     describe "Attributes" do
       it { should respond_to :name }
       it { should respond_to :path }
-      it { should respond_to :elapsed_time }
       it { should respond_to :files_count }
+    end
+
+    describe "Methods" do
+      it { should respond_to :elapsed_time }
     end
 
     describe "Validations" do

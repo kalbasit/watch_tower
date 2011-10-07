@@ -11,6 +11,7 @@ module WatchTower
       # Associations
       belongs_to :project, counter_cache: true
       has_many :time_entries, dependent: :destroy
+      has_many :durations, dependent: :destroy
     end
   end
 end
