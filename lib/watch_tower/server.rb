@@ -1,6 +1,10 @@
 SERVER_PATH = File.expand_path(File.join(File.dirname(__FILE__), 'server'))
 MODELS_PATH = File.join(SERVER_PATH, 'models')
+EXTENSIONS_PATH = File.join(SERVER_PATH, 'extensions')
 MIGRATIONS_PATH = File.join(SERVER_PATH, 'db', 'migrate')
+
+# Sinatra
+require 'sinatra'
 
 module WatchTower
   module Server
@@ -11,6 +15,7 @@ module WatchTower
     autoload :Project, ::File.join(MODELS_PATH, 'project.rb')
     autoload :File, ::File.join(MODELS_PATH, 'file.rb')
     autoload :TimeEntry, ::File.join(MODELS_PATH, 'time_entry.rb')
+    autoload :Extensions
     autoload :App
 
     # Start the server

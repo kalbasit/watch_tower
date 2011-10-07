@@ -1,10 +1,10 @@
-require 'sinatra'
-require 'sinatra-snap'
-
 module WatchTower
   module Server
     class App < ::Sinatra::Application
-      # Define routes
+      # Extensions
+      include Extensions::ImprovedPartials
+
+      # Routes
       paths :root => '/'
 
       # The index action
