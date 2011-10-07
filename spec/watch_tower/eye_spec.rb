@@ -15,7 +15,7 @@ describe Eye do
       # Mock the editor
       @editor = mock
       @editor.stubs(:is_running?).returns(true)
-      @editor.stubs(:current_path).returns(@file_path)
+      @editor.stubs(:current_paths).returns([@file_path])
       Editor.stubs(:editors).returns([@editor])
 
       # Mock the project
@@ -51,8 +51,8 @@ describe Eye do
       subject.start
     end
 
-    it "should call current_path on the editor to determine the file path" do
-      @editor.expects(:current_path).returns(@file_path).once
+    it "should call current_paths on the editor to determine the file path" do
+      @editor.expects(:current_paths).returns([@file_path]).once
 
       subject.start
     end
