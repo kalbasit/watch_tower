@@ -4,6 +4,7 @@ module WatchTower
 
   # Exceptions raised by the Project module
   ProjectError = Class.new WatchTowerError
+  FileNotFound = Class.new ProjectError
 
   # Exception raised by the Path module
   PathError = Class.new ProjectError

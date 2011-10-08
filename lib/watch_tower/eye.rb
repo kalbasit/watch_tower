@@ -27,6 +27,9 @@ module WatchTower
               rescue PathNotUnderCodePath
                 LOG.debug("#{__FILE__}:#{__LINE__ - 2}: The file '#{file_path}' is not located under '#{Config[:code_path]}', it has been ignored")
                 next
+              rescue FileNotFound
+                LOG.debug "#{__FILE__}:#{__LINE__ - 5}: The file '#{file_path}' does not exist, it has been ignored"
+                next
               end
 
               begin
