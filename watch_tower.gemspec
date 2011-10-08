@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'haml', '~>3.1.3'
   s.add_dependency 'sinatra', '~> 1.3.0'
   s.add_dependency 'sinatra-snap', '~>0.3.2'
+  s.add_dependency 'draper', '~>0.8.0'
   s.add_dependency 'git', '~>1.2.5'
 
   # Development dependencies

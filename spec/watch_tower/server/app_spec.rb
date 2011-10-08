@@ -32,19 +32,19 @@ module Server
 
       it "should display each project as an article" do
         within 'section#projects' do
-          page.should have_selector '.watch_tower_server_project'
+          page.should have_selector '.project'
         end
       end
 
       it "should display the name of each project" do
         within 'section#projects' do
-          page.should have_selector '.watch_tower_server_project > .name'
+          page.should have_selector '.project > .name'
         end
       end
 
       it "should display the elapsed time of each project" do
         within 'section#projects' do
-          page.should have_selector '.watch_tower_server_project > .elapsed'
+          page.should have_selector '.project > .elapsed'
         end
       end
     end

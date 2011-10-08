@@ -13,7 +13,7 @@ module WatchTower
     autoload :File, ::File.join(MODELS_PATH, 'file.rb')
     autoload :TimeEntry, ::File.join(MODELS_PATH, 'time_entry.rb')
     autoload :Extensions
-    autoload :Presenter
+    autoload :Decorator
     autoload :App
 
     # Start the server
