@@ -14,6 +14,12 @@ FactoryGirl.define do
     mtime { Time.now }
   end
 
+  factory :duration, class: Server::Duration do
+    file
+    date { Time.now }
+    duration { Random.rand(1000) }
+  end
+
   sequence :name do |n|
     "project_#{n}"
   end

@@ -24,6 +24,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'i18n', '~>0.6.0'
   s.add_dependency 'haml', '~>3.1.3'
   s.add_dependency 'sinatra', '~> 1.3.0'
+  s.add_dependency 'sinatra-snap', '~>0.3.2'
+  s.add_dependency 'draper', '~>0.8.0'
   s.add_dependency 'git', '~>1.2.5'
 
   # Development dependencies
@@ -37,6 +39,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mocha', '~>0.10.0'
   s.add_development_dependency 'factory_girl', '~>2.1.2'
   s.add_development_dependency 'timecop', '~>0.3.5'
+  s.add_development_dependency 'capybara', '~>1.1.1'
 
   # Debugging
   s.add_development_dependency 'pry', '~>0.9.6.2'

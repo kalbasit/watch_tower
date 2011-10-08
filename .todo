@@ -18,4 +18,7 @@
     <note priority="medium" time="1317980873">
         Convert the Editor module to be Enumerable for easier access to the list of editors
     </note>
+    <note priority="medium" time="1317996464">
+        maybe use sinatra-simple-navigation gem
+    </note>
 </todo>
