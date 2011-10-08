@@ -21,6 +21,14 @@ LOG = Logger.new(File.join(LOG_PATH, 'watch_tower.log'))
 # Require daemon from active_support's core_ext allows us to fork really quickly
 require 'active_support/core_ext/process/daemon'
 
+module WatchTower
+  @@threads = {}
+
+  def self.threads
+    @@threads
+  end
+end
+
 # Require watch_tower's libraries
 require "watch_tower/version"
 require "watch_tower/errors"
