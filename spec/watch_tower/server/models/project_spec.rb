@@ -71,7 +71,7 @@ module Server
       it "should calculate elapsed time" do
         3.times do
           Timecop.freeze(Time.now + 1)
-          FactoryGirl.create :time_entry, file: @file
+          FactoryGirl.create :time_entry, file: @file, mtime: Time.now
         end
 
         @project.reload
@@ -81,15 +81,15 @@ module Server
       it "should skip the one with pause time" do
         3.times do
           Timecop.freeze(Time.now + 1)
-          FactoryGirl.create :time_entry, file: @file
+          FactoryGirl.create :time_entry, file: @file, mtime: Time.now
         end
 
         Timecop.freeze(Time.now + TimeEntry::PAUSE_TIME + 1)
-        FactoryGirl.create :time_entry, file: @file
+        FactoryGirl.create :time_entry, file: @file, mtime: Time.now
 
         3.times do
           Timecop.freeze(Time.now + 1)
-          FactoryGirl.create :time_entry, file: @file
+          FactoryGirl.create :time_entry, file: @file, mtime: Time.now
         end
 
         @project.reload
@@ -99,12 +99,12 @@ module Server
       it "should not count the time entries of another file" do
         3.times do
           Timecop.freeze(Time.now + 1)
-          FactoryGirl.create :time_entry, file: @file
+          FactoryGirl.create :time_entry, file: @file, mtime: Time.now
         end
 
         3.times do
           Timecop.freeze(Time.now + 1)
-          FactoryGirl.create :time_entry
+          FactoryGirl.create :time_entry, mtime: Time.now
         end
 
         @project.reload
@@ -125,19 +125,19 @@ module Server
         10.times do |n|
           file = @projects.first.files.first
           Timecop.freeze(Time.now + n * 2)
-          FactoryGirl.create :time_entry, file: file
+          FactoryGirl.create :time_entry, file: file, mtime: Time.now
         end
 
         10.times do |n|
           file = @projects[1].files.first
           Timecop.freeze(Time.now + n * 10)
-          FactoryGirl.create :time_entry, file: file
+          FactoryGirl.create :time_entry, file: file, mtime: Time.now
         end
 
         10.times do |n|
           file = @projects.last.files.first
           Timecop.freeze(Time.now + n * 5)
-          FactoryGirl.create :time_entry, file: file
+          FactoryGirl.create :time_entry, file: file, mtime: Time.now
         end
 
         Project.all.first.should == @projects[1]

@@ -11,12 +11,12 @@ FactoryGirl.define do
 
   factory :time_entry, class: Server::TimeEntry do
     file
-    mtime { Time.now }
+    mtime
   end
 
   factory :duration, class: Server::Duration do
     file
-    date { Time.now }
+    date
     duration { Random.rand(1000) }
   end
 
@@ -26,5 +26,13 @@ FactoryGirl.define do
 
   sequence :path do |n|
     "/path/to/project_#{n}"
+  end
+
+  sequence :mtime do |n|
+    Time.now + 2 * n
+  end
+
+  sequence :date do |n|
+    Time.now + 2 * n
   end
 end
