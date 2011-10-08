@@ -4,8 +4,10 @@ module WatchTower
 
     # Start the watch loop
     #
+    # @param [Hash] options
     # @raise [EyeError]
-    def start
+    def start(options = {})
+      LOG.debug("#{__FILE__}:#{__LINE__}: The Eye loop has just started")
       loop do
         # Try getting the mtime of the document opened by each editor in the
         # editors list.
@@ -19,18 +21,31 @@ module WatchTower
             # Get the currently being edited file from the editor
             files_paths = editor.current_paths
             files_paths.each do |file_path|
-              # Create a project from the file_path
-              project = Project.new_from_path(file_path)
-              # Create (or fetch) a project
-              project_model = Server::Project.find_or_create_by_name_and_path(project.name, project.path)
-              # Create (or fetch) a file
-              file_model = project_model.files.find_or_create_by_path(file_path)
               begin
-                # Create a time entry
-                file_model.time_entries.create!(mtime: File.stat(file_path).mtime)
+                # Create a project from the file_path
+                project = Project.new_from_path(file_path)
+              rescue PathNotUnderCodePath
+                LOG.debug("#{__FILE__}:#{__LINE__ - 2}: The file '#{file_path}' is not located under '#{Config[:code_path]}', it has been ignored")
+                next
+              end
+
+              begin
+                # Create (or fetch) a project
+                project_model = Server::Project.find_or_create_by_name_and_path(project.name, project.path)
+
+                # Create (or fetch) a file
+                file_model = project_model.files.find_or_create_by_path(file_path)
+
+                begin
+                  # Create a time entry
+                  file_model.time_entries.create!(mtime: File.stat(file_path).mtime)
+                rescue ActiveRecord::RecordInvalid => e
+                  # This should happen if the mtime is already present
+                end
               rescue ActiveRecord::RecordInvalid => e
-                # This shouldn't happen!
-                LOG.debug "#{__FILE__}:#{__LINE__ - 3}: #{e}"
+                # This should not happen
+                LOG.fatal("#{__FILE__}:#{__LINE__}: #{e}")
+                $close_eye = true
               end
             end
           else
@@ -40,9 +55,10 @@ module WatchTower
 
         # If $stop global is set, please stop, otherwise sleep for 30 seconds.
         if $close_eye
+          LOG.debug("#{__FILE__}:#{__LINE__}: Closing eye has been requested, end the loop")
           break
         else
-          sleep 1
+          sleep 10
         end
       end
     end
@@ -51,17 +67,7 @@ module WatchTower
     #
     # @param [Hash] options
     def start!(options = {})
-      @thread = Thread.new do
-        # Trap INT and TERM to quit the thread
-        Signal.trap("INT")  { exit }
-        Signal.trap("TERM") { exit }
-
-        # Start the loop
-        start
-
-        # Exit right after the loop ended (for some reason)
-        exit
-      end
+      start(options)
     end
   end
 end

@@ -25,7 +25,7 @@ module WatchTower
       # @param [Hash] options A hash of options
       # @return boolean
       def active_for_path?(path, options = {})
-        path = expand_path path
+        path = expand_path path rescue nil
         project_git_folder_path(path).present?
       end
 

@@ -55,6 +55,8 @@ module WatchTower
 
                   # Start WatchTower
                   start_watch_tower
+
+                  LOG.debug "#{__FILE__}:#{__LINE__}: WatchTower has finished."
                 else
                   LOG.debug "#{__FILE__}:#{__LINE__}: Running WatchTower in the background."
                   pid = fork do
@@ -66,19 +68,30 @@ module WatchTower
 
                     # Start WatchTower
                     start_watch_tower
+
+                    LOG.debug "#{__FILE__}:#{__LINE__}: WatchTower has finished."
                   end
                 end
               end
 
               # Start watch tower
               # This method just start the watch tower it doesn't know
-              # or care if we are in a forked process or not
+              # or care if we are in a forked process or not, all it cares about
+              # is starting the database server before starting the eye
               #
-              # see #start_eye
               # see #start_server
+              # see #start_eye
               def start_watch_tower
-                start_eye
+                # Start the server
                 start_server
+
+                # Wait until the database starts
+                until Server::Database.is_connected? do
+                  sleep(1)
+                end
+
+                # Start the eye now.
+                start_eye
               end
 
               # Start the eye
@@ -103,16 +116,16 @@ module WatchTower
               #
               # @return [Hash] options
               def watch_tower_options
-                return @options if @options
+                return @watch_tower_options if @watch_tower_options
 
-                @options = options.dup
-                @options.delete(:bootloader)
+                @watch_tower_options = options.dup
+                @watch_tower_options.delete(:bootloader)
 
                 # Log the options as a Debug
-                LOG.debug "#{__FILE__}:#{__LINE__}: Options are \#{@options.inspect}."
+                LOG.debug "#{__FILE__}:#{__LINE__}: Options are \#{@watch_tower_options.inspect}."
 
                 # Return the options
-                @options
+                @watch_tower_options
               end
           END
         end
@@ -120,9 +133,3 @@ module WatchTower
     end
   end
 end
-
-#            class_option :foreground,
-
-#
-#            class_option
-#
