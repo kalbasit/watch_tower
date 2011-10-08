@@ -37,8 +37,8 @@ RSpec::configure do |config|
       each(&:delete_all)                                  # Run delete_all on each class
   end
 
-  config.before(:each) do
-    # To get RSpec stubs and mocks working.
-    $rspec_mocks ||= RSpec::Mocks::Space.new
+  # Start the server before all examples
+  config.before(:all) do
+    WatchTower::Server::Database.start!
   end
 end

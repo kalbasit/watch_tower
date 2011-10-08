@@ -2,6 +2,9 @@ SERVER_PATH = File.expand_path(File.join(File.dirname(__FILE__), 'server'))
 MODELS_PATH = File.join(SERVER_PATH, 'models')
 MIGRATIONS_PATH = File.join(SERVER_PATH, 'db', 'migrate')
 
+# Active Record
+require 'active_record'
+
 module WatchTower
   module Server
     extend ::ActiveSupport::Autoload
