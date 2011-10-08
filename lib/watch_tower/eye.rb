@@ -46,5 +46,22 @@ module WatchTower
         end
       end
     end
+
+    # Start the Eye, a method invoked from the Watch Tower command line interface
+    #
+    # @param [Hash] options
+    def start!(options = {})
+      @thread = Thread.new do
+        # Trap INT and TERM to quit the thread
+        Signal.trap("INT")  { exit }
+        Signal.trap("TERM") { exit }
+
+        # Start the loop
+        start
+
+        # Exit right after the loop ended (for some reason)
+        exit
+      end
+    end
   end
 end

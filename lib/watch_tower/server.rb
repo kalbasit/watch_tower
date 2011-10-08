@@ -20,12 +20,29 @@ module WatchTower
     # This method starts the database and then starts the server
     #
     # @param [Hash] options
-    def self.start!(options = {})
+    def self.start(options = {})
       # Start the Database
       Database.start!(options)
 
       # Start the Sinatra application
       start_web_server(options)
+    end
+
+    # Start the Server, a method invoked from the Watch Tower command line interface
+    #
+    # @param [Hash] options
+    def self.start!(options = {})
+      @thread ||= Thread.new do
+        # Trap INT and TERM to quit the thread
+        Signal.trap("INT")  { exit }
+        Signal.trap("TERM") { exit }
+
+        # Start the server
+        start(options)
+
+        # Exit right after the loop ended (for some reason)
+        exit
+      end
     end
 
     protected
