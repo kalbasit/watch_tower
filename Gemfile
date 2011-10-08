@@ -8,6 +8,7 @@ gemspec
 platforms :ruby do
   gem 'mysql2'
   if ENV['TRAVIS']
+    # pg is not compiling on rbx-2.0
     gem 'pg', :platforms => :mri
   else
     gem 'pg'
