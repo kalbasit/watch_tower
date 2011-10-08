@@ -21,4 +21,7 @@
     <note priority="medium" time="1317996464">
         maybe use sinatra-simple-navigation gem
     </note>
+    <note priority="medium" time="1318109702">
+        Add tracking by git branch, needs a branches table that belongs to a project and has many time_entries
+    </note>
 </todo>

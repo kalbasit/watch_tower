@@ -6,3 +6,6 @@
 
 - maybe use sinatra-simple-navigation gem
   (added Fri Oct  7 16:07:44 2011, incomplete, priority medium)
+
+- Add tracking by git branch, needs a branches table that belongs to a project and has many time_entries
+  (added Sat Oct  8 23:35:02 2011, incomplete, priority medium)
