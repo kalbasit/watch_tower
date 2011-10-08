@@ -39,6 +39,54 @@ module WatchTower
                 model_class.constantize
               end
           END
+
+          base.class_eval <<-END, __FILE__, __LINE__ + 1
+            protected
+              def pluralize(num, word)
+                if num > 1
+                  "\#{num} \#{word.pluralize}"
+                else
+                  "\#{num} \#{word}"
+                end
+              end
+
+              # Humanize time
+              #
+              # @param [Integer] The number of seconds
+              # @return [String]
+              def humanize_time(time)
+                case
+                when time >= 1.day
+                  humanize_day(time)
+                when time >= 1.hour
+                  humanize_hour(time)
+                when time >= 1.minute
+                  humanize_minute(time)
+                else
+                  pluralize time, "second"
+                end
+              end
+          END
+
+          [:day, :hour, :minute].each do |t|
+            base.class_eval <<-END, __FILE__, __LINE__ + 1
+              protected
+                def humanize_#{t}(time)
+                  seconds = 1.#{t}
+                  num = (time / seconds).to_i
+                  rest = time % seconds
+
+                  time_str = pluralize num, "#{t}"
+
+                  unless rest == 0
+                    "\#{time_str}#{t == :minute ? ' and' : ','} \#{humanize_time(rest)}"
+                  else
+                    time_str
+                  end
+                end
+            END
+          end
+
         end
       end
     end
