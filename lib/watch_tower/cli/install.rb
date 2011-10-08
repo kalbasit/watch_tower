@@ -9,10 +9,6 @@ module WatchTower
       module InstanceMethods
         def self.included(base)
           base.class_eval <<-END, __FILE__, __LINE__ + 1
-            # Call add_runtime_options! from Thor::Actions
-            # This adds quite a few options to the commands
-            add_runtime_options!
-
             # Mappings (aliases)
             map "-i" => :install
 
