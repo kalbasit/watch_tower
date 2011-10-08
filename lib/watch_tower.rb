@@ -11,7 +11,8 @@ require 'active_record'
 
 # Define a few pathes
 ROOT_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..'))
-TEMPLATE_PATH = File.join(ROOT_PATH, 'lib', 'watch_tower', 'templates')
+LIB_PATH = File.join(ROOT_PATH, 'lib', 'watch_tower')
+TEMPLATE_PATH = File.join(LIB_PATH, 'templates')
 USER_PATH = File.expand_path(File.join(ENV['HOME'], '.watch_tower'))
 DATABASE_PATH = File.join(USER_PATH, 'databases')
 LOG_PATH = File.join(USER_PATH, 'log')

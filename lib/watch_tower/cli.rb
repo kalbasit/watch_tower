@@ -1,13 +1,15 @@
 require 'thor'
-require 'watch_tower/cli/start'
-require 'watch_tower/cli/install'
+
+# Load all modules
+Dir["#{LIB_PATH}/cli/**/*.rb"].each { |f| require f }
 
 module WatchTower
   module CLI
     class Runner < ::Thor
-      include ::Thor::Actions
-      include Start
+      # Include cli modules
       include Install
+      include Open
+      include Start
     end
   end
 end

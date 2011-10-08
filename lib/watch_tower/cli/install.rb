@@ -9,6 +9,9 @@ module WatchTower
       module InstanceMethods
         def self.included(base)
           base.class_eval <<-END, __FILE__, __LINE__ + 1
+            # This module needs Thor::Actions
+            include ::Thor::Actions
+
             # Mappings (aliases)
             map "-i" => :install
 
