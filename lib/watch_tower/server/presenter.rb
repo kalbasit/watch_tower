@@ -1,6 +1,6 @@
 module WatchTower
   module Server
-    module Presenters
+    module Presenter
       extend ::ActiveSupport::Autoload
 
       autoload :Base

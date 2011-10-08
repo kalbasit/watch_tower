@@ -1,6 +1,6 @@
 module WatchTower
   module Server
-    module Presenters
+    module Presenter
       module Base
 
         def self.included(base)
