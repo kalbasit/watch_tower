@@ -4,11 +4,15 @@ require 'sinatra'
 module WatchTower
   module Server
     class App < ::Sinatra::Application
-      # Extensions
-      include Extensions::ImprovedPartials
+      # Helper
+      include Helpers::ImprovedPartials
+      include Helpers::Asset
 
       # Include Decorator
       include Decorator
+
+      # Configurations
+      include Configurations::Asset
 
       # Routes
       paths :root => '/'
