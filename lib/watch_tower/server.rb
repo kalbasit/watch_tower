@@ -13,18 +13,20 @@ module WatchTower
     autoload :App
     autoload :Database
 
-    begin
-      # Connect to the Database
-      Database.connect!
+    def self.start
+      begin
+        # Connect to the Database
+        Database.connect!
 
-      # Migrate the database
-      Database.migrate!
-    rescue DatabaseConfigNotFoundError
-      STDERR.puts "Database configurations are missing, please edit #{Config::CONFIG_FILE} and try again."
-      exit(1)
-    rescue RuntimeError => e
-      STDERR.puts e
-      exit(1)
+        # Migrate the database
+        Database.migrate!
+      rescue DatabaseConfigNotFoundError
+        STDERR.puts "Database configurations are missing, please edit #{Config::CONFIG_FILE} and try again."
+        exit(1)
+      rescue RuntimeError => e
+        STDERR.puts e
+        exit(1)
+      end
     end
   end
 end
