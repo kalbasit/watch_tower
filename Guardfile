@@ -13,7 +13,6 @@ guard 'rspec', :version => 2 do
   watch(%r{spec/factories/(.+)\.rb} ) { "spec" }
   watch(%r{spec/support/(.+)\.rb} ) { "spec" }
 
-  # Server
+  watch(%r{^lib/(.+)\.rb$})     { |m| "spec/#{m[1]}_spec.rb" }
   watch(%r(^lib/watch_tower/server/(views|extensions|presenters)/(.+)$)) { "spec/watch_tower/server/app_spec.rb" }
-  watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
 end
