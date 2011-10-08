@@ -2,11 +2,12 @@ require 'sinatra-snap'
 
 module WatchTower
   module Server
-    module Extensions
+    module Helpers
       extend ::ActiveSupport::Autoload
 
-      # Sinatra extensions
+      # Sinatra helpers
       autoload :ImprovedPartials
+      autoload :Asset
     end
   end
 end

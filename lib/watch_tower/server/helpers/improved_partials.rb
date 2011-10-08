@@ -1,6 +1,6 @@
 module WatchTower
   module Server
-    module Extensions
+    module Helpers
       module ImprovedPartials
 
         def self.included(base)
