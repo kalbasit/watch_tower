@@ -13,7 +13,7 @@ module WatchTower
       # The index action
       get :root do
         @title = "Projects"
-        @projects = Project.all
+        @projects = Presenters::Project.all
 
         haml :index
       end
