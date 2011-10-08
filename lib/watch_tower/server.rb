@@ -3,9 +3,6 @@ MODELS_PATH = File.join(SERVER_PATH, 'models')
 EXTENSIONS_PATH = File.join(SERVER_PATH, 'extensions')
 MIGRATIONS_PATH = File.join(SERVER_PATH, 'db', 'migrate')
 
-# Sinatra
-require 'sinatra'
-
 module WatchTower
   module Server
     extend ::ActiveSupport::Autoload

@@ -1,3 +1,6 @@
+# Sinatra
+require 'sinatra'
+
 module WatchTower
   module Server
     class App < ::Sinatra::Application
@@ -9,6 +12,9 @@ module WatchTower
 
       # The index action
       get :root do
+        @title = "Projects"
+        @projects = Project.all
+
         haml :index
       end
     end
