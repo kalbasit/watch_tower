@@ -28,13 +28,11 @@ module WatchTower
       # @param [Hash] options A hash of options
       # @return [String] the project's folder
       def working_directory(path, options = {})
-        path = expand_path path
         return @@working_cache[path] if @@working_cache.key?(path)
 
-        code = options[:code] || Config[:code]
-        nested_project_layers = options[:nested_project_layers] || Config[:nested_project_layers]
 
-        @@working_cache[path] = project_path_from_nested_path(code, path, nested_project_layers)
+        @@working_cache[path] = project_path_from_nested_path(code_path(options),
+          path, nested_project_layers(options))
         @@working_cache[path]
       end
 
@@ -44,17 +42,32 @@ module WatchTower
       # @param [Hash] options A hash of options
       # @return [String] the project's name
       def project_name(path, options = {})
-        path = expand_path path
         return @@project_name_cache[path] if @@project_name_cache.key?(path)
 
-        code = options[:code] || Config[:code]
-        nested_project_layers = options[:nested_project_layers] || Config[:nested_project_layers]
-
-        @@project_name_cache[path] = project_name_from_nested_path(code, path, nested_project_layers)
+        @@project_name_cache[path] = project_name_from_nested_path(code_path(options),
+          path, nested_project_layers(options))
         @@project_name_cache[path]
       end
 
       protected
+
+        # Get the code path from the options, if not found use the one from the
+        # configurations
+        #
+        # @param [Hash] options
+        # @return [String] The Code path
+        def code_path(options = {})
+          options[:code_path] || Config[:code_path]
+        end
+
+        # Get the nested_project_layers from the options, if not found use the
+        # one from the configurations
+        #
+        # @param [Hash] options
+        # @return [String] The nested_project_layers
+        def nested_project_layers(options = {})
+          options[:nested_project_layers] || Config[:nested_project_layers]
+        end
 
         # Taken from timetap
         # https://github.com/elia/timetap/blob/master/lib/time_tap/project.rb#L40
@@ -88,9 +101,11 @@ module WatchTower
         # @return [Array] The project path's parts
         # @raise [WatchTower::PathNotUnderCodePath] if the path is not nested under code
         def project_path_part(code, path, nested_project_layers = 2)
+          return @@project_path_part_cache[path] if @@project_path_part_cache.key?(path)
+
+          # Expand pathes
           code = expand_path code
           path = expand_path path
-          return @@project_path_part_cache[path] if @@project_path_part_cache.key?(path)
 
           regex_suffix = "([^/]+)"
           regex_suffix = [regex_suffix] * nested_project_layers

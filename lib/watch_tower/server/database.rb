@@ -1,3 +1,5 @@
+require 'active_record'
+
 module WatchTower
   module Server
     module Database
@@ -9,6 +11,8 @@ module WatchTower
       # see #migrate!
       # @param [Hash] options
       def start!(options = {})
+        LOG.debug("#{__FILE__}:#{__LINE__}: Starting the database server.")
+
         # Connect to the Database
         connect!
 
@@ -17,8 +21,8 @@ module WatchTower
       rescue DatabaseConfigNotFoundError
         STDERR.puts "Database configurations are missing, please edit #{Config::CONFIG_FILE} and try again."
         exit(1)
-      rescue RuntimeError => e
-        STDERR.puts e
+      rescue ::ActiveRecord::ConnectionNotEstablished => e
+        STDERR.puts "There was an error connecting to the database: #{e}"
         exit(1)
       end
 
@@ -32,14 +36,22 @@ module WatchTower
       rescue DatabaseConfigNotFoundError
         STDERR.puts "Database configurations are missing, please edit #{Config::CONFIG_FILE} and try again."
         exit(1)
-      rescue RuntimeError => e
-        STDERR.puts e
+      rescue ::ActiveRecord::ConnectionNotEstablished => e
+        STDERR.puts "There was an error connecting to the database: #{e}"
         exit(1)
+      end
+
+      def is_connected?
+        ActiveRecord::Base.connected?
       end
 
       protected
         # Connect to the database
         def connect!
+          return if is_connected?
+          LOG.debug("#{__FILE__}:#{__LINE__}: Connecting to the database.")
+          # Make ActiveRecord Thread-safe
+          # ActiveRecord::Base.allow_concurrency = true
           # Create a connection
           ActiveRecord::Base.establish_connection(db_config)
 
@@ -55,6 +67,7 @@ module WatchTower
 
         # Migrate the database
         def migrate!
+          LOG.debug("#{__FILE__}:#{__LINE__}: Migrating the database.")
           # Connect to the database
           connect!
 
@@ -74,7 +87,7 @@ module WatchTower
 
         # Set the logger
         def logger
-          ActiveRecord::Base.logger = Logger.new ::File.open(log_path, 'a')
+          ActiveRecord::Base.logger ||= Logger.new ::File.open(log_path, 'a')
         end
 
         # Get the log file's absolute path

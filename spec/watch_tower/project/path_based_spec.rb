@@ -19,6 +19,11 @@ class Project
       @project_path_parts = ['/home/user/Code', 'OpenSource', 'watch_tower']
     end
 
+    before(:each) do
+      PathBased.stubs(:code_path).returns(@code)
+      PathBased.stubs(:code_path).returns(@code)
+    end
+
     describe "#project_path_part" do
       it "should respond to #project_path_part" do
         -> { subject.send :project_path_part, *@args }.should_not raise_error NoMethodError

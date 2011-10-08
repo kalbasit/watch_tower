@@ -14,6 +14,10 @@ describe Project do
       @project_name = 'watch_tower'
     end
 
+    before(:each) do
+      ::File.stubs(:exists?).returns(true)
+    end
+
     describe "#new_from_path" do
 
       it { should respond_to :new_from_path }
