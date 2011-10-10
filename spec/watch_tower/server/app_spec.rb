@@ -4,21 +4,25 @@ module Server
   describe App do
     before(:each) do
       @projects = {
-        empty: {time_entries:[] },
-        not_empty: {time_entries: []}
+        empty: {files: [], time_entries:[] },
+        not_empty: {files: [], time_entries: []}
       }
 
       @projects[:not_empty][:project] = FactoryGirl.create(:project)
-      @projects[:not_empty][:file] = FactoryGirl.create(:file, project: @projects[:not_empty][:project])
-      5.times do
-        @projects[:not_empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:not_empty][:file])
+      2.times do
+        @projects[:not_empty][:files] << FactoryGirl.create(:file, project: @projects[:not_empty][:project])
       end
-      @projects[:not_empty][:duration] = FactoryGirl.create(:duration, file: @projects[:not_empty][:file])
+      5.times do
+        @projects[:not_empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:not_empty][:files].first)
+      end
+      @projects[:not_empty][:duration] = FactoryGirl.create(:duration, file: @projects[:not_empty][:files].first)
 
       @projects[:empty][:project] = FactoryGirl.create(:project)
-      @projects[:empty][:file] = FactoryGirl.create(:file, project: @projects[:empty][:project])
-      @projects[:empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:empty][:file])
-      @projects[:empty][:duration] = FactoryGirl.create(:duration, file: @projects[:empty][:file])
+      2.times do
+        @projects[:empty][:files] << FactoryGirl.create(:file, project: @projects[:empty][:project])
+      end
+      @projects[:empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:empty][:files].first)
+      @projects[:empty][:duration] = FactoryGirl.create(:duration, file: @projects[:empty][:files].first)
     end
 
     describe "#index" do
@@ -150,7 +154,7 @@ module Server
 
       it "should display the file's path" do
         within 'article#project section#files article.file div.path' do
-          page.should have_content @projects[:not_empty][:file].path
+          page.should have_content @projects[:not_empty][:files].first.path
         end
       end
 
@@ -162,13 +166,19 @@ module Server
 
       it "should display the file's elaped time" do
         within 'article#project section#files article.file div.elapsed' do
-          page.should have_content @projects[:not_empty][:file].elapsed_time.to_s
+          page.should have_content @projects[:not_empty][:files].first.elapsed_time.to_s
         end
       end
 
       it "should display an image under each file's name to categorize percentage" do
         within 'article#project section#files article.file' do
           page.should have_selector '.percentage_img_container > .percentage > img'
+        end
+      end
+
+      it "should not display files having 0 seconds" do
+        within 'article#project section#files' do
+          page.should_not have_content @projects[:not_empty][:files].last.path
         end
       end
     end
