@@ -1,6 +1,6 @@
 %article#project
   %header
-    %h1.project_name= @project.name
+    %h1.project_name= @project.name.camelcase
     %h2.project_path= @project.path
   %section#files
     = partial('file', collection: FileDecorator.decorate(@project.files.worked_on))

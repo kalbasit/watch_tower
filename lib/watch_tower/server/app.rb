@@ -28,7 +28,7 @@ module WatchTower
 
       get :project do
         @project = ProjectDecorator.find(params[:id])
-        @title = "Project - #{@project.name.capitalize}"
+        @title = "Project - #{@project.name.camelcase}"
 
         haml :project
       end

@@ -60,13 +60,13 @@ module Server
 
       it "should display the name of each project" do
         within 'section#projects .project > .name' do
-          page.should have_content @projects[:not_empty][:project].name
+          page.should have_content @projects[:not_empty][:project].name.camelcase
         end
       end
 
       it "should not show the project with an empty time entries" do
         within 'section#projects' do
-          page.should_not have_content @projects[:empty][:project].name
+          page.should_not have_content @projects[:empty][:project].name.camelcase
         end
       end
 
@@ -106,7 +106,7 @@ module Server
 
       it "should have the correct title" do
         within :xpath, '//html/head/title' do
-          page.should have_content "Watch Tower - Project - #{@projects[:not_empty][:project].name.capitalize}"
+          page.should have_content "Watch Tower - Project - #{@projects[:not_empty][:project].name.camelcase}"
         end
       end
 
@@ -124,7 +124,7 @@ module Server
 
       it "should have the project's name in an h1" do
         within 'article#project header > h1.project_name' do
-          page.should have_content @projects[:not_empty][:project].name
+          page.should have_content @projects[:not_empty][:project].name.camelcase
         end
       end
 
