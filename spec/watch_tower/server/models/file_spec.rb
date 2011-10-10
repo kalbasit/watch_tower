@@ -72,7 +72,7 @@ module Server
           FactoryGirl.create :time_entry, file: @file, mtime: Time.now
         end
 
-        Timecop.freeze(Time.now + TimeEntry::PAUSE_TIME + 1)
+        Timecop.freeze(Time.now + @file.time_entries.first.send(:pause_time) + 1)
         FactoryGirl.create :time_entry, file: @file, mtime: Time.now
 
         3.times do
