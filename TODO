@@ -1,3 +1,6 @@
+- Figure out how to load assets from gems and remove the bundled jQuery files.
+  (added Mon Oct 10 16:13:36 2011, incomplete, priority high)
+
 - The Config module need some tests.
   (added Thu Oct  6 12:02:34 2011, incomplete, priority medium)
 
