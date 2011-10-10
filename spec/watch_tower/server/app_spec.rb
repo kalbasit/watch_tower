@@ -47,6 +47,12 @@ module Server
           page.should have_selector '.project > .elapsed'
         end
       end
+
+      it "should display an image under each project's name to categorize percentage" do
+        within 'section#projects' do
+          page.should have_selector '.project > .percentage_img_container > .percentage > img'
+        end
+      end
     end
   end
 end

@@ -11,6 +11,19 @@ module WatchTower
           humanize_time elapsed_time
         end
 
+        # Return an image representing the percentage of this project
+        #
+        # @return [String] image_tag
+        def percentage
+          max_elapsed = Project.order('elapsed_time DESC').first.elapsed_time
+
+          percentage = (elapsed_time * 100 / max_elapsed).to_i
+
+          <<-EHTML
+            <img src="#{asset_path('percentage.png')}" data-width="#{percentage}" />
+          EHTML
+        end
+
         # Accessing Helpers
         #   You can access any helper via a proxy
         #

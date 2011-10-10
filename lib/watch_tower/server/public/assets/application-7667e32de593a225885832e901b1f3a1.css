@@ -5,3 +5,16 @@
  */
 body {
   background: #cdcdcd; }
+
+.clearfix {
+  clear: both; }
+#projects .project .name {
+  float: left;
+  width: 200px; }
+#projects .project .percentage_img_container {
+  width: 310px;
+  float: left; }
+  #projects .project .percentage_img_container .percentage_img {
+    height: 20px; }
+#projects .project .elapsed {
+  float: left; }
