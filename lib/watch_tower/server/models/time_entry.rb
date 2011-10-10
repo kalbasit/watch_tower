@@ -1,7 +1,9 @@
 module WatchTower
   module Server
     class TimeEntry < ::ActiveRecord::Base
-      PAUSE_TIME = 30.minutes
+
+      # Default pause time, in case nothing was given in the config file
+      DEFAULT_PAUSE_TIME = 30.minutes
 
       # Validations
       validates :file_id, presence: true
@@ -31,7 +33,7 @@ module WatchTower
           if this_time_entry_date == last_time_entry_date
             # Calculate the time
             time_entry_elapsed = this_time_entry.mtime - last_time_entry.mtime rescue 0
-            unless time_entry_elapsed > PAUSE_TIME
+            unless time_entry_elapsed > pause_time
               # Update the file elapsed time
               file.elapsed_time += time_entry_elapsed
               file.save
@@ -44,6 +46,11 @@ module WatchTower
               d.save
             end
           end
+        end
+
+        # Get the
+        def pause_time
+          eval(Config[:pause_time]) rescue DEFAULT_PAUSE_TIME
         end
     end
   end

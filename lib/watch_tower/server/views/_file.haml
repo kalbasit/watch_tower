@@ -1,0 +1,13 @@
+%article.file[file]
+  %div
+    .path= file.path
+    .elapsed= file.elapsed
+    .clearfix
+  .percentage_img_container
+    .percentage
+      -# TODO: Move this to the presenter after having resolved the presenter
+      -#       issues, in Draper I can't access helpers for some reason
+      - max_elapsed = ::WatchTower::Server::File.where('project_id = ?', file.project_id).order('elapsed_time DESC').first.elapsed_time
+      - percentage = (file.elapsed_time * 100 / max_elapsed).to_i rescue 100
+      %img.percentage_img{src: asset_path('percentage.png'), 'data-width' => percentage}/
+  .clearfix

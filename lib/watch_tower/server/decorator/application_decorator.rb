@@ -3,6 +3,17 @@ module WatchTower
     module Decorator
       class ApplicationDecorator < Draper::Base
 
+        # Returns a human formatted time
+        #
+        # @return [String] The elapsed time formatted
+        def elapsed
+          if model.respond_to? :elapsed_time
+            humanize_time elapsed_time
+          else
+            ""
+          end
+        end
+
         protected
           def pluralize(num, word)
             if num > 1

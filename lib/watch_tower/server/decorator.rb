@@ -7,6 +7,7 @@ module WatchTower
 
       autoload :ApplicationDecorator
       autoload :ProjectDecorator
+      autoload :FileDecorator
     end
   end
 end
