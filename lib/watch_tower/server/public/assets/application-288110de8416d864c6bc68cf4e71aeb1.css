@@ -1,0 +1,86 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ */
+#project .path {
+  float: left;
+  width: 600px; }
+#project .elapsed {
+  float: left; }
+#project .percentage_img_container {
+  width: 310px;
+  float: left; }
+  #project .percentage_img_container .percentage_img {
+    height: 20px; }
+#logo a {
+  color: black;
+  text-decoration: none;
+  float: left;
+  display: block;
+  background: url("WatchTower-6b5d5e2c7d1d4585ca45f2a453170610.jpg") no-repeat;
+  width: 150px;
+  height: 94px; }
+  #logo a:visited, #logo a:hover {
+    text-decoration: none; }
+#logo h1 {
+  float: left;
+  margin-top: 30px;
+  margin-left: 40px; }
+
+.clearfix {
+  clear: both; }
+
+body {
+  background: #f7f7f7;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif; }
+  body #wrapper {
+    width: 960px;
+    margin: 0 auto; }
+    body #wrapper #main {
+      border: 1px solid #cdcdcd;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      padding: 10px;
+      min-height: 200px;
+      background: white; }
+    body #wrapper #footer {
+      width: 960px;
+      text-align: center;
+      background: #d6afaf;
+      color: black;
+      padding: 5px 0;
+      font-size: 12px; }
+      body #wrapper #footer a {
+        color: black;
+        text-decoration: none; }
+        body #wrapper #footer a:visited, body #wrapper #footer a:hover {
+          text-decoration: none; }
+#projects header .name {
+  float: left;
+  width: 200px;
+  font-size: 20px;
+  text-decoration: underline; }
+#projects header .percentage {
+  width: 310px;
+  float: left;
+  font-size: 20px;
+  text-decoration: underline; }
+  #projects header .percentage .percentage_img {
+    height: 20px; }
+#projects header .elapsed {
+  float: left;
+  font-size: 20px;
+  text-decoration: underline; }
+#projects .project .name {
+  float: left;
+  width: 200px; }
+#projects .project .percentage_img_container {
+  width: 310px;
+  float: left; }
+  #projects .project .percentage_img_container .percentage_img {
+    height: 20px; }
+#projects .project .elapsed {
+  float: left; }

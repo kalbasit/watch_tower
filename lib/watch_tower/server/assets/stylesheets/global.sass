@@ -1,13 +1,58 @@
-body
-  background: #CDCDCD
-
-.clearfix
-  clear: both
+$footer_text_color: #000
 
 #logo
   a
     color: #000
     text-decoration: none
+    float: left
+
+    // Background stylesheet
+    display: block
+    // TODO: Very bad bad bad idea to hardcode assets, how can we reference an asset from sass ?
+    background: url('WatchTower-6b5d5e2c7d1d4585ca45f2a453170610.jpg') no-repeat
+    width: 150px
+    height: 94px
 
     &:visited, &:hover
       text-decoration: none
+
+  h1
+    float: left
+    margin-top: 30px
+    margin-left: 40px
+
+.clearfix
+  clear: both
+
+body
+  background: #f7f7f7
+  color: #000
+  font-family: Arial, Helvetica, sans-serif
+
+  #wrapper
+    width: 960px
+    margin: 0 auto
+
+    #main
+      border: 1px solid #cdcdcd
+      -webkit-border-radius: 5px
+      -moz-border-radius: 5px
+      border-radius: 5px
+      padding: 10px
+      min-height: 200px
+      background: #fff
+
+    #footer
+      width: 960px
+      text-align: center
+      background: #D6AFAF
+      color: $footer_text_color
+      padding: 5px 0
+      font-size: 12px
+
+      a
+        color: $footer_text_color
+        text-decoration: none
+
+        &:visited, &:hover
+          text-decoration: none

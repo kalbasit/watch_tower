@@ -15,8 +15,19 @@
     / Script tahs
     %script{:src => asset_path('application.js')}
   %body
-    %header
-      #logo
-        %a{href: "/"}
+    %section#wrapper
+
+      %header
+        #logo
+          %a{href: "/"}
           %h1 Watch Tower
-    = yield
+          .clearfix
+
+      %section#main
+        = yield
+
+      %section#footer
+        WatchTower
+        -
+        %a{href: 'http://www.technogate.fr'}
+          TechnoGate
