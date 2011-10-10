@@ -31,6 +31,12 @@
 .clearfix {
   clear: both; }
 
+a {
+  color: +#b36c6c;
+  text-decoration: none; }
+  a:hover, a:visited {
+    text-decoration: none; }
+
 body {
   background: #f7f7f7;
   color: black;

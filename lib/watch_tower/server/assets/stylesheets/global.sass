@@ -1,4 +1,6 @@
 $footer_text_color: #000
+$footer_bg: #D6AFAF
+$link_color: +darken($footer_bg, 20%)
 
 #logo
   a
@@ -24,6 +26,13 @@ $footer_text_color: #000
 .clearfix
   clear: both
 
+a
+  color: $link_color
+  text-decoration: none
+
+  &:hover, &:visited
+    text-decoration: none
+
 body
   background: #f7f7f7
   color: #000
@@ -45,7 +54,7 @@ body
     #footer
       width: 960px
       text-align: center
-      background: #D6AFAF
+      background: $footer_bg
       color: $footer_text_color
       padding: 5px 0
       font-size: 12px
