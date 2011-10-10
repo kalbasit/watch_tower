@@ -1,12 +1,15 @@
+# Sources
 source "http://rubygems.org"
 
-
-# Specify your gem's dependencies in watch_tower.gemspec
+# Parse watch_tower.gemspec
 gemspec
+
+####
+# For development or testing
+###
 
 # Require rbconfig to figure out the target OS
 require 'rbconfig'
-
 
 platforms :jruby do
   gem 'activerecord-jdbcmysql-adapter'
