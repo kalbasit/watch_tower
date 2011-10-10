@@ -3,7 +3,7 @@ rvm:
   - 1.9.2
   - 1.9.3
   - jruby
-  - rbx-2.0
+  # - rbx-2.0
 env:
   - WATCH_TOWER_ENV=test RBXOPT="${RBXOPT} -X19" JRUBY_OPTS="${JRUBY_OPTS} --1.9" ADAPTERS="sqlite:mysql:postgresql"
 notifications:
