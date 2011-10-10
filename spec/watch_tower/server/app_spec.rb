@@ -3,10 +3,22 @@ require 'spec_helper'
 module Server
   describe App do
     before(:each) do
-      @project = FactoryGirl.create :project
-      @file = FactoryGirl.create :file, project: @project
-      @time_entry = FactoryGirl.create :time_entry, file: @file
-      @duration = FactoryGirl.create :duration, file: @file
+      @projects = {
+        empty: {time_entries:[] },
+        not_empty: {time_entries: []}
+      }
+
+      @projects[:not_empty][:project] = FactoryGirl.create(:project)
+      @projects[:not_empty][:file] = FactoryGirl.create(:file, project: @projects[:not_empty][:project])
+      5.times do
+        @projects[:not_empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:not_empty][:file])
+      end
+      @projects[:not_empty][:duration] = FactoryGirl.create(:duration, file: @projects[:not_empty][:file])
+
+      @projects[:empty][:project] = FactoryGirl.create(:project)
+      @projects[:empty][:file] = FactoryGirl.create(:file, project: @projects[:empty][:project])
+      @projects[:empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:empty][:file])
+      @projects[:empty][:duration] = FactoryGirl.create(:duration, file: @projects[:empty][:file])
     end
 
     describe "#index" do
@@ -62,14 +74,14 @@ module Server
 
       it "should link to the project's page" do
         within 'section#projects .project .name' do
-          page.should have_selector('a', href: "/project/#{@project.id}")
+          page.should have_selector('a', href: "/project/#{@projects[:not_empty][:project].id}")
         end
       end
     end
 
     describe "#project" do
       before(:each) do
-        visit "/project/#{@project.id}"
+        visit "/project/#{@projects[:not_empty][:project].id}"
       end
 
       it "should render the layout" do
@@ -78,7 +90,7 @@ module Server
 
       it "should have the correct title" do
         within :xpath, '//html/head/title' do
-          page.should have_content "Watch Tower - Project - #{@project.name.capitalize}"
+          page.should have_content "Watch Tower - Project - #{@projects[:not_empty][:project].name.capitalize}"
         end
       end
 
@@ -96,7 +108,7 @@ module Server
 
       it "should have the project's name in an h1" do
         within 'article#project header > h1.project_name' do
-          page.should have_content @project.name
+          page.should have_content @projects[:not_empty][:project].name
         end
       end
 
@@ -108,7 +120,7 @@ module Server
 
       it "should have the project's path in an h2" do
         within 'article#project header > h2.project_path' do
-          page.should have_content @project.path
+          page.should have_content @projects[:not_empty][:project].path
         end
       end
 
@@ -126,7 +138,7 @@ module Server
 
       it "should display the file's path" do
         within 'article#project section#files article.file div.path' do
-          page.should have_content @file.path
+          page.should have_content @projects[:not_empty][:file].path
         end
       end
 
@@ -138,7 +150,7 @@ module Server
 
       it "should display the file's elaped time" do
         within 'article#project section#files article.file div.elapsed' do
-          page.should have_content @file.elapsed_time.to_s
+          page.should have_content @projects[:not_empty][:file].elapsed_time.to_s
         end
       end
 
