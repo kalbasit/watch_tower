@@ -27,4 +27,7 @@
     <note priority="medium" time="1318109702">
         Add tracking by git branch, needs a branches table that belongs to a project and has many time_entries
     </note>
+    <note priority="medium" time="1318258373">
+        Maybe use a Rails engine instead of Sinatra ?
+    </note>
 </todo>
