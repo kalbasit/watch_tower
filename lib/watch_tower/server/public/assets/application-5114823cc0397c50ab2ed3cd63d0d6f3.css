@@ -3,11 +3,27 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  */
+#project .path {
+  float: left;
+  width: 600px; }
+#project .elapsed {
+  float: left; }
+#project .percentage_img_container {
+  width: 310px;
+  float: left; }
+  #project .percentage_img_container .percentage_img {
+    height: 20px; }
 body {
   background: #cdcdcd; }
 
 .clearfix {
   clear: both; }
+
+#logo a {
+  color: black;
+  text-decoration: none; }
+  #logo a:visited, #logo a:hover {
+    text-decoration: none; }
 #projects .project .name {
   float: left;
   width: 200px; }

@@ -16,6 +16,7 @@ module WatchTower
 
       # Routes
       paths :root => '/'
+      paths :project => '/project/:id'
 
       # The index action
       get :root do
@@ -23,6 +24,13 @@ module WatchTower
         @projects = ProjectDecorator.decorate(Project.all)
 
         haml :index
+      end
+
+      get :project do
+        @project = ProjectDecorator.find(params[:id])
+        @title = "Project - #{@project.name.capitalize}"
+
+        haml :project
       end
     end
   end

@@ -1,5 +1,6 @@
 %article.project[project]
-  .name= project.name
+  .name
+    = "<a href='#{path_to(:project).with(project.id)}'>#{project.name}</a>"
   .percentage_img_container
     .percentage
       -# TODO: Move this to the presenter after having resolved the presenter
