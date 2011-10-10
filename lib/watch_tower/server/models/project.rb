@@ -3,6 +3,7 @@ module WatchTower
     class Project < ::ActiveRecord::Base
       # Scopes
       default_scope order('projects.elapsed_time DESC')
+      scope :worked_on, -> { where('projects.elapsed_time > ?', 0) }
 
       # Validations
       validates :name, presence: true

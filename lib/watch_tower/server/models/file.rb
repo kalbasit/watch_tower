@@ -3,6 +3,7 @@ module WatchTower
     class File < ::ActiveRecord::Base
       # Scopes
       default_scope order('files.elapsed_time DESC')
+      scope :worked_on, -> { where('files.elapsed_time > ?', 0) }
 
       # Validations
       validates :project_id, presence: true

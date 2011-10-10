@@ -173,6 +173,22 @@ module Server
 
         File.all.first.should == @files[1]
       end
+
+      it "should have a scope worked_on" do
+        File.should respond_to(:worked_on)
+      end
+
+      it "should have a scope worked_on that returns all projects that do not have empty time_entries" do
+        5.times do
+          FactoryGirl.create :time_entry, file: @files[0]
+        end
+
+        5.times do
+          FactoryGirl.create :time_entry, file: @files[1]
+        end
+
+        File.worked_on.should_not include(@files.last)
+      end
     end
   end
 end

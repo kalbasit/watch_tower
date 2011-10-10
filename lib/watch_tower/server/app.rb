@@ -21,7 +21,7 @@ module WatchTower
       # The index action
       get :root do
         @title = "Projects"
-        @projects = ProjectDecorator.decorate(Project.all)
+        @projects = ProjectDecorator.decorate(Project.worked_on)
 
         haml :index
       end

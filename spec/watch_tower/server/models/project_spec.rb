@@ -122,25 +122,43 @@ module Server
       end
 
       it "should have the default scope to" do
+        file = @projects.first.files.first
         10.times do |n|
-          file = @projects.first.files.first
           Timecop.freeze(Time.now + n * 2)
           FactoryGirl.create :time_entry, file: file, mtime: Time.now
         end
 
+        file = @projects[1].files.first
         10.times do |n|
-          file = @projects[1].files.first
           Timecop.freeze(Time.now + n * 10)
           FactoryGirl.create :time_entry, file: file, mtime: Time.now
         end
 
+        file = @projects.last.files.first
         10.times do |n|
-          file = @projects.last.files.first
           Timecop.freeze(Time.now + n * 5)
           FactoryGirl.create :time_entry, file: file, mtime: Time.now
         end
 
         Project.all.first.should == @projects[1]
+      end
+
+      it "should have a scope worked_on" do
+        Project.should respond_to(:worked_on)
+      end
+
+      it "should have a scope worked_on that returns all projects that do not have empty time_entries" do
+        file = @projects[0].files.first
+        5.times do
+          FactoryGirl.create :time_entry, file: file
+        end
+
+        file = @projects[1].files.first
+        5.times do
+          FactoryGirl.create :time_entry, file: file
+        end
+
+        Project.worked_on.should_not include(@projects.last)
       end
     end
   end

@@ -48,9 +48,21 @@ module Server
         end
       end
 
-      it "should display the name of each project" do
+      it "should display have a section for the project's name" do
         within 'section#projects' do
           page.should have_selector '.project > .name'
+        end
+      end
+
+      it "should display the name of each project" do
+        within 'section#projects .project > .name' do
+          page.should have_content @projects[:not_empty][:project].name
+        end
+      end
+
+      it "should not show the project with an empty time entries" do
+        within 'section#projects' do
+          page.should_not have_content @projects[:empty][:project].name
         end
       end
 
