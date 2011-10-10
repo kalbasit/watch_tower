@@ -142,8 +142,8 @@ module Server
         end
 
         @file.reload
-        @file.durations.first.date.should == current_day
-        @file.durations.last.date.should == next_day
+        @file.durations.order('id ASC').first.date.should == current_day
+        @file.durations.order('id ASC').last.date.should == next_day
       end
     end
 
