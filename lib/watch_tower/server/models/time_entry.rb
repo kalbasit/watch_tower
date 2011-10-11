@@ -27,6 +27,8 @@ module WatchTower
           # Gather information about this and last time entry for this file
           this_time_entry = self
           last_time_entry = file.time_entries.where('id < ?', this_time_entry.id).order('id DESC').first
+          # Check the hash first
+          return if this_time_entry.file_hash == last_time_entry.try(:file_hash)
           # Parse the date of the mtime
           this_time_entry_date = self.mtime.to_date
           last_time_entry_date = last_time_entry.mtime.to_date rescue nil

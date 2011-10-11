@@ -157,6 +157,33 @@ module Server
         @file.durations.order('id ASC').first.date.should == current_day
         @file.durations.order('id ASC').last.date.should == next_day
       end
+
+      it "should not add elapsed time to the count if the file's has has not changed" do
+        # Freeze the time
+        Timecop.freeze(Time.now)
+        # Create the first time entry
+        t1 = FactoryGirl.create :time_entry, file: @file, file_hash: @file.file_hash
+        # Go ahead 10 minutes
+        Timecop.freeze(Time.now + 10.minutes)
+        # Create the second time entry with the same file and hash
+        FactoryGirl.create :time_entry, file: @file, file_hash: @file.file_hash
+
+        @file.elapsed_time.should == 0
+      end
+
+      it "should update the hash of the file with the last time entry" do
+        # Freeze the time
+        Timecop.freeze(Time.now)
+        # Create the first time entry
+        t1 = FactoryGirl.create :time_entry, file: @file, file_hash: @file.file_hash
+        # Go ahead 10 minutes
+        Timecop.freeze(Time.now + 10.minutes)
+        # Create the second time entry with the same file and hash
+        FactoryGirl.create :time_entry, file: @file, file_hash: @file.file_hash
+
+        @file.file_hash.should == t1.file_hash
+      end
+
     end
 
     describe "scopes" do
