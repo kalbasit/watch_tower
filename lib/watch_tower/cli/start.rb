@@ -90,6 +90,11 @@ module WatchTower
                   sleep(1)
                 end
 
+                # Wait until the database has migrated
+                until Server::Database.is_migrated? do
+                  sleep(1)
+                end
+
                 # Start the eye now.
                 start_eye
               end

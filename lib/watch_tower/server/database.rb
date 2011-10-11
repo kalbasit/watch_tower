@@ -45,6 +45,11 @@ module WatchTower
         ActiveRecord::Base.connected?
       end
 
+      def is_migrated?
+        ActiveRecord::Migrator.current_version ==
+          ActiveRecord::Migrator.migrations(MIGRATIONS_PATH).last.version
+      end
+
       protected
         # Connect to the database
         def connect!
@@ -65,6 +70,7 @@ module WatchTower
 
         # Migrate the database
         def migrate!
+          return if is_migrated?
           LOG.debug("#{__FILE__}:#{__LINE__}: Migrating the database.")
           # Connect to the database
           connect!
