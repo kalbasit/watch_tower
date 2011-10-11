@@ -29,6 +29,8 @@ module WatchTower
           last_time_entry = file.time_entries.where('id < ?', this_time_entry.id).order('id DESC').first
           # Check the hash first
           return if this_time_entry.file_hash == last_time_entry.try(:file_hash)
+          # Update the file's hash
+          file.file_hash = this_time_entry.file_hash
           # Parse the date of the mtime
           this_time_entry_date = self.mtime.to_date
           last_time_entry_date = last_time_entry.mtime.to_date rescue nil
@@ -39,16 +41,18 @@ module WatchTower
             unless time_entry_elapsed > pause_time
               # Update the file elapsed time
               file.elapsed_time += time_entry_elapsed
-              file.save
               # Update the project's elapsed time
               file.project.elapsed_time += time_entry_elapsed
-              file.project.save
               # Add this time to the durations table
               d = file.durations.find_or_create_by_date(this_time_entry_date)
               d.duration += time_entry_elapsed
               d.save
             end
           end
+
+          # Save the file and project
+          file.save
+          file.project.save
         end
 
         # Get the

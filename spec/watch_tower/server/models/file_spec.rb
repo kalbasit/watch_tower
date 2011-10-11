@@ -175,11 +175,11 @@ module Server
         # Freeze the time
         Timecop.freeze(Time.now)
         # Create the first time entry
-        t1 = FactoryGirl.create :time_entry, file: @file, file_hash: @file.file_hash
+        t1 = FactoryGirl.create :time_entry, file: @file
         # Go ahead 10 minutes
         Timecop.freeze(Time.now + 10.minutes)
         # Create the second time entry with the same file and hash
-        FactoryGirl.create :time_entry, file: @file, file_hash: @file.file_hash
+        FactoryGirl.create :time_entry, file: @file, file_hash: t1.file_hash
 
         @file.file_hash.should == t1.file_hash
       end
