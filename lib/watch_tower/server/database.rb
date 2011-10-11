@@ -50,8 +50,6 @@ module WatchTower
         def connect!
           return if is_connected?
           LOG.debug("#{__FILE__}:#{__LINE__}: Connecting to the database.")
-          # Make ActiveRecord Thread-safe
-          # ActiveRecord::Base.allow_concurrency = true
           # Create a connection
           ActiveRecord::Base.establish_connection(db_config)
 
