@@ -14,6 +14,11 @@ module Server
         t.should_not be_valid
       end
 
+      it "should require a hash" do
+        m = FactoryGirl.build :time_entry, file_hash: nil
+        m.should_not be_valid
+      end
+
       it "should be valid if attributes requirements are met" do
         t = FactoryGirl.build :time_entry
         t.should be_valid

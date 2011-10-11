@@ -28,6 +28,11 @@ describe Eye do
     @file_stat = mock
     @file_stat.stubs(:mtime).returns(@mtime)
     ::File.stubs(:stat).returns(@file_stat)
+
+    # Stub the file_hash
+    @file_hash = mock
+    @file_hash.stubs(:hexdigest).returns('b1843f2aeea08c34a4a0b978b117256cd4615a6c')
+    Digest::SHA1.stubs(:file).with(@file_path).returns(@file_hash)
   end
 
   describe "#start totally mocked" do
@@ -56,6 +61,12 @@ describe Eye do
 
     it "should call current_paths on the editor to determine the file path" do
       @editor.expects(:current_paths).returns([@file_path]).once
+
+      subject.start
+    end
+
+    it "should get the file's hash from Digest::SHA1" do
+      Digest::SHA1.expects(:file).with(@file_path).returns(@file_hash).once
 
       subject.start
     end
