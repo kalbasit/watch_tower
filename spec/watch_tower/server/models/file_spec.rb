@@ -21,9 +21,9 @@ module Server
         m.should_not be_valid
       end
 
-      it "should require a hash" do
+      it "should not require a hash" do
         m = FactoryGirl.build :file, file_hash: nil
-        m.should_not be_valid
+        m.should be_valid
       end
 
       it "should have a unique path for each project" do

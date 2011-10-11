@@ -9,7 +9,6 @@ module WatchTower
       validates :project_id, presence: true
       validates :path, presence: true
       validates_uniqueness_of :path, sope: :project_id
-      validates :file_hash, presence: true
 
       # Associations
       belongs_to :project, counter_cache: true
