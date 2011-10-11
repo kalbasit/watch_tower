@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["wael.nasreddine@gmail.com"]
   s.homepage    = ""
   s.summary     = "Unobtrusive time-tracking for TextMate."
-  s.description = "TimeTap helps you track the time you spend coding on each project while in TextMate."
+  s.description = "WatchTower helps you track the time you spend on each project."
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
