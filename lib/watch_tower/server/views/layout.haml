@@ -1,0 +1,32 @@
+!!! 5
+%html
+  %head
+    / Title
+    %title= "Watch Tower - #{@title}"
+
+    / Meta tags
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+
+    / Link tags
+    %link{:href => asset_path('application.css'), :rel => "stylesheet"}/
+
+    / Script tahs
+    %script{:src => asset_path('application.js')}
+  %body
+    %section#wrapper
+
+      %header
+        #logo
+          %a{href: "/"}
+            %h1 Watch Tower
+
+      %section#main
+        = yield
+
+      %section#footer
+        WatchTower
+        -
+        %a{href: 'http://www.technogate.fr'}
+          TechnoGate

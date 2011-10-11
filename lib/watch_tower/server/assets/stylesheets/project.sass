@@ -1,0 +1,59 @@
+=project_name
+  float: left
+  width: 200px
+
+=percentage
+  width: 310px
+  float: left
+  .percentage_img
+    height: 20px
+
+=elapsed
+  float: left
+
+=header_text
+  font-size: 20px
+  text-decoration: underline
+
+#projects
+  header
+    .name
+      +project_name
+      +header_text
+
+    .percentage
+      +percentage
+      +header_text
+    .elapsed
+      +elapsed
+      +header_text
+
+  .project
+    .name
+      +project_name
+    .percentage_img_container
+      +percentage
+    .elapsed
+      +elapsed
+
+#project
+  #files
+    header
+      .path
+        +header_text
+        float: left
+        width: 600px
+      .elapsed
+        +header_text
+        float: left
+
+  .path
+    float: left
+    width: 600px
+  .elapsed
+    float: left
+  .percentage_img_container
+    width: 310px
+    float: left
+    .percentage_img
+      height: 20px

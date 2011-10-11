@@ -1,6 +1,6 @@
 module WatchTower
   module Editor
-    class BasePs
+    module BasePs
     end
   end
 end

@@ -1,0 +1,17 @@
+- Figure out how to load assets from gems and remove the bundled jQuery files.
+  (added Mon Oct 10 16:13:36 2011, incomplete, priority high)
+
+- The Config module need some tests.
+  (added Thu Oct  6 12:02:34 2011, incomplete, priority medium)
+
+- Convert the Editor module to be Enumerable for easier access to the list of editors
+  (added Fri Oct  7 11:47:53 2011, incomplete, priority medium)
+
+- maybe use sinatra-simple-navigation gem
+  (added Fri Oct  7 16:07:44 2011, incomplete, priority medium)
+
+- Add tracking by git branch, needs a branches table that belongs to a project and has many time_entries
+  (added Sat Oct  8 23:35:02 2011, incomplete, priority medium)
+
+- Maybe use a Rails engine instead of Sinatra ?
+  (added Mon Oct 10 16:52:53 2011, incomplete, priority medium)

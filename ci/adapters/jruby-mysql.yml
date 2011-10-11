@@ -1,0 +1,8 @@
+  database:
+    test:
+      adapter: jdbcmysql
+      encoding: utf8
+      reconnect: false
+      database: watch_tower_test
+      pool: 5
+      username: root

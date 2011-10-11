@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>fr.technogate.WatchTower</string>
+
+  <key>Program</key>
+  <string>watchtower</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>start</string>
+    <string>--bootloader</string>
+  </array>
+
+  <key>OnDemand</key>
+  <false/>
+
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>

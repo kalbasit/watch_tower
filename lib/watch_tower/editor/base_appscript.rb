@@ -11,18 +11,19 @@ module WatchTower
         def self.included(base)
           base.class_eval <<-END, __FILE__, __LINE__ + 1
             # Include AppScript
-            extend ::Appscript
+            include ::Appscript
 
             def is_running?
-              @@app.is_running?
+              editor.is_running? if editor
             end
 
             def current_path
-              if is_running?
-                # Get the document
-                document = @@app.document.get
+              current_paths.try(:first)
+            end
 
-                document.first.path.get rescue nil
+            def current_paths
+              if is_running?
+                editor.document.get.collect(&:path).collect(&:get)
               end
             end
           END

@@ -2,3 +2,9 @@
 .bundle
 Gemfile.lock
 pkg/*
+.rbx
+.rvmrc
+
+# Tranmuter output
+README.pdf
+README.html
