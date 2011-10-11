@@ -33,7 +33,7 @@ module WatchTower
               sprockets.append_path(::File.join(SERVER_PATH, 'assets', 'javascripts'))
               sprockets.append_path(::File.join(SERVER_PATH, 'assets', 'images'))
 
-              sprockets.context_class.send :include, Helpers::Asset
+              sprockets.context_class.send :extend, Helpers::Asset
             end
           END
         end

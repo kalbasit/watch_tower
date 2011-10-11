@@ -23,11 +23,11 @@ Gem::Specification.new do |s|
   ####
 
   # Active Support
-  s.add_dependency 'activesupport', '=3.1.0' # Specific version because of sprockets specific version
+  s.add_dependency 'activesupport', '~>3.1.1'
   s.add_dependency 'i18n', '~>0.6.0'
 
   # Active Record
-  s.add_dependency 'activerecord', '=3.1.0' # Specific version because of sprockets specific version
+  s.add_dependency 'activerecord', '~>3.1.1'
 
   # Sinatra
   s.add_dependency 'sinatra', '~> 1.3.0'
@@ -44,9 +44,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'coffee-script', '~>2.2.0'
   s.add_dependency 'uglifier', '~>1.0.3'
   s.add_dependency 'sass', '~>3.1.10'
-  # .path not working with 2.0.2
-  # TODO: find out why and update it
-  s.add_dependency 'sprockets', '=2.0.0'
+  s.add_dependency 'sprockets', '~>2.0.2'
 
   ####
   # Development dependencies
