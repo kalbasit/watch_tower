@@ -6,11 +6,13 @@ FactoryGirl.define do
 
   factory :file, class: Server::File do
     project
+    file_hash
     path
   end
 
   factory :time_entry, class: Server::TimeEntry do
     file
+    file_hash
     mtime
   end
 
@@ -34,5 +36,10 @@ FactoryGirl.define do
 
   sequence :date do |n|
     Time.now + 2 * n
+  end
+
+  sequence :file_hash do |n|
+    require 'digest/sha1'
+    Digest::SHA1.hexdigest('WatchTower' * n)
   end
 end

@@ -9,6 +9,7 @@ module WatchTower
       validates :file_id, presence: true
       validates :mtime, presence: true
       validates_uniqueness_of :mtime, scope: :file_id
+      validates :file_hash, presence: true
 
 
       # Associations
