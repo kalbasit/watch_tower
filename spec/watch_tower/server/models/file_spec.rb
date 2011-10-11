@@ -230,4 +230,55 @@ module Server
       end
     end
   end
+
+  describe "Methods" do
+    before(:each) do
+      @project = FactoryGirl.create :project
+      @files = []
+      2.times do
+        @files << FactoryGirl.create(:file, project: @project)
+        2.times do
+          FactoryGirl.create :time_entry, file: @files.last
+        end
+      end
+    end
+
+    describe "one project" do
+      describe "#sum_elapsed_time" do
+        it "should return the sum of all elapsed times of all the files for the same project" do
+          @project.files.sum_elapsed_time.should == @files.inject(0) {|s, f| s += f.elapsed_time }
+        end
+      end
+
+      describe "#percent" do
+        it "should return 50" do
+          @project.files.first.percent.should == 50
+        end
+      end
+    end
+
+    describe "two projects" do
+      before(:each) do
+        @other_files = []
+        2.times do
+          @other_files << FactoryGirl.create(:file)
+          2.times do
+            FactoryGirl.create :time_entry, file: @other_files.last
+          end
+        end
+
+        describe "#sum_elapsed_time" do
+          it "should return the sum of all elapsed times of all the files for the same project" do
+            @project.files.sum_elapsed_time.should == @files.inject(0) {|s, f| s += f.elapsed_time }
+          end
+        end
+
+        describe "#percent" do
+          it "should return 50" do
+            @project.files.first.percent.should == 50
+          end
+        end
+      end
+    end
+  end
 end
