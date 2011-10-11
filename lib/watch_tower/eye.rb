@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 module WatchTower
   module Eye
     extend self
@@ -22,6 +24,8 @@ module WatchTower
             files_paths = editor.current_paths
             files_paths.each do |file_path|
               begin
+                # Get the file_hash of the file
+                file_hash = Digest::SHA1.file(file_path).hexdigest
                 # Create a project from the file_path
                 project = Project.new_from_path(file_path)
               rescue PathNotUnderCodePath
@@ -38,10 +42,9 @@ module WatchTower
 
                 # Create (or fetch) a file
                 file_model = project_model.files.find_or_create_by_path(file_path)
-
                 begin
                   # Create a time entry
-                  file_model.time_entries.create!(mtime: File.stat(file_path).mtime)
+                  file_model.time_entries.create!(mtime: File.stat(file_path).mtime, file_hash: file_hash)
                 rescue ActiveRecord::RecordInvalid => e
                   # This should happen if the mtime is already present
                 end
