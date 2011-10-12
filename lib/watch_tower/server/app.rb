@@ -19,7 +19,13 @@ module WatchTower
       # The index action
       get :root do
         @title = "Projects"
-        @projects = Project.worked_on
+        if params[:from_date] && params[:to_date]
+          @projects = Project.
+            date_range(params[:from_date], params[:to_date]).
+            worked_on
+        else
+          @projects = Project.worked_on
+        end
 
         haml :index, layout: (request.xhr? ? false : :layout)
       end
