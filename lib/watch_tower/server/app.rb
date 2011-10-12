@@ -7,9 +7,7 @@ module WatchTower
       # Helper
       include Helpers::ImprovedPartials
       include Helpers::Asset
-
-      # Include Decorator
-      include Decorator
+      include Helpers::Presenters
 
       # Configurations
       include Configurations::Asset
@@ -21,13 +19,13 @@ module WatchTower
       # The index action
       get :root do
         @title = "Projects"
-        @projects = ProjectDecorator.decorate(Project.worked_on)
+        @projects = Project.worked_on
 
         haml :index
       end
 
       get :project do
-        @project = ProjectDecorator.find(params[:id])
+        @project = Project.find(params[:id])
         @title = "Project - #{@project.name.camelcase}"
 
         haml :project

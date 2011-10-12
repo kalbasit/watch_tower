@@ -1,7 +1,44 @@
 module WatchTower
   module Server
-    module Decorator
-      class ApplicationDecorator < Draper::Base
+    module Presenters
+      class ApplicationPresenter
+
+        attr_reader :model, :template
+
+        # Presents a model
+        #
+        # @param [Symbol] name
+        def self.presents(name)
+          define_method name do
+            @model
+          end
+        end
+
+        # Initialise the presenter
+        #
+        # @param [ActiveRecord::Base] Model
+        # @param [Object] Template
+        def initialize(model, template)
+          @model = model
+          @template = template
+        end
+
+        # Overwrite Kernel#method_missing to invoke either the model or the
+        # template's method if present, if not Kernel#method_missing will be
+        # called
+        #
+        # @param [Symbol] method: The method name
+        # @param [Array] arguments
+        # @param [Block]
+        def method_missing(method, *args, &block)
+          if model.respond_to?(method)
+            model.send(method, *args, &block)
+          elsif template.respond_to?(method)
+            template.send(method, *args, &block)
+          else
+            super
+          end
+        end
 
         # Returns a human formatted time
         #
@@ -58,33 +95,6 @@ module WatchTower
                 end
             END
           end
-
-        # Lazy Helpers
-        #   PRO: Call Rails helpers without the h. proxy
-        #        ex: number_to_currency(model.price)
-        #   CON: Add a bazillion methods into your decorator's namespace
-        #        and probably sacrifice performance/memory
-        #
-        #   Enable them by uncommenting this line:
-        #   lazy_helpers
-
-        # Shared Decorations
-        #   Consider defining shared methods common to all your models.
-        #
-        #   Example: standardize the formatting of timestamps
-        #
-        #   def formatted_timestamp(time)
-        #     h.content_tag :span, time.strftime("%a %m/%d/%y"),
-        #                   :class => 'timestamp'
-        #   end
-        #
-        #   def created_at
-        #     formatted_timestamp(model.created_at)
-        #   end
-        #
-        #   def updated_at
-        #     formatted_timestamp(model.updated_at)
-        #   end
       end
     end
   end
