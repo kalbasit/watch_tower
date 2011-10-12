@@ -19,9 +19,8 @@ module WatchTower
       # Enable sessions
       enable :sessions
 
-      # The index action
-      get :root do
-        @title = "Projects"
+      # Before filter
+      before do
         # Parse the from/to date from params and add it to the session
         if params[:from_date] && params[:to_date]
           session[:date_filtering] = {
@@ -29,6 +28,11 @@ module WatchTower
             to_date: params[:to_date]
           }
         end
+      end
+
+      # The index action
+      get :root do
+        @title = "Projects"
         # Either use date filtering or not
         if session.try(:[], :date_filtering).try(:[], :from_date) && session.try(:[], :date_filtering).try(:[], :to_date)
           @projects = Project.
