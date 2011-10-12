@@ -23,7 +23,9 @@
             %h1 Watch Tower
 
       %section#main
-        = yield
+        %aside#date
+          %input{type: 'text'}
+        .page= yield
 
       %section#footer
         WatchTower
