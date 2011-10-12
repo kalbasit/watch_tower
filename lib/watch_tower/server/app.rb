@@ -21,14 +21,14 @@ module WatchTower
         @title = "Projects"
         @projects = Project.worked_on
 
-        haml :index
+        haml :index, layout: (request.xhr? ? false : :layout)
       end
 
       get :project do
         @project = Project.find(params[:id])
         @title = "Project - #{@project.name.camelcase}"
 
-        haml :project
+        haml :project, layout: (request.xhr? ? false : :layout)
       end
     end
   end
