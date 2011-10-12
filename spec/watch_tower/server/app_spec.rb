@@ -27,6 +27,7 @@ module Server
 
     describe "#layout" do
       it "should show a datepicker" do
+        visit '/'
         within '#main' do
           page.should have_selector 'aside#date'
           page.should have_selector 'aside#date input'
