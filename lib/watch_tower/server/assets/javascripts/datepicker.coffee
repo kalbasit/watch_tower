@@ -1,6 +1,7 @@
 date_filtering =
   handleResponse: (response, textStatus, jqXHR) ->
     ($ '.page').html(response)
+
   handleDatePicker: (dates) ->
     options = { from_date:  $.datepick.formatDate(dates[0]), to_date:  $.datepick.formatDate(dates[1]) }
     url = window.location.pathname
