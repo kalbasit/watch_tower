@@ -5,10 +5,6 @@
         = presenter.name.camelcase
     .percentage_img_container
       .percentage
-        -# TODO: Move this to the presenter after having resolved the presenter
-        -#       issues, in Draper I can't access helpers for some reason
-        - max_elapsed = ::WatchTower::Server::Project.order('elapsed_time DESC').first.elapsed_time
-        - percentage = (project.elapsed_time * 100 / max_elapsed).to_i rescue 100
-        %img.percentage_img{src: asset_path('percentage.png'), 'data-width' => percentage}/
+        %img.percentage_img{src: asset_path('percentage.png'), alt: "#{presenter.percent}% of total time", 'data-width' => presenter.percent}/
     .elapsed= presenter.elapsed
     .clearfix

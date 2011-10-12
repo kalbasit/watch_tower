@@ -8,10 +8,6 @@ module Server
       it { should respond_to :files_count }
     end
 
-    describe "Methods" do
-      it { should respond_to :elapsed_time }
-    end
-
     describe "Validations" do
       it { should_not be_valid }
 
@@ -159,6 +155,51 @@ module Server
         end
 
         Project.worked_on.should_not include(@projects.last)
+      end
+    end
+
+    describe "Methods" do
+      before(:each) do
+        @projects = []
+        2.times do
+          @projects << FactoryGirl.create(:project)
+        end
+
+        @projects.each do |p|
+          2.times do
+            f = FactoryGirl.create(:file, project: p)
+            2.times do
+              FactoryGirl.create :time_entry, file: f
+            end
+          end
+        end
+      end
+
+      describe "#elapsed_time" do
+        it { should respond_to :elapsed_time }
+
+        it "should have the right elapsed_time" do
+          @projects.first.elapsed_time.should == 4
+        end
+      end
+
+
+      describe "#sum_elapsed_time" do
+        it "should respond_to sum_elapsed_time" do
+          Project.should respond_to(:sum_elapsed_time)
+        end
+
+        it "should return the sum of all elapsed times of all projects" do
+          Project.sum_elapsed_time.should == @projects.inject(0) {|s, p| s += p.elapsed_time }
+        end
+      end
+
+      describe "#percent" do
+        it { should respond_to :percent }
+
+        it "should return 50" do
+          @projects.first.percent.should == 50
+        end
       end
     end
   end
