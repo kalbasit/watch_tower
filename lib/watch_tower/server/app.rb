@@ -23,9 +23,21 @@ module WatchTower
       before do
         # Parse the from/to date from params and add it to the session
         if params[:from_date] && params[:to_date]
+          if params[:from_date].present? && params[:to_date].present?
+            session[:date_filtering] = {
+              from_date: params[:from_date],
+              to_date: params[:to_date]
+            }
+          else
+            session[:date_filtering] = nil
+          end
+        end
+
+        # Make sure we have a default date filtering
+        unless session.try(:[], :date_filtering).try(:[], :from_date) && session.try(:[], :date_filtering).try(:[], :to_date)
           session[:date_filtering] = {
-            from_date: params[:from_date],
-            to_date: params[:to_date]
+            from_date: Time.now.to_date.beginning_of_month.strftime('%m/%d/%Y'),
+            to_date: Time.now.to_date.strftime('%m/%d/%Y')
           }
         end
       end
