@@ -42,20 +42,23 @@ module Server
         @project.reload.files_count.should == 10
       end
 
-      it "should have time_entries through files" # do
-       #        file1 = FactoryGirl.create :file, project: @project
-       #        file2 = FactoryGirl.create :file, project: @project
-       #
-       #        10.times do
-       #          FactoryGirl.create :time_entry, file: file1
-       #        end
-       #
-       #        10.times do
-       #          FactoryGirl.create :time_entry, file: file2
-       #        end
-       #
-       #        @project.reload.time_entries.size.should == 20
-       #      end
+      it "should have many time entries through files" do
+        f = FactoryGirl.create :file, project: @project
+        t = FactoryGirl.create :time_entry, file: f
+
+        @project.reload.time_entries.should include(t)
+      end
+
+      it "should have many durations through files" do
+        f = FactoryGirl.create :file, project: @project
+
+        2.times do
+          FactoryGirl.create :time_entry, file: f
+        end
+
+        @project.reload.durations.should_not be_empty
+        @project.reload.durations.should include(Duration.first)
+      end
     end
 
     describe "TimeEntries count" do

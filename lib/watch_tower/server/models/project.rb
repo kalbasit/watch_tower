@@ -12,6 +12,7 @@ module WatchTower
       # Associations
       has_many :files, dependent: :destroy
       has_many :time_entries, through: :files
+      has_many :durations, through: :files
 
       # Return the percent of this file
       def percent
