@@ -34,9 +34,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'sinatra-snap', '~>0.3.2'
   s.add_dependency 'haml', '~>3.1.3'
 
-  # Decorators
-  s.add_dependency 'draper', '~>0.8.0'
-
   # Git
   s.add_dependency 'git', '~>1.2.5'
 
@@ -49,10 +46,15 @@ Gem::Specification.new do |s|
   ####
   # Development dependencies
   ####
+
+  # Guard
   s.add_development_dependency 'guard', '~>0.8.4'
   s.add_development_dependency 'guard-bundler', '~>0.1.3'
   s.add_development_dependency 'guard-rspec', '~>0.4.5'
   s.add_development_dependency 'guard-sprockets2', '~>0.0.5'
+
+  # Documentation
+  s.add_development_dependency 'yard', '~>0.7.2'
 
   ####
   # Development / Test dependencies

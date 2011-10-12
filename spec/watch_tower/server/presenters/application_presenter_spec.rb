@@ -1,21 +1,18 @@
 require 'spec_helper'
 
 module Server
-  module Decorator
-    describe ProjectDecorator do
-      before(:each) do
-        @project = FactoryGirl.create :project
-      end
+  module Presenters
+    describe ApplicationPresenter do
 
-      subject { ProjectDecorator.find(@project.id) }
+      describe "Instance Methods" do
+        before(:each) do
+          @model = mock
+          @model.stubs(:id).returns(1)
+          @model.stubs(:elapsed_time).returns(1234)
+        end
 
-      it "should return a formatted elapsed time" do
-        time = 1.day + 2.hours + 3.minutes + 34.seconds
-        subject.stubs(:elapsed_time).returns(time)
-        subject.elapsed.should == '1 day, 2 hours, 3 minutes and 34 seconds'
-      end
+        subject { ApplicationPresenter.new(@model, nil) }
 
-      describe "Application Decorator" do
         describe "#humanize_time" do
           it "should return 1 second" do
             subject.send(:humanize_time, 1).should == '1 second'
@@ -52,6 +49,20 @@ module Server
           it "should return 1 day, 2 hours, 3 minutes and 34 seconds" do
             time = 1.day + 2.hours + 3.minutes + 34.seconds
             subject.send(:humanize_time, time).should == '1 day, 2 hours, 3 minutes and 34 seconds'
+          end
+        end
+      end
+
+      describe "Class Methods" do
+        subject { ApplicationPresenter }
+
+        describe "#presents" do
+          it { should respond_to :presents }
+
+          it "should create a method the same name as the argument passed to presents" do
+            Class.new(subject) do
+              presents :foo
+            end.new(@project, nil).should respond_to :foo
           end
         end
       end

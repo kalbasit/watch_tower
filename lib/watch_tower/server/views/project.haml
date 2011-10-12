@@ -1,12 +1,13 @@
-%article#project
-  %header
-    %h1.project_name= @project.name.camelcase
-    %h2.project_path= @project.path
-  %section#files
+- present @project do |presenter|
+  %article#project
     %header
-      .path
-        File path
-      .elapsed
-        Total Time
-      .clearfix
-    = partial('file', collection: FileDecorator.decorate(@project.files.worked_on))
+      %h1.project_name= presenter.name.camelcase
+      %h2.project_path= presenter.path
+    %section#files
+      %header
+        .path
+          File path
+        .elapsed
+          Total Time
+        .clearfix
+      = partial('file', collection: presenter.files.worked_on)
