@@ -44,7 +44,10 @@ module WatchTower
                 file_model = project_model.files.find_or_create_by_path(file_path)
                 begin
                   # Create a time entry
-                  file_model.time_entries.create!(mtime: File.stat(file_path).mtime, file_hash: file_hash, editor: editor.name)
+                  file_model.time_entries.create! mtime: File.stat(file_path).mtime,
+                    file_hash: file_hash,
+                    editor_name: editor.name,
+                    editor_version: editor.version
                 rescue ActiveRecord::RecordInvalid => e
                   # This should happen if the mtime is already present
                 end

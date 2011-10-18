@@ -24,6 +24,13 @@ module WatchTower
               editor.try(:name).try(:get)
             end
 
+            # Returns the version of the editor
+            #
+            # Child class should implement this method
+            def version
+              editor.try(:version).try(:get)
+            end
+
             def current_path
               current_paths.try(:first)
             end

@@ -16,6 +16,7 @@ describe Eye do
     @editor.stubs(:is_running?).returns(true)
     @editor.stubs(:current_paths).returns([@file_path])
     @editor.stubs(:name).returns("Textmate")
+    @editor.stubs(:version).returns("1.5.10")
     Editor.stubs(:editors).returns([@editor])
 
     # Mock the project
@@ -103,6 +104,12 @@ describe Eye do
 
     it "should ask the editor for the name" do
       @editor.expects(:name).returns("Textmate").once
+
+      subject.start
+    end
+
+    it "should ask the editor for the version" do
+      @editor.expects(:version).returns("1.5.10").once
 
       subject.start
     end

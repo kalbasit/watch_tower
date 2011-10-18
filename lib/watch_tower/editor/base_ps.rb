@@ -14,6 +14,13 @@ module WatchTower
             def name
               raise NotImplementedError, "Please define this function in your class."
             end
+
+            # Returns the version of the editor
+            #
+            # Child class should implement this method
+            def version
+              raise NotImplementedError, "Please define this function in your class."
+            end
           END
         end
       end

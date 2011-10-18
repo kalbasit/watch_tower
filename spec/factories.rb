@@ -13,7 +13,8 @@ FactoryGirl.define do
   factory :time_entry, class: Server::TimeEntry do
     file
     file_hash
-    editor "Textmate"
+    editor_name "Textmate"
+    editor_version "1.5.10"
     mtime
   end
 

@@ -4,11 +4,14 @@ module Editor
   describe Textmate do
     it { should respond_to :current_path }
 
+    it { should respond_to :name }
+    its(:name) { should_not raise_error NotImplementedError }
+
+    it { should respond_to :version }
+    its(:version) { should_not raise_error NotImplementedError }
+
     describe "#is_running?" do
       it { should respond_to :is_running? }
-
-      it { should respond_to :name }
-      its(:name) { should_not raise_error NotImplementedError }
 
       it "should return wether Textmate is running or not" do
         app = mock()
