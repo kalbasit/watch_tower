@@ -97,6 +97,6 @@ if failures.empty?
 else
   puts
   puts "WatchTower build FAILED"
-  puts "Failed adapters: #{failures.join(', ')}"
+  puts "Failed adapters: #{failures.keys.join(', ')}"
   exit(false)
 end
