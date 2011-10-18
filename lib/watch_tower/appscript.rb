@@ -13,6 +13,14 @@ rescue LoadError
       def is_running?
         false
       end
+
+      def name
+        "Not available"
+      end
+
+      def version
+        "Not available"
+      end
     end
 
     def app(*args)
