@@ -45,14 +45,9 @@ module WatchTower
       # The index action
       get :root do
         @title = "Projects"
-        # Either use date filtering or not
-        if session.try(:[], :date_filtering).try(:[], :from_date) && session.try(:[], :date_filtering).try(:[], :to_date)
-          @projects = Project.
-            date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date]).
-            worked_on
-        else
-          @projects = Project.worked_on
-        end
+        @projects = Project.
+          date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date]).
+          worked_on
 
         haml :index, layout: (request.xhr? ? false : :layout)
       end
@@ -60,6 +55,9 @@ module WatchTower
       get :project do
         @project = Project.find(params[:id])
         @title = "Project - #{@project.name.camelcase}"
+        @files = @project.files.
+          date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date]).
+          worked_on
 
         haml :project, layout: (request.xhr? ? false : :layout)
       end
