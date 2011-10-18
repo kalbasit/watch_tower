@@ -52,6 +52,7 @@ module WatchTower
         haml :index, layout: (request.xhr? ? false : :layout)
       end
 
+      # The project action
       get :project do
         @project = Project.find(params[:id])
         @title = "Project - #{@project.name.camelcase}"
