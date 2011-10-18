@@ -1,4 +1,4 @@
-percentage =
+window.percentage =
   applyPercentage: ->
     ($ '.percentage_img').each (index, element) ->
       width = ($ element).attr('data-width')
