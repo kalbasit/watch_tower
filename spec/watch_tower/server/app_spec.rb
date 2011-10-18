@@ -25,6 +25,16 @@ module Server
       @projects[:empty][:duration] = FactoryGirl.create(:duration, file: @projects[:empty][:files].first)
     end
 
+    describe "#layout" do
+      it "should show a datepicker" do
+        visit '/'
+        within '#main' do
+          page.should have_selector 'aside#date'
+          page.should have_selector 'aside#date input'
+        end
+      end
+    end
+
     describe "#index" do
       before(:each) do
         visit '/'

@@ -42,20 +42,23 @@ module Server
         @project.reload.files_count.should == 10
       end
 
-      it "should have time_entries through files" # do
-       #        file1 = FactoryGirl.create :file, project: @project
-       #        file2 = FactoryGirl.create :file, project: @project
-       #
-       #        10.times do
-       #          FactoryGirl.create :time_entry, file: file1
-       #        end
-       #
-       #        10.times do
-       #          FactoryGirl.create :time_entry, file: file2
-       #        end
-       #
-       #        @project.reload.time_entries.size.should == 20
-       #      end
+      it "should have many time entries through files" do
+        f = FactoryGirl.create :file, project: @project
+        t = FactoryGirl.create :time_entry, file: f
+
+        @project.reload.time_entries.should include(t)
+      end
+
+      it "should have many durations through files" do
+        f = FactoryGirl.create :file, project: @project
+
+        2.times do
+          FactoryGirl.create :time_entry, file: f
+        end
+
+        @project.reload.durations.should_not be_empty
+        @project.reload.durations.should include(Duration.first)
+      end
     end
 
     describe "TimeEntries count" do
@@ -159,23 +162,23 @@ module Server
     end
 
     describe "Methods" do
-      before(:each) do
-        @projects = []
-        2.times do
-          @projects << FactoryGirl.create(:project)
-        end
-
-        @projects.each do |p|
+      describe "#elapsed_time" do
+        before(:each) do
+          @projects = []
           2.times do
-            f = FactoryGirl.create(:file, project: p)
+            @projects << FactoryGirl.create(:project)
+          end
+
+          @projects.each do |p|
             2.times do
-              FactoryGirl.create :time_entry, file: f
+              f = FactoryGirl.create(:file, project: p)
+              2.times do
+                FactoryGirl.create :time_entry, file: f
+              end
             end
           end
         end
-      end
 
-      describe "#elapsed_time" do
         it { should respond_to :elapsed_time }
 
         it "should have the right elapsed_time" do
@@ -185,6 +188,22 @@ module Server
 
 
       describe "#sum_elapsed_time" do
+        before(:each) do
+          @projects = []
+          2.times do
+            @projects << FactoryGirl.create(:project)
+          end
+
+          @projects.each do |p|
+            2.times do
+              f = FactoryGirl.create(:file, project: p)
+              2.times do
+                FactoryGirl.create :time_entry, file: f
+              end
+            end
+          end
+        end
+
         it "should respond_to sum_elapsed_time" do
           Project.should respond_to(:sum_elapsed_time)
         end
@@ -194,7 +213,76 @@ module Server
         end
       end
 
+      describe "#date_range" do
+        before(:each) do
+          @tw_projects = []
+          @lw_projects = []
+          # Freeze the time to this week
+          Timecop.freeze(Time.now)
+          # Create a bunch of projects
+          2.times do
+            @tw_projects << FactoryGirl.create(:project)
+            2.times do
+              f = FactoryGirl.create(:file, project: @tw_projects.last)
+              2.times do |n|
+                FactoryGirl.create(:time_entry, file: f)
+              end
+            end
+          end
+          # Freeze the time to last week
+          Timecop.freeze(Time.now - 7.days)
+          # Create a bunch of projects
+          2.times do
+            @lw_projects << FactoryGirl.create(:project)
+            2.times do
+              f = FactoryGirl.create(:file, project: @lw_projects.last)
+              2.times do
+                FactoryGirl.create(:time_entry, file: f)
+              end
+            end
+          end
+          # Return the frozen time to now
+          Timecop.freeze(Time.now + 7.days)
+        end
+
+        subject { Project }
+
+        it { should respond_to :date_range }
+
+        it "should return an active relation object" do
+          from = (Time.now - 6.days).strftime '%m/%d/%Y'
+          to = Time.now.strftime '%m/%d/%Y'
+
+          q = subject.date_range from, to
+          q.should be_instance_of ActiveRecord::Relation
+        end
+
+        it "should not return project's of last week" do
+          from = (Time.now - 6.days).strftime '%m/%d/%Y'
+          to = Time.now.strftime '%m/%d/%Y'
+
+          q = subject.date_range from, to
+          @lw_projects.each {|p| q.should_not include(p)}
+        end
+      end
+
       describe "#percent" do
+        before(:each) do
+          @projects = []
+          2.times do
+            @projects << FactoryGirl.create(:project)
+          end
+
+          @projects.each do |p|
+            2.times do
+              f = FactoryGirl.create(:file, project: p)
+              2.times do
+                FactoryGirl.create :time_entry, file: f
+              end
+            end
+          end
+        end
+
         it { should respond_to :percent }
 
         it "should return 50" do

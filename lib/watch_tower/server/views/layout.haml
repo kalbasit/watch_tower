@@ -8,6 +8,8 @@
     %meta{:charset => "utf-8"}/
     %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    %meta{name: 'date_filtering_from', content: session[:date_filtering][:from_date] }/
+    %meta{name: 'date_filtering_to', content: session[:date_filtering][:to_date]}/
 
     / Link tags
     %link{:href => asset_path('application.css'), :rel => "stylesheet"}/
@@ -23,7 +25,9 @@
             %h1 Watch Tower
 
       %section#main
-        = yield
+        %aside#date
+          %input{type: 'text'}
+        .page= yield
 
       %section#footer
         WatchTower

@@ -14,6 +14,7 @@ module WatchTower
 
       # Associations
       belongs_to :file, counter_cache: true
+      has_many :durations
 
       # Callbacks
       after_create :calculate_elapsed_time
