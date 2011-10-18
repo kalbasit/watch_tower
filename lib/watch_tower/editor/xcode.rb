@@ -3,6 +3,13 @@ module WatchTower
     class Xcode
       include BaseAppscript
 
+      # Returns the name of the editor
+      #
+      # @return [String] The editor's name
+      def name
+        "Xcode"
+      end
+
       protected
         # This method returns an instance of ::Appscript::Application
         #

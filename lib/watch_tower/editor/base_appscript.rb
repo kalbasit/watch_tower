@@ -17,6 +17,13 @@ module WatchTower
               editor.is_running? if editor
             end
 
+            # Returns the name of the editor
+            #
+            # Child class should implement this method
+            def name
+              raise NotImplementedError, "Please define this function in your class."
+            end
+
             def current_path
               current_paths.try(:first)
             end

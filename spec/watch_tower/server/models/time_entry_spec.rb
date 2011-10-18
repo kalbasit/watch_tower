@@ -19,6 +19,11 @@ module Server
         m.should_not be_valid
       end
 
+      it "should require an editor" do
+        m = FactoryGirl.build :time_entry, editor: nil
+        m.should_not be_valid
+      end
+
       it "should be valid if attributes requirements are met" do
         t = FactoryGirl.build :time_entry
         t.should be_valid

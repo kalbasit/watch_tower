@@ -7,6 +7,9 @@ module Editor
     describe "#is_running?" do
       it { should respond_to :is_running? }
 
+      it { should respond_to :name }
+      its(:name) { should_not raise_error NotImplementedError }
+
       it "should return wether Textmate is running or not" do
         app = mock()
         app.expects(:is_running?).returns(true).once

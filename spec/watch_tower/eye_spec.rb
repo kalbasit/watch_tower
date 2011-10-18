@@ -15,6 +15,7 @@ describe Eye do
     @editor.stubs(:new).returns(@editor)
     @editor.stubs(:is_running?).returns(true)
     @editor.stubs(:current_paths).returns([@file_path])
+    @editor.stubs(:name).returns("Textmate")
     Editor.stubs(:editors).returns([@editor])
 
     # Mock the project
@@ -96,6 +97,12 @@ describe Eye do
     it "should ask the file for mtime" do
       @file_stat.expects(:mtime).returns(Time.now).once
       ::File.expects(:stat).with(@file_path).returns(@file_stat)
+
+      subject.start
+    end
+
+    it "should ask the editor for the name" do
+      @editor.expects(:name).returns("Textmate").once
 
       subject.start
     end
