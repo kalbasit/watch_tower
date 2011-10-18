@@ -25,6 +25,11 @@ module Server
       @projects[:empty][:duration] = FactoryGirl.create(:duration, file: @projects[:empty][:files].first)
     end
 
+    after(:each) do
+      # Reset the from/to date
+      visit "/?from_date=&to_date="
+    end
+
     describe "#layout" do
       it "should show a datepicker" do
         visit '/'
@@ -102,6 +107,18 @@ module Server
         within 'section#projects .project .name' do
           page.should have_selector('a', href: "/project/#{@projects[:not_empty][:project].id}")
         end
+      end
+
+      it "should display No projects available for the selected date range if there are no projects" do
+        Project.delete_all
+        visit '/'
+        page.should have_content "No projects available for the selected date range."
+      end
+
+      it "should display No projects available for the selected date range if projects exist but date range is way off" do
+        params = ['from_date=10/01/2001', 'to_date=10/10/2001']
+        visit "/?#{params.join('&')}"
+        page.should have_content "No projects available for the selected date range."
       end
     end
 
@@ -190,6 +207,18 @@ module Server
         within 'article#project section#files' do
           page.should_not have_content @projects[:not_empty][:files].last.path
         end
+      end
+
+      it "should display No files available for the selected date range if there are no files" do
+        @projects[:not_empty][:project].files.delete_all
+        visit "/project/#{@projects[:not_empty][:project].id}"
+        page.should have_content "No files available for the selected date range."
+      end
+
+      it "should display No files available for the selected date range if projects exist but date range is way off" do
+        params = ['from_date=10/01/2001', 'to_date=10/10/2001']
+        visit "/project/#{@projects[:not_empty][:project].id}?#{params.join('&')}"
+        page.should have_content "No files available for the selected date range."
       end
     end
   end
