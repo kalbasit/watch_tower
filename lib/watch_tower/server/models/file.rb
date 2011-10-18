@@ -32,7 +32,7 @@ module WatchTower
         joins(:durations => :file).
           where('durations.date >= ?', from).
           where('durations.date <= ?', to).
-          select('DISTINCT "files".*')
+          select('DISTINCT files.*')
       end
 
       # Returns the sum of all elapsed time
