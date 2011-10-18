@@ -5,7 +5,9 @@ require 'fileutils'
 include FileUtils
 
 commands = [
+  'mysql -e "drop database if exists watch_tower_test;"',
   'mysql -e "create database watch_tower_test;"',
+  'psql  -c "drop database if exists watch_tower_test;" -U postgres',
   'psql  -c "create database watch_tower_test;" -U postgres'
 ]
 
