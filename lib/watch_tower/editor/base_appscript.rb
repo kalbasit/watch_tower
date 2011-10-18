@@ -21,7 +21,14 @@ module WatchTower
             #
             # Child class should implement this method
             def name
-              raise NotImplementedError, "Please define this function in your class."
+              editor.try(:name).try(:get)
+            end
+
+            # Returns the version of the editor
+            #
+            # Child class should implement this method
+            def version
+              editor.try(:version).try(:get)
             end
 
             def current_path
