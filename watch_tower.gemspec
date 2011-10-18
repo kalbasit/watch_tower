@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
 require "watch_tower/version"
+require 'rbconfig'
 
 Gem::Specification.new do |s|
   s.name        = "watch_tower"
@@ -21,6 +22,9 @@ Gem::Specification.new do |s|
   ####
   # Run-time dependencies
   ####
+
+  # Appscript
+  s.add_dependency 'rb-appscript', '~>0.6.1' if RbConfig::CONFIG['target_os'] =~ /darwin/i
 
   # Active Support
   s.add_dependency 'activesupport', '~>3.1.1'
