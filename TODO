@@ -1,3 +1,6 @@
+- The elapsed time of the project should change when the duration changes
+  (added Wed Oct 19 18:25:05 2011, incomplete, priority veryhigh)
+
 - Figure out how to load assets from gems and remove the bundled jQuery files.
   (added Mon Oct 10 16:13:36 2011, incomplete, priority high)
 
