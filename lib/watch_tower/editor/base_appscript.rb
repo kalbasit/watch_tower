@@ -13,6 +13,9 @@ module WatchTower
             # Include AppScript
             include ::Appscript
 
+            # Is the editor running ?
+            #
+            # @return [Boolean]
             def is_running?
               editor.is_running? if editor
             end
@@ -31,10 +34,18 @@ module WatchTower
               editor.try(:version).try(:get)
             end
 
+            # Return the path of the document being edited
+            # Child classes can override this method if the behaviour is different
+            #
+            # @return [String] path to the document currently being edited
             def current_path
               current_paths.try(:first)
             end
 
+            # Return the pathes of the documents being edited
+            # Child classes can override this method if the behaviour is different
+            #
+            # @return [Array] pathes to the documents currently being edited
             def current_paths
               if is_running?
                 editor.document.get.collect(&:path).collect(&:get)
