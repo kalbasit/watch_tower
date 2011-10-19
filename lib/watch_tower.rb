@@ -33,7 +33,7 @@ FileUtils.mkdir_p LOG_PATH
 module WatchTower
 
   # Create a logger
-  LOG = Logger.new(File.join(LOG_PATH, 'watch_tower.log'))
+  LOG = Logger.new(File.join(LOG_PATH, "#{ENV['WATCH_TOWER_ENV']}.log"))
 
   # Threads
   # Hash
