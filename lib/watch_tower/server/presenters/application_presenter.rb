@@ -42,13 +42,12 @@ module WatchTower
 
         # Returns a human formatted time
         #
+        # @param [Integer] elapsed_time
         # @return [String] The elapsed time formatted
-        def elapsed
-          if model.respond_to? :elapsed_time
-            humanize_time elapsed_time
-          else
-            ""
-          end
+        def elapsed(elapsed_time = nil)
+          return "" if elapsed_time.nil? && !model.respond_to?(:elapsed_time)
+          elapsed_time ||= model.elapsed_time
+          humanize_time elapsed_time
         end
 
         protected
