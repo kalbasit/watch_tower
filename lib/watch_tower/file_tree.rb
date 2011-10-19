@@ -3,7 +3,7 @@ module WatchTower
   # of the files and their elapsed time
   class FileTree
 
-    attr_reader :files, :tree
+    attr_reader :files
 
     # Initialize
     #
@@ -19,7 +19,17 @@ module WatchTower
     # Render the FileTree
     #
     # @return [Array] The FileTree representation
-    def render
+    def tree
+      # Initialize the elapsed_time of the tree
+      @elapsed_time ||= 0
+      # Remove base_path from paths
+      remove_base_path_from_paths
+      # Iterate over each file to calculate the total elapsed time
+      @files.each do |f|
+        @elapsed_time += f[:elapsed_time]
+      end
+      # Return a hash
+      { files: @files, elapsed_time: @elapsed_time }
     end
 
     protected
