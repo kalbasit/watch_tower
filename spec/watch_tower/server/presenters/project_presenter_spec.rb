@@ -13,7 +13,9 @@ module Server
 
         it "should return a formatted elapsed time" do
           time = 1.day + 2.hours + 3.minutes + 34.seconds
-          subject.stubs(:elapsed_time).returns(time)
+          model = mock
+          model.stubs(:elapsed_time).returns(time)
+          subject.stubs(:model).returns(model)
           subject.elapsed.should == '1 day, 2 hours, 3 minutes and 34 seconds'
         end
       end
