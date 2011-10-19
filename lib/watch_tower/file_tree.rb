@@ -24,9 +24,7 @@ module WatchTower
     end
 
     protected
-      # Render the FileTree
-      #
-      # @return [Array] The FileTree representation
+      # Process the Tree
       def process
         # Parse files
         parse_files
