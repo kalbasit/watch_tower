@@ -47,7 +47,7 @@ module WatchTower
             #
             # @return [Array] pathes to the documents currently being edited
             def current_paths
-              if is_running?
+              if is_running? && editor.respond_to?(:document)
                 editor.document.get.collect(&:path).collect(&:get)
               end
             end

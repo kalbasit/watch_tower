@@ -72,6 +72,12 @@ module Editor
 
         subject.current_paths.should be_nil
       end
+
+      it "should return nil if the application does not respond to document" do
+        @editor.stubs(:respond_to?).with(:document).returns(false)
+
+        subject.current_paths.should be_nil
+      end
     end
   end
 end
