@@ -14,28 +14,37 @@ module WatchTower
     def initialize(base_path, files)
       @base_path = base_path
       @files = files
+      @elapsed_time = 0
     end
 
     # Render the FileTree
     #
     # @return [Array] The FileTree representation
     def tree
-      # Initialize the elapsed_time of the tree
-      @elapsed_time ||= 0
       # Remove base_path from paths
       remove_base_path_from_paths
-      # Iterate over each file to calculate the total elapsed time
-      @files.each do |f|
-        @elapsed_time += f[:elapsed_time]
-      end
+      # Parse files
+      parse_files
+
       # Return a hash
-      { files: @files, elapsed_time: @elapsed_time }
+      { files: files, elapsed_time: @elapsed_time }
     end
 
     protected
+      # Removes the base_path from the files
       def remove_base_path_from_paths
         @files.collect do |f|
           f[:path].gsub!(%r(#{@base_path}#{File::SEPARATOR}), '')
+        end
+      end
+
+      # Parses only files under the current base_path
+      def parse_files
+        # Iterate over each file to calculate the total elapsed time
+        @files.each do |f|
+          unless f[:path] =~ %r(#{File::SEPARATOR})
+            @elapsed_time += f[:elapsed_time]
+          end
         end
       end
   end

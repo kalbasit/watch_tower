@@ -8,8 +8,8 @@ describe FileTree do
       { path: "#{@base_path}/file2.rb", elapsed_time: 1800 },
     ]
     @files = @simple_files.dup
-    @files << { path: "#{@base_path}/folder/file1.rb", elapsed_time: 1800 }
-    @files << { path: "#{@base_path}/folder/file2.rb", elapsed_time: 900 }
+    @files << { path: "#{@base_path}/folder/file_under_folder1.rb", elapsed_time: 1800 }
+    @files << { path: "#{@base_path}/folder/file_under_folder2.rb", elapsed_time: 900 }
 
     @simple_files_elapsed_times = {
       @base_path => 5400
