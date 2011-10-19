@@ -9,6 +9,7 @@ describe Eye do
     @file_path = '/home/user/Code/OpenSource/watch_tower/lib/watch_tower/server/models/time_entries.rb'
     @project_path = '/home/user/Code/OpenSource/watch_tower'
     @project_name = 'watch_tower'
+    ::File.stubs(:exists?).with(@file_path).returns(true)
 
     # Mock the editor
     @editor = mock
@@ -63,6 +64,12 @@ describe Eye do
 
     it "should call current_paths on the editor to determine the file path" do
       @editor.expects(:current_paths).returns([@file_path]).once
+
+      subject.start
+    end
+
+    it "should call File.exists?" do
+      ::File.expects(:exists?).with(@file_path).returns(true).once
 
       subject.start
     end

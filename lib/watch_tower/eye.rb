@@ -22,8 +22,10 @@ module WatchTower
             LOG.debug("#{__FILE__}:#{__LINE__}: #{editor.to_s} is running")
             # Get the currently being edited file from the editor
             files_paths = editor.current_paths
+            # Iterate over the files to fill the database
             files_paths.each do |file_path|
               begin
+                next unless file_path && File.exists?(file_path)
                 # Get the file_hash of the file
                 file_hash = Digest::SHA1.file(file_path).hexdigest
                 # Create a project from the file_path
