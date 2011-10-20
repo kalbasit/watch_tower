@@ -101,13 +101,20 @@ module WatchTower
           # @param [Boolean] root
           # @return [String] HTML of the file tree
           def parse_file_tree(tree, root = false)
-            # Create the root element and add the name
+            # Create the root element
             if root
               html = '<article class="file_tree">'
-              html << %(<div id="root" class="folder"><span class="name">Project</span>)
+              html << '<div id="root" class="folder">'
             else
               folder_name = ::File.basename(tree.base_path)
               html = %(<div id="nested_#{folder_name}" class="nested_folder">)
+            end
+            # Add the collapsed span
+            html << '<span class="collapsed">+</span>'
+            # Add the name
+            if root
+              html << '<span class="name">Project</span>'
+            else
               html << %(<span class="name">#{folder_name}</span>)
             end
             # Add the elapsed time

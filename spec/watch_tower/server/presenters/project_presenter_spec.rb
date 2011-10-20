@@ -64,6 +64,16 @@ module Server
             subject.send(:parse_file_tree, @tree.nested_tree['folder']).should =~ %r(^<div id="nested_folder" class="nested_folder"[^>]*>.*</div>$)
           end
 
+          it "should return a span for the expand/collapse for the root" do
+            subject.send(:parse_file_tree, @tree, true).should =~
+              %r(<div id="root"[^>]*>.*<span class="collapsed">\s*\+\s*</span>.*</div>)
+          end
+
+          it "should return a span for the expand/collapse for the nested_folder" do
+            subject.send(:parse_file_tree, @tree.nested_tree['folder']).should =~
+              %r(<div id="nested_folder"[^>]*>.*<span class="collapsed">\s*\+\s*</span>.*</div>)
+          end
+
           it "should return a span for the name, Project for the root" do
             subject.send(:parse_file_tree, @tree, true).should =~
               %r(<div id="root"[^>]*>.*<span class="name">\s*Project\s*</span>.*</div>)
