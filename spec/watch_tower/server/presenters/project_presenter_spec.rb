@@ -48,17 +48,25 @@ module Server
         describe "#parse_file_tree" do
           it { should respond_to :parse_file_tree }
 
+          it "should nest everything under an article with class file_tree" do
+            subject.send(:parse_file_tree, @tree, true).should =~ %r(^<article class="file_tree"[^>]*>.*</article>$)
+          end
+
+          it "shouldn't nest everything under an article with class file_tree if it is not the root element" do
+            subject.send(:parse_file_tree, @tree.nested_tree['folder']).should_not =~ %r(^<article class="file_tree"[^>]*>.*</article>$)
+          end
+
           it "should return a div with id root" do
-            subject.send(:parse_file_tree, @tree, true).should =~ %r(^<div id="root" class="folder"[^>]*>.*</div>$)
+            subject.send(:parse_file_tree, @tree, true).should =~ %r(<div id="root" class="folder"[^>]*>.*</div>)
           end
 
           it "should return a div with id nested_folder" do
             subject.send(:parse_file_tree, @tree.nested_tree['folder']).should =~ %r(^<div id="nested_folder" class="nested_folder"[^>]*>.*</div>$)
           end
 
-          it "should return a span for the name, files for the root" do
+          it "should return a span for the name, Project for the root" do
             subject.send(:parse_file_tree, @tree, true).should =~
-              %r(^<div id="root"[^>]*>.*<span class="name">\s*files\s*</span>.*</div>$)
+              %r(<div id="root"[^>]*>.*<span class="name">\s*Project\s*</span>.*</div>)
           end
 
           it "should return a span for the name, folder for the nested folder" do
@@ -68,7 +76,7 @@ module Server
 
           it "should return a span for the elapsed time (root)" do
             subject.send(:parse_file_tree, @tree, true).should =~
-              %r(^<div id="root"[^>]*>.*<span class="elapsed_time">\s*#{subject.elapsed(@elapsed_time)}\s*</span>.*</div>$)
+              %r(<div id="root"[^>]*>.*<span class="elapsed_time">\s*#{subject.elapsed(@elapsed_time)}\s*</span>.*</div>)
           end
 
           it "should return a span for the elapsed time (folder)" do
@@ -78,22 +86,22 @@ module Server
 
           it "should return the folder tree inside the tree" do
             subject.send(:parse_file_tree, @tree, true).should =~
-              %r(^<div id="root"[^>]*>.*<div id="nested_folder"[^>]*>.*</div>)
+              %r(<div id="root"[^>]*>.*<div id="nested_folder"[^>]*>.*</div>)
           end
 
           it "should return the files" do
             subject.send(:parse_file_tree, @tree, true).should =~
-              %r(^<div id="root"[^>]*>.*<ul class="files"[^>]*>.*</ul>.*</div>)
+              %r(<div id="root"[^>]*>.*<ul class="files"[^>]*>.*</ul>.*</div>)
           end
 
           it "should return the path of the files" do
             subject.send(:parse_file_tree, @tree, true).should =~
-              %r(^<div id="root"[^>]*>.*<ul class="files"[^>]*>.*<li class="file">.*<span class="path">file1.rb</span>.*</li>.*</ul>.*</div>)
+              %r(<div id="root"[^>]*>.*<ul class="files"[^>]*>.*<li class="file">.*<span class="path">file1.rb</span>.*</li>.*</ul>.*</div>)
           end
 
           it "should return the elapsed time of the files" do
             subject.send(:parse_file_tree, @tree, true).should =~
-              %r(^<div id="root"[^>]*>.*<ul class="files"[^>]*>.*<li class="file">.*<span class="elapsed_time">1 second</span>.*</li>.*</ul>.*</div>)
+              %r(<div id="root"[^>]*>.*<ul class="files"[^>]*>.*<li class="file">.*<span class="elapsed_time">1 second</span>.*</li>.*</ul>.*</div>)
           end
         end
 

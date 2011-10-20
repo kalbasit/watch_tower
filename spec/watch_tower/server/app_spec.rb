@@ -173,33 +173,27 @@ module Server
         end
       end
 
-      it "should have a div for the file's path" do
-        within 'article#project section#files article.file' do
-          page.should have_selector 'div.path'
+      it "should have a span for the file's path" do
+        within 'article#project section#files li.file' do
+          page.should have_selector 'span.path'
         end
       end
 
       it "should display the file's path" do
-        within 'article#project section#files article.file div.path' do
-          page.should have_content @projects[:not_empty][:files].first.path
+        within 'article#project section#files li.file span.path' do
+          page.should have_content ::File.basename(@projects[:not_empty][:files].first.path)
         end
       end
 
-      it "should have a div for the file's elapsed time" do
-        within 'article#project section#files article.file' do
-          page.should have_selector 'div.elapsed'
+      it "should have a span for the file's elapsed time" do
+        within 'article#project section#files li.file' do
+          page.should have_selector 'span.elapsed_time'
         end
       end
 
       it "should display the file's elaped time" do
-        within 'article#project section#files article.file div.elapsed' do
+        within 'article#project section#files li.file span.elapsed_time' do
           page.should have_content @projects[:not_empty][:files].first.elapsed_time.to_s
-        end
-      end
-
-      it "should display an image under each file's name to categorize percentage" do
-        within 'article#project section#files article.file' do
-          page.should have_selector '.percentage_img_container > .percentage > img'
         end
       end
 

@@ -103,7 +103,8 @@ module WatchTower
           def parse_file_tree(tree, root = false)
             # Create the root element and add the name
             if root
-              html = %(<div id="root" class="folder"><span class="name">files</span>)
+              html = '<article class="file_tree">'
+              html << %(<div id="root" class="folder"><span class="name">Project</span>)
             else
               folder_name = ::File.basename(tree.base_path)
               html = %(<div id="nested_#{folder_name}" class="nested_folder">)
@@ -134,8 +135,12 @@ module WatchTower
               # Close the files 's ul
               html << '</ul>'
             end
-
-            html + "</div>"
+            # Close the root div
+            html << "</div>"
+            # Clode the article if it is the root element
+            html << "</article>" if root
+            # Finally return the whole thing
+            html
           end
       end
     end
