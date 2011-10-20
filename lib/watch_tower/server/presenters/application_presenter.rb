@@ -103,10 +103,10 @@ module WatchTower
           def parse_file_tree(tree, root = false)
             # Create the root element and add the name
             if root
-              html = %(<div id="root"><span class="name">files</span>)
+              html = %(<div id="root" class="folder"><span class="name">files</span>)
             else
               folder_name = ::File.basename(tree.base_path)
-              html = %(<div id="nested_#{folder_name}">)
+              html = %(<div id="nested_#{folder_name}" class="folder">)
               html << %(<span class="name">#{folder_name}</span>)
             end
             # Add the elapsed time
@@ -119,18 +119,18 @@ module WatchTower
             end
             # Add the files
             if tree.files.any?
-              # Open the files 's div
-              html << '<div class="files">'
+              # Open the files 's ul
+              html << '<ul class="files">'
               tree.files.each do |file|
-                # Open the file's div
-                html << '<div class="file">'
+                # Open the file's li
+                html << '<li class="file">'
                 # Add the path
                 html << %(<span class="path">#{file[:path]}</span>)
-                # Close the file's div
-                html << '</div>'
+                # Close the file's li
+                html << '</li>'
               end
-              # Close the files 's div
-              html << '</div>'
+              # Close the files 's ul
+              html << '</ul>'
             end
 
             html + "</div>"
