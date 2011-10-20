@@ -106,7 +106,7 @@ module WatchTower
               html = %(<div id="root" class="folder"><span class="name">files</span>)
             else
               folder_name = ::File.basename(tree.base_path)
-              html = %(<div id="nested_#{folder_name}" class="folder">)
+              html = %(<div id="nested_#{folder_name}" class="nested_folder">)
               html << %(<span class="name">#{folder_name}</span>)
             end
             # Add the elapsed time
@@ -126,6 +126,8 @@ module WatchTower
                 html << '<li class="file">'
                 # Add the path
                 html << %(<span class="path">#{file[:path]}</span>)
+                # Add the elapsed time
+                html << %(<span class="elapsed_time">#{elapsed(file[:elapsed_time])}</span>)
                 # Close the file's li
                 html << '</li>'
               end
