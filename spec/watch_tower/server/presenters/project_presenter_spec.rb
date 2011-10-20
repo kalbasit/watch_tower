@@ -96,8 +96,7 @@ module Server
           it { should respond_to :file_tree }
 
           it "should return a div with id root" do
-            # TODO: This is really ugly, it should be split into multiple lines
-            regex = %r(<div id="root"><span class="name">files</span><span class="elapsed_time">4 seconds</span><div id="nested_folder"><span class="name">folder</span><span class="elapsed_time">2 seconds</span><div class="files"><div class="file"><span class="path">file_under_folder(1|2).rb</span></div><div class="file"><span class="path">file_under_folder(1|2).rb</span></div></div></div><div class="files"><div class="file"><span class="path">file(1|2).rb</span></div><div class="file"><span class="path">file(1|2).rb</span></div></div></div>)
+            regex = %r(.*root.*name.*elapsed_time.*nested_folder.*files.*file_under_folder(1|2).*files.*file(1|2).*)
 
             subject.file_tree(@files).should =~ regex
           end
