@@ -245,6 +245,44 @@ aside#date {
     border: none;
     width: 201px;
     height: 21px; }
+.file_tree {
+  background: #f7f7f7;
+  padding: 10px;
+  min-height: 16px;
+  border: 1px solid #cdcdcd;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
+  .file_tree .collapsed, .file_tree .expanded {
+    float: left;
+    text-align: center;
+    width: 10px;
+    height: 9px;
+    margin-right: 10px;
+    background: white;
+    padding: 0 3px 7px 3px;
+    -webkit-border-radius: 29px;
+    -moz-border-radius: 29px;
+    border-radius: 29px; }
+    .file_tree .collapsed:hover, .file_tree .expanded:hover {
+      background: #5d4bff;
+      color: white;
+      cursor: pointer; }
+  .file_tree .name {
+    float: left; }
+  .file_tree .path {
+    float: left;
+    width: auto !important; }
+  .file_tree .elapsed_time {
+    float: right; }
+  .file_tree .files {
+    display: none;
+    list-style: none;
+    margin: 0; }
+  .file_tree .nested_folder {
+    display: none; }
+    .file_tree .nested_folder {
+      margin-left: 15px; }
 h1 {
   font-size: 2em; }
 

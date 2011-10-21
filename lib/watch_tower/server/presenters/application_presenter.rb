@@ -109,6 +109,8 @@ module WatchTower
               folder_name = ::File.basename(tree.base_path)
               html = %(<div id="nested_#{folder_name}" class="nested_folder">)
             end
+            # Open the wrapper
+            html << '<div>'
             # Add the collapsed span
             html << '<span class="collapsed">+</span>'
             # Add the name
@@ -119,6 +121,10 @@ module WatchTower
             end
             # Add the elapsed time
             html << %(<span class="elapsed_time">#{elapsed(tree.elapsed_time)}</span>)
+            # End with a clearfix element
+            html << '<div class="clearfix"></div>'
+            # Close the wrapper
+            html << '</div>'
             # Add the nested_tree if available
             if tree.nested_tree.any?
               tree.nested_tree.each_pair do |folder, nested_tree|
@@ -136,6 +142,8 @@ module WatchTower
                 html << %(<span class="path">#{file[:path]}</span>)
                 # Add the elapsed time
                 html << %(<span class="elapsed_time">#{elapsed(file[:elapsed_time])}</span>)
+                # End with a clearfix element
+                html << '<div class="clearfix"></div>'
                 # Close the file's li
                 html << '</li>'
               end
