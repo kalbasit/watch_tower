@@ -5,12 +5,6 @@
       %h2.project_path= presenter.path
     %section#files
       - if @files.any?
-        %header
-          .path
-            File path
-          .elapsed
-            Total Time
-          .clearfix
-        = partial('file', collection: @files)
+        = presenter.file_tree(@files)
       - else
         No files available for the selected date range.
