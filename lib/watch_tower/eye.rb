@@ -28,6 +28,7 @@ module WatchTower
             files_paths.each do |file_path|
               begin
                 next unless file_path && File.exists?(file_path)
+                next if file_path =~ %r(/.git/)
                 # Get the file_hash of the file
                 file_hash = Digest::SHA1.file(file_path).hexdigest
                 # Create a project from the file_path
