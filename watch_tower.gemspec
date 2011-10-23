@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'haml', '~>3.1.3'
 
   # Git
-  s.add_dependency 'git', '~>1.2.5'
+  s.add_dependency 'grit', '~>2.4.1'
 
   # Asset Pipeline
   s.add_dependency 'coffee-script', '~>2.2.0'

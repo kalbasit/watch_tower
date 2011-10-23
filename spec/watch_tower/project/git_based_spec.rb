@@ -109,11 +109,11 @@ class Project
 
       it { should respond_to :head }
 
-      it "should create a Git::Base object" do
+      it "should create a Grit::Repo object" do
         commit = mock
         git_base = mock
-        git_base.stubs(:log).returns([commit])
-        ::Git.expects(:open).with(@project_path).returns(git_base).once
+        git_base.stubs(:commits).returns([commit])
+        Grit::Repo.expects(:new).with(@project_path).returns(git_base).once
 
         subject.head(@project_path)
       end
@@ -121,8 +121,8 @@ class Project
       it "should return the head revision" do
         commit = mock
         git_base = mock
-        git_base.stubs(:log).returns([commit])
-        ::Git.stubs(:open).with(@project_path).returns(git_base)
+        git_base.stubs(:commits).returns([commit])
+        Grit::Repo.stubs(:new).with(@project_path).returns(git_base)
 
         subject.head(@project_path).should == commit
       end
