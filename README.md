@@ -3,7 +3,7 @@
 [![Click here to lend your support to: Open Source Projects and make a donation at www.pledgie.com !](http://www.pledgie.com/campaigns/16123.png?skin_name=chrome)](http://www.pledgie.com/campaigns/16123)
 
 WatchTower helps you track the time you spend on each project and on each file
-in the project.
+in the projects.
 
 # Introduction
 
@@ -13,8 +13,7 @@ comes to the rescue.
 WatchTower runs in the background and monitors your editors (see Supported
 Editors) and records the time you spend on each file and thus on the project
 in total. Using a simple but powerful web interface, you can view details and
-statistics of each project and the edited files.
-
+statistics about each project and each file.
 
 # Features
 
