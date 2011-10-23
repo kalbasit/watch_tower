@@ -19,8 +19,8 @@ project
 The installation has been made as simple as possible, here's the steps required:
 
 ```bash
-$ gem install watch_tower
-$ watchtower intall
+$ gem install watch_tower --pre
+$ watchtower install
 ```
 
 This creates a configuration file which you __should__ review before invoking
@@ -57,6 +57,10 @@ following guidelines:
   a typo'.
 - Include tests.
 - Do not change the version, We will take care of that.
+
+You can also take a look at the [TODO
+list](https://github.com/TechnoGate/watch_tower/blob/master/TODO) for what's
+in mind for the project
 
 # License
 
