@@ -41,11 +41,11 @@ $ watchtower open
 
 ## Home page
 
-![Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
+<img src="http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png" alt"Home page" />
 
 ## Project page
 
-![Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
+<img src="http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png" alt="Project page" />
 
 # License
 
