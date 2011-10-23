@@ -12,7 +12,7 @@
     <note priority="medium" time="1317889118" done="1317980852">
         Add a ci/travis.rb script which runs the tests under Travis-CI, needed because the config file added in todo number 3 won't exist and the current setup (sqlite) does not work with JRuby
     </note>
-    <note priority="veryhigh" time="1319041505">
+    <note priority="veryhigh" time="1319041505" done="1319386202">
         The elapsed time of the project should change when the duration changes
     </note>
     <note priority="high" time="1318256016">
