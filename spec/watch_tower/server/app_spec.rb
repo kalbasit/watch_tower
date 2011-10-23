@@ -9,13 +9,18 @@ module Server
       }
 
       @projects[:not_empty][:project] = FactoryGirl.create(:project)
+      Timecop.freeze(Time.now)
       2.times do
-        @projects[:not_empty][:files] << FactoryGirl.create(:file, project: @projects[:not_empty][:project])
+        2.times do
+          @projects[:not_empty][:files] << FactoryGirl.create(:file, project: @projects[:not_empty][:project])
+        end
+        5.times do
+          @projects[:not_empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:not_empty][:files].first)
+        end
+        @projects[:not_empty][:duration] = FactoryGirl.create(:duration, file: @projects[:not_empty][:files].first)
+        Timecop.freeze(Time.now + 2.days)
       end
-      5.times do
-        @projects[:not_empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:not_empty][:files].first)
-      end
-      @projects[:not_empty][:duration] = FactoryGirl.create(:duration, file: @projects[:not_empty][:files].first)
+      Timecop.return
 
       @projects[:empty][:project] = FactoryGirl.create(:project)
       2.times do
@@ -119,6 +124,12 @@ module Server
         params = ['from_date=10/01/2001', 'to_date=10/10/2001']
         visit "/?#{params.join('&')}"
         page.should have_content "No projects available for the selected date range."
+      end
+
+      it "should display the project with elapsed time with the date range" do
+        params = [(Time.now + 1.day).strftime('%m/%d/%Y'), (Time.now + 3.days).strftime('%m/%d/%Y')]
+        visit "/?#{params.join('&')}"
+        page.should have_content '8 seconds'
       end
     end
 

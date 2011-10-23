@@ -47,9 +47,8 @@ module WatchTower
       # The index action
       get :root do
         @title = "Projects"
-        @projects = Project.
-          date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date]).
-          worked_on
+        @durations = Duration.date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date])
+        @projects = @durations.collect(&:file).collect(&:project).uniq
 
         haml :index, layout: (request.xhr? ? false : :layout)
       end
@@ -58,9 +57,8 @@ module WatchTower
       get :project do
         @project = Project.find(params[:id])
         @title = "Project - #{@project.name.camelcase}"
-        @files = @project.files.
-          date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date]).
-          worked_on
+        @durations = @project.durations.date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date])
+        @files = @durations.collect(&:file).uniq
 
         haml :project, layout: (request.xhr? ? false : :layout)
       end

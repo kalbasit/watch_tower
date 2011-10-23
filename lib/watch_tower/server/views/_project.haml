@@ -6,5 +6,5 @@
     .percentage_img_container
       .percentage
         %img.percentage_img{src: asset_path('percentage.png'), alt: "#{presenter.percent}% of total time", 'data-width' => presenter.percent}/
-    .elapsed= presenter.elapsed
+    .elapsed= presenter.elapsed(project.durations.date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date]).sum(:duration))
     .clearfix
