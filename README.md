@@ -41,11 +41,11 @@ $ watchtower open
 
 ## Home page
 
-![Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
+[![Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
 
 ## Project page
 
-![Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
+[![Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
 
 # Contributing
 
