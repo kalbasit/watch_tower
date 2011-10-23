@@ -279,6 +279,8 @@ aside#date {
     display: none;
     list-style: none;
     margin: 0; }
+  .file_tree .folder_wrapper, .file_tree .file {
+    border-bottom: 1px dashed #bcbcbc; }
   .file_tree .nested_folder {
     display: none; }
     .file_tree .nested_folder {
