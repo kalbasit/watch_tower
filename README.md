@@ -21,11 +21,22 @@ The installation has been made as simple as possible, here's the steps required:
 ```bash
 $ gem install watch_tower --pre
 $ watchtower install
+$ watchtower load_bootloader
 ```
 
 This creates a configuration file which you __should__ review before invoking
 __WatchTower__, located at __~/.watch_tower/config.yml__ the configuration file
 is self explanatory.
+
+# Update
+
+It is important to run
+
+```bash
+$ watchtower load_bootloader
+```
+
+because the path to watchtower binary file is hardcoded in the boot loader.
 
 # Usage
 
