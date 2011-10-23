@@ -8,7 +8,8 @@ end
 
 guard 'sprockets2',
   sprockets: WatchTower::Server::App.sprockets,
-  assets_path: 'lib/watch_tower/server/public/assets' do
+  assets_path: 'lib/watch_tower/server/public/assets',
+  gz: false do
   watch(%r{^lib/watch_tower/server/assets/.+$})
   watch('lib/watch_tower/server/app.rb')
 end

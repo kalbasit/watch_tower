@@ -28,6 +28,12 @@ module WatchTower
 
             # Install bootloader
             desc "install_bootloader", "Install Watch Tower's bootloader"
+            method_option :force,
+              type: :boolean,
+              required: false,
+              aliases: "-f",
+              default: false,
+              desc: "Force the installation of the bootloader"
             def install_bootloader
               # Install the bootloader
               install_bootloader_on_os
@@ -91,9 +97,7 @@ module WatchTower
               # Install bootloader on Mac OS X
               def install_bootloader_on_mac
                 self.class.source_root(TEMPLATE_PATH)
-                # copy_file 'watchtower.plist', File.join(ENV['HOME'], 'Library',
-                #   'LaunchAgents', 'fr.technogate.WatchTower.plist')
-                create_file bootloader_path_on_mac do
+                create_file bootloader_path_on_mac, force: options[:force] do
                   ruby_binary = which('ruby')
                   watch_tower_binary = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'bin', 'watchtower'))
                   template = File.expand_path(find_in_source_paths('watchtower.plist.erb'))

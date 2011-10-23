@@ -53,6 +53,14 @@ module WatchTower
                 editor.document.get.collect(&:path).collect(&:get)
               end
             end
+
+            # The editor's name for the log
+            # Child classes can overwrite this method
+            #
+            # @return [String]
+            def to_s
+              "\#{self.class.to_s.split('::').last} Editor"
+            end
           END
         end
       end
