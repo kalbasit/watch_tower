@@ -2,7 +2,7 @@ script: 'ci/travis.rb'
 branches:
   only:
     - master
-    - develop
+    - stable
 rvm:
   - 1.9.2
   - 1.9.3
