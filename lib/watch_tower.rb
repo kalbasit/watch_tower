@@ -48,6 +48,19 @@ module WatchTower
     @@threads
   end
 
+  # Get WatchTower's environment
+  #
+  # @return [String] The current environment
+  def self.env
+    ENV['WATCH_TOWER_ENV']
+  end
+
+  # Set WatchTower's environment
+  #
+  # @param [String] The environment
+  def self.env=(environment)
+    ENV['WATCH_TOWER_ENV'] = environment
+  end
 end
 
 # Make sure we are running UTF-8
