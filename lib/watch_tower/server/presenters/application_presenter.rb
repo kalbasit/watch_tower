@@ -112,7 +112,7 @@ module WatchTower
               html = %(<div id="nested_#{folder_name}" class="nested_folder">)
             end
             # Open the wrapper
-            html << '<div>'
+            html << '<div class="folder_wrapper">'
             # Add the collapsed span
             html << '<span class="collapsed">+</span>'
             # Add the name

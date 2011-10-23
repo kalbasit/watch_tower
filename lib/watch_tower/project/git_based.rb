@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-require 'git'
+require 'grit'
 
 module WatchTower
   class Project
@@ -59,12 +59,12 @@ module WatchTower
       end
 
       def head(path)
-        log(path)
+        log(path).first
       end
 
       def log(path)
-        g = ::Git.open path
-        g.log.first
+        g = Grit::Repo.new(path)
+        g.commits
       end
 
       protected

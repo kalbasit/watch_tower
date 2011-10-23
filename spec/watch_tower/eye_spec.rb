@@ -38,7 +38,7 @@ describe Eye do
     Digest::SHA1.stubs(:file).with(@file_path).returns(@file_hash)
   end
 
-  describe "#start totally mocked" do
+  describe "#start workflow" do
     before(:each) do
       # Mock the project's model
       # @time_entry = stub_everything('time_entry')
@@ -70,6 +70,15 @@ describe Eye do
 
     it "should call File.exists?" do
       ::File.expects(:exists?).with(@file_path).returns(true).once
+
+      subject.start
+    end
+
+    it "shouldn't add the file if it matches the ignore list" do
+      ignored_path = '/path/to/project/.git/COMMIT_MESSAGE'
+      ::File.stubs(:exists?).with(ignored_path).returns(true)
+      @editor.stubs(:current_paths).returns([ignored_path])
+      Digest::SHA1.expects(:file).with(ignored_path).never
 
       subject.start
     end

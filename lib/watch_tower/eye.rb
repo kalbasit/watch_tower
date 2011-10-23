@@ -6,6 +6,9 @@ module WatchTower
   module Eye
     extend self
 
+    # Ignore paths
+    IGNORED_PATHS = %r(/(.git|.svn)/)
+
     # Start the watch loop
     #
     # @param [Hash] options
@@ -28,6 +31,7 @@ module WatchTower
             files_paths.each do |file_path|
               begin
                 next unless file_path && File.exists?(file_path)
+                next if file_path =~ IGNORED_PATHS
                 # Get the file_hash of the file
                 file_hash = Digest::SHA1.file(file_path).hexdigest
                 # Create a project from the file_path

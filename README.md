@@ -1,4 +1,4 @@
-# Watch Tower [![Build Status](http://travis-ci.org/TechnoGate/watch_tower.png)](http://travis-ci.org/TechnoGate/watch_tower) ![Still Maintained](http://stillmaintained.com/TechnoGate/watch_tower.png)
+# Watch Tower [![Build Status](http://travis-ci.org/TechnoGate/watch_tower.png)](http://travis-ci.org/TechnoGate/watch_tower) [![Still Maintained](http://stillmaintained.com/TechnoGate/watch_tower.png)](http://stillmaintained.com/TechnoGate/watch_tower)
 
 [![Click here to lend your support to: Open Source Projects and make a donation at www.pledgie.com !](http://www.pledgie.com/campaigns/16123.png?skin_name=chrome)](http://www.pledgie.com/campaigns/16123)
 
@@ -19,8 +19,8 @@ project
 The installation has been made as simple as possible, here's the steps required:
 
 ```bash
-$ gem install watch_tower
-$ watchtower intall
+$ gem install watch_tower --pre
+$ watchtower install
 ```
 
 This creates a configuration file which you __should__ review before invoking
@@ -41,11 +41,11 @@ $ watchtower open
 
 ## Home page
 
-![Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
+[![Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
 
 ## Project page
 
-![Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
+[![Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
 
 # Contributing
 
@@ -57,6 +57,10 @@ following guidelines:
   a typo'.
 - Include tests.
 - Do not change the version, We will take care of that.
+
+You can also take a look at the [TODO
+list](https://github.com/TechnoGate/watch_tower/blob/master/TODO) for what's
+in mind for the project
 
 # License
 

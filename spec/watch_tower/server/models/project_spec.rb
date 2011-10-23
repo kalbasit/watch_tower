@@ -273,11 +273,12 @@ module Server
             @projects << FactoryGirl.create(:project)
           end
 
+          Timecop.freeze(Time.now)
           @projects.each do |p|
             2.times do
               f = FactoryGirl.create(:file, project: p)
-              2.times do
-                FactoryGirl.create :time_entry, file: f
+              2.times do |n|
+                FactoryGirl.create :time_entry, file: f, mtime: Time.now + 2 * n
               end
             end
           end

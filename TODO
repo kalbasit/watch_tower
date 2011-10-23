@@ -1,8 +1,8 @@
-- The elapsed time of the project should change when the duration changes
-  (added Wed Oct 19 18:25:05 2011, incomplete, priority veryhigh)
-
 - Figure out how to load assets from gems and remove the bundled jQuery files.
   (added Mon Oct 10 16:13:36 2011, incomplete, priority high)
+
+- Make it possible to add a new project, a project that can't be recognised by GitBased nor PathBased.
+  (added Sun Oct 23 18:15:52 2011, incomplete, priority high)
 
 - The Config module need some tests.
   (added Thu Oct  6 12:02:34 2011, incomplete, priority medium)
@@ -18,3 +18,21 @@
 
 - Maybe use a Rails engine instead of Sinatra ?
   (added Mon Oct 10 16:52:53 2011, incomplete, priority medium)
+
+- Add support for ViM
+  (added Sun Oct 23 18:12:56 2011, incomplete, priority medium)
+
+- Add support for Netbeans
+  (added Sun Oct 23 18:13:05 2011, incomplete, priority medium)
+
+- Add support for Eclipse
+  (added Sun Oct 23 18:13:14 2011, incomplete, priority medium)
+
+- Add support for Linux (it should work after adding ViM, Eclipse and Netbeans)
+  (added Sun Oct 23 18:14:24 2011, incomplete, priority medium)
+
+- Add support for Microsoft Windows
+  (added Sun Oct 23 18:14:36 2011, incomplete, priority medium)
+
+- Add support Microsoft Office (Word, Excel, Powerpoint)
+  (added Sun Oct 23 18:14:59 2011, incomplete, priority medium)
