@@ -3,8 +3,15 @@
 module WatchTower
   MAJOR = 0
   MINOR = 0
-  PATCH = 0
-  PRE = 1
+  TINY = 1
+  PRE = "beta1"
 
-  VERSION = [MAJOR, MINOR, PATCH, PRE].join('.')
+  def self.version
+    # Init the version
+    version = [MAJOR, MINOR, TINY]
+    # Add the pre if available
+    version << PRE unless PRE.nil? || PRE !~ /\S/
+    # Return the version joined by a dot
+    version.join('.')
+  end
 end

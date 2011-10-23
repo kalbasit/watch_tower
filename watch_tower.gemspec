@@ -5,7 +5,7 @@ require 'rbconfig'
 
 Gem::Specification.new do |s|
   s.name        = "watch_tower"
-  s.version     = WatchTower::VERSION
+  s.version     = WatchTower.version
   s.authors     = ["Wael Nasreddine"]
   s.email       = ["wael.nasreddine@gmail.com"]
   s.homepage    = ""
