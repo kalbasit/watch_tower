@@ -64,7 +64,7 @@ module WatchTower
           end
         end
 
-        # If $stop global is set, please stop, otherwise sleep for 30 seconds.
+        # If $stop global is set, please stop, otherwise sleep for 10 seconds.
         if $close_eye
           LOG.debug("#{__FILE__}:#{__LINE__}: Closing eye has been requested, end the loop")
           break
@@ -78,6 +78,10 @@ module WatchTower
     #
     # @param [Hash] options
     def start!(options = {})
+      # Signal handling
+      Signal.trap("INT")  { $close_eye = true }
+      Signal.trap("TERM") { $close_eye = true }
+
       start(options)
     end
   end
