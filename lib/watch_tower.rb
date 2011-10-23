@@ -48,6 +48,9 @@ module WatchTower
 
 end
 
+# Make sure we are running UTF-8
+Encoding.default_external = 'utf-8'
+
 # Require watch_tower's libraries
 require "watch_tower/version"
 require "watch_tower/errors"
