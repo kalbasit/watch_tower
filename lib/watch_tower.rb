@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 # RubyGems is needed at first
 require 'rubygems'
 

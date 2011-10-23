@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 require 'watch_tower/project/any_based'
 require 'watch_tower/project/init'
 

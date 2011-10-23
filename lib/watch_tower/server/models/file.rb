@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module WatchTower
   module Server
     class File < ::ActiveRecord::Base

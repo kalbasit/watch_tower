@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module WatchTower
   MAJOR = 0
   MINOR = 0

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# -*- encoding: utf-8 -*-
 # This file has been taken from rails
 # https://github.com/rails/rails/blob/master/ci/travis.rb
 require 'fileutils'

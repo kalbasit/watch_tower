@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module WatchTower
   # Global Error
   WatchTowerError = Class.new Exception

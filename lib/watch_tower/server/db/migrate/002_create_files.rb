@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 class CreateFiles < ActiveRecord::Migration
   def change
     create_table :files do |t|

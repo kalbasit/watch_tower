@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module WatchTower
   # This class is used by the server to provided a FileTree representation
   # of the files and their elapsed time
