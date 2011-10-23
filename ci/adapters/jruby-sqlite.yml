@@ -1,6 +1,6 @@
   database:
     test:
       adapter: jdbcsqlite3
-      database: ":memory:"
+      database: ~/.watch_tower/databases/test.sqlite3
       pool: 5
       timeout: 5000
