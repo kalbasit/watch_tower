@@ -241,12 +241,14 @@ module Server
         before(:each) do
           @project = FactoryGirl.create :project
           @files = []
+          Timecop.freeze(Time.now)
           2.times do
             @files << FactoryGirl.create(:file, project: @project)
-            2.times do
-              FactoryGirl.create :time_entry, file: @files.last
+            2.times do |n|
+              FactoryGirl.create :time_entry, file: @files.last, mtime: Time.now + 2 * n
             end
           end
+          Timecop.return
         end
         describe "#sum_elapsed_time" do
           it "should return the sum of all elapsed times of all the files for the same project" do
