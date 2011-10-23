@@ -1,4 +1,7 @@
 - present @project do |presenter|
+  .back
+    %a{:href => '/'} &laquo; Home
+    .clearfix
   %article#project
     %header
       %h1.project_name= presenter.name.camelcase
