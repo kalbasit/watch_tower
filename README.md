@@ -14,6 +14,24 @@ Editors) and records the time you spend on each file and thus on the project
 in total, and using a web interface, it presents you with statistics on each
 project
 
+# Features
+
+- Track editors (see Supported Editors) and record all files tracked under
+  git or placed under __code_path__ defined in the config file.
+- Display all projects on the home page that has been worked on the current
+  month, the date range can be changed using the date picker on the home page
+- For each project, a detailed overview of each file with the elapsed time
+  within the selected date range
+
+# Supported Editors
+
+- TextMate
+- Xcode
+
+# Supported Operating Systems
+
+- Mac OS X
+
 # Installation
 
 The installation has been made as simple as possible, here's the steps required:
