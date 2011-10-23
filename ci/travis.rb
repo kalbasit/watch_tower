@@ -32,6 +32,7 @@ class Build
 
   def create_config_file
     commands = [
+      "rm -rf ~/.watch_tower"
       "mkdir -p ~/.watch_tower",
       "cp lib/watch_tower/templates/config.yml ~/.watch_tower/config.yml",
       "cat ci/adapters/#{ruby_platform}-#{adapter}.yml >> ~/.watch_tower/config.yml"
