@@ -47,11 +47,22 @@ $ watchtower open
 
 ![Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
 
+# Contributing
+
+Please feel free to fork and send pull requests, but please follow the
+following guidelines:
+
+- Prefix each commit message with the filename or the module followed by a
+  colon and a space, for example 'README: fix a typo' or 'Server/Project: Fix
+  a typo'.
+- Include tests.
+- Do not change the version, We will take care of that.
+
 # License
 
 ## This code is free to use under the terms of the MIT license.
 
-Copyright (c) 2011 Wael Nasreddine <wael.nasreddine@gmail.com>
+Copyright (c) 2011 TechnoGate &lt;support@technogate.fr&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
