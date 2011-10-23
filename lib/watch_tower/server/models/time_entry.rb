@@ -31,7 +31,7 @@ module WatchTower
         def calculate_elapsed_time
           # Gather information about this and last time entry for this file
           this_time_entry = self
-          last_time_entry = file.time_entries.where('id < ?', this_time_entry.id).order('id DESC').first
+          last_time_entry = file.time_entries.where('id < ?', this_time_entry.id).order('id DESC').limit(1).first
           # Check the hash first
           return if this_time_entry.file_hash == last_time_entry.try(:file_hash)
           # Update the file's hash
