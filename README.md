@@ -37,6 +37,16 @@ http://localhost:9282 or using the command
 $ watchtower open
 ```
 
+# Screenshots
+
+## Home page
+
+[!Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
+
+## Project page
+
+[!Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
+
 # License
 
 ## This code is free to use under the terms of the MIT license.
