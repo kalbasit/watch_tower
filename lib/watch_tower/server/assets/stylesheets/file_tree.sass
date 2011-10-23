@@ -1,0 +1,42 @@
+.file_tree
+  background: #f7f7f7
+  padding: 10px
+  min-height: 16px
+  border: 1px solid #cdcdcd
+  -webkit-border-radius: 5px
+  -moz-border-radius: 5px
+  border-radius: 5px
+
+  .collapsed, .expanded
+    float: left
+    text-align: center
+    width: 10px
+    height: 9px
+    margin-right: 10px
+    background: #fff
+    padding: 0 3px 7px 3px
+    -webkit-border-radius: 29px
+    -moz-border-radius: 29px
+    border-radius: 29px
+
+    &:hover
+      background: #5D4BFF
+      color: #fff
+      cursor: pointer
+
+  .name
+    float: left
+  .path
+    float: left
+    width: auto !important
+  .elapsed_time
+    float: right
+  .files
+    display: none
+    list-style: none
+    margin: 0
+
+  .nested_folder
+    display: none
+    &
+      margin-left: 15px

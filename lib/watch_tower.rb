@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 # RubyGems is needed at first
 require 'rubygems'
 
@@ -33,7 +35,7 @@ FileUtils.mkdir_p LOG_PATH
 module WatchTower
 
   # Create a logger
-  LOG = Logger.new(File.join(LOG_PATH, 'watch_tower.log'))
+  LOG = Logger.new(File.join(LOG_PATH, "#{ENV['WATCH_TOWER_ENV']}.log"))
 
   # Threads
   # Hash
@@ -46,7 +48,23 @@ module WatchTower
     @@threads
   end
 
+  # Get WatchTower's environment
+  #
+  # @return [String] The current environment
+  def self.env
+    ENV['WATCH_TOWER_ENV']
+  end
+
+  # Set WatchTower's environment
+  #
+  # @param [String] The environment
+  def self.env=(environment)
+    ENV['WATCH_TOWER_ENV'] = environment
+  end
 end
+
+# Make sure we are running UTF-8
+Encoding.default_external = 'utf-8'
 
 # Require watch_tower's libraries
 require "watch_tower/version"
@@ -57,4 +75,5 @@ require "watch_tower/cli"
 require "watch_tower/editor"
 require "watch_tower/project"
 require "watch_tower/eye"
+require "watch_tower/file_tree"
 require "watch_tower/server"

@@ -1,4 +1,8 @@
 script: 'ci/travis.rb'
+branches:
+  only:
+    - master
+    - develop
 rvm:
   - 1.9.2
   - 1.9.3

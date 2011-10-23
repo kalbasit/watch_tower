@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 require 'digest/sha1'
 
 module WatchTower
@@ -22,8 +24,10 @@ module WatchTower
             LOG.debug("#{__FILE__}:#{__LINE__}: #{editor.to_s} is running")
             # Get the currently being edited file from the editor
             files_paths = editor.current_paths
+            # Iterate over the files to fill the database
             files_paths.each do |file_path|
               begin
+                next unless file_path && File.exists?(file_path)
                 # Get the file_hash of the file
                 file_hash = Digest::SHA1.file(file_path).hexdigest
                 # Create a project from the file_path
@@ -44,7 +48,10 @@ module WatchTower
                 file_model = project_model.files.find_or_create_by_path(file_path)
                 begin
                   # Create a time entry
-                  file_model.time_entries.create!(mtime: File.stat(file_path).mtime, file_hash: file_hash)
+                  file_model.time_entries.create! mtime: File.stat(file_path).mtime,
+                    file_hash: file_hash,
+                    editor_name: editor.name,
+                    editor_version: editor.version
                 rescue ActiveRecord::RecordInvalid => e
                   # This should happen if the mtime is already present
                 end
@@ -59,7 +66,7 @@ module WatchTower
           end
         end
 
-        # If $stop global is set, please stop, otherwise sleep for 30 seconds.
+        # If $stop global is set, please stop, otherwise sleep for 10 seconds.
         if $close_eye
           LOG.debug("#{__FILE__}:#{__LINE__}: Closing eye has been requested, end the loop")
           break
@@ -73,6 +80,10 @@ module WatchTower
     #
     # @param [Hash] options
     def start!(options = {})
+      # Signal handling
+      Signal.trap("INT")  { $close_eye = true }
+      Signal.trap("TERM") { $close_eye = true }
+
       start(options)
     end
   end

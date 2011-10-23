@@ -1,7 +1,10 @@
 %section#projects
-  %header
-    .name Project
-    .percentage Percentage
-    .elapsed Total time
-    .clearfix
-  = partial('project', collection: @projects)
+  - if @projects.any?
+    %header
+      .name Project
+      .percentage Percentage
+      .elapsed Total time
+      .clearfix
+    = partial('project', collection: @projects)
+  - else
+    No projects available for the selected date range.

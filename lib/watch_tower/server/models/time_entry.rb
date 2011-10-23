@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module WatchTower
   module Server
     class TimeEntry < ::ActiveRecord::Base
@@ -10,10 +12,13 @@ module WatchTower
       validates :mtime, presence: true
       validates_uniqueness_of :mtime, scope: :file_id
       validates :file_hash, presence: true
+      validates :editor_name, presence: true
+      validates :editor_version, presence: true
 
 
       # Associations
       belongs_to :file, counter_cache: true
+      has_many :durations
 
       # Callbacks
       after_create :calculate_elapsed_time

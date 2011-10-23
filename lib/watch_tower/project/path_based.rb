@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module WatchTower
   class Project
     # The module contains Path specific project methods, methods like name, path

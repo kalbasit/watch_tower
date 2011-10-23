@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 # Sinatra
 require 'sinatra'
 
@@ -7,9 +9,7 @@ module WatchTower
       # Helper
       include Helpers::ImprovedPartials
       include Helpers::Asset
-
-      # Include Decorator
-      include Decorator
+      include Helpers::Presenters
 
       # Configurations
       include Configurations::Asset
@@ -18,19 +18,49 @@ module WatchTower
       paths :root => '/'
       paths :project => '/project/:id'
 
+      # Enable sessions
+      enable :sessions
+
+      # Before filter
+      before do
+        # Parse the from/to date from params and add it to the session
+        if params[:from_date] && params[:to_date]
+          if params[:from_date].present? && params[:to_date].present?
+            session[:date_filtering] = {
+              from_date: params[:from_date],
+              to_date: params[:to_date]
+            }
+          else
+            session[:date_filtering] = nil
+          end
+        end
+
+        # Make sure we have a default date filtering
+        unless session.try(:[], :date_filtering).try(:[], :from_date) && session.try(:[], :date_filtering).try(:[], :to_date)
+          session[:date_filtering] = {
+            from_date: Time.now.to_date.beginning_of_month.strftime('%m/%d/%Y'),
+            to_date: Time.now.to_date.strftime('%m/%d/%Y')
+          }
+        end
+      end
+
       # The index action
       get :root do
         @title = "Projects"
-        @projects = ProjectDecorator.decorate(Project.worked_on)
+        @durations = Duration.date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date])
+        @projects = @durations.collect(&:file).collect(&:project).uniq
 
-        haml :index
+        haml :index, layout: (request.xhr? ? false : :layout)
       end
 
+      # The project action
       get :project do
-        @project = ProjectDecorator.find(params[:id])
+        @project = Project.find(params[:id])
         @title = "Project - #{@project.name.camelcase}"
+        @durations = @project.durations.date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date])
+        @files = @durations.collect(&:file).uniq
 
-        haml :project
+        haml :project, layout: (request.xhr? ? false : :layout)
       end
     end
   end

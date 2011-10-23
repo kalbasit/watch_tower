@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 require 'active_support/hash_with_indifferent_access'
 
 module WatchTower

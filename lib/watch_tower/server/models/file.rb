@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module WatchTower
   module Server
     class File < ::ActiveRecord::Base
@@ -18,6 +20,21 @@ module WatchTower
       # Return the percent of this file
       def percent
         (elapsed_time * 100) / project.files.sum_elapsed_time
+      end
+
+      # Return an ActiveRelation limited to a date range
+      #
+      # @param [String] From date
+      # @param [String] To date
+      # @return [ActiveRelation]
+      def self.date_range(from, to)
+        from = Date.strptime(from, '%m/%d/%Y')
+        to = Date.strptime(to, '%m/%d/%Y')
+
+        joins(:durations => :file).
+          where('durations.date >= ?', from).
+          where('durations.date <= ?', to).
+          select('DISTINCT files.*')
       end
 
       # Returns the sum of all elapsed time

@@ -9,13 +9,18 @@ module Server
       }
 
       @projects[:not_empty][:project] = FactoryGirl.create(:project)
+      Timecop.freeze(Time.now)
       2.times do
-        @projects[:not_empty][:files] << FactoryGirl.create(:file, project: @projects[:not_empty][:project])
+        2.times do
+          @projects[:not_empty][:files] << FactoryGirl.create(:file, project: @projects[:not_empty][:project])
+        end
+        5.times do
+          @projects[:not_empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:not_empty][:files].first)
+        end
+        @projects[:not_empty][:duration] = FactoryGirl.create(:duration, file: @projects[:not_empty][:files].first)
+        Timecop.freeze(Time.now + 2.days)
       end
-      5.times do
-        @projects[:not_empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:not_empty][:files].first)
-      end
-      @projects[:not_empty][:duration] = FactoryGirl.create(:duration, file: @projects[:not_empty][:files].first)
+      Timecop.return
 
       @projects[:empty][:project] = FactoryGirl.create(:project)
       2.times do
@@ -23,6 +28,21 @@ module Server
       end
       @projects[:empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:empty][:files].first)
       @projects[:empty][:duration] = FactoryGirl.create(:duration, file: @projects[:empty][:files].first)
+    end
+
+    after(:each) do
+      # Reset the from/to date
+      visit "/?from_date=&to_date="
+    end
+
+    describe "#layout" do
+      it "should show a datepicker" do
+        visit '/'
+        within '#main' do
+          page.should have_selector 'aside#date'
+          page.should have_selector 'aside#date input'
+        end
+      end
     end
 
     describe "#index" do
@@ -93,6 +113,24 @@ module Server
           page.should have_selector('a', href: "/project/#{@projects[:not_empty][:project].id}")
         end
       end
+
+      it "should display No projects available for the selected date range if there are no projects" do
+        Project.delete_all
+        visit '/'
+        page.should have_content "No projects available for the selected date range."
+      end
+
+      it "should display No projects available for the selected date range if projects exist but date range is way off" do
+        params = ['from_date=10/01/2001', 'to_date=10/10/2001']
+        visit "/?#{params.join('&')}"
+        page.should have_content "No projects available for the selected date range."
+      end
+
+      it "should display the project with elapsed time with the date range" do
+        params = [(Time.now + 1.day).strftime('%m/%d/%Y'), (Time.now + 3.days).strftime('%m/%d/%Y')]
+        visit "/?#{params.join('&')}"
+        page.should have_content '8 seconds'
+      end
     end
 
     describe "#project" do
@@ -146,33 +184,27 @@ module Server
         end
       end
 
-      it "should have a div for the file's path" do
-        within 'article#project section#files article.file' do
-          page.should have_selector 'div.path'
+      it "should have a span for the file's path" do
+        within 'article#project section#files li.file' do
+          page.should have_selector 'span.path'
         end
       end
 
       it "should display the file's path" do
-        within 'article#project section#files article.file div.path' do
-          page.should have_content @projects[:not_empty][:files].first.path
+        within 'article#project section#files li.file span.path' do
+          page.should have_content ::File.basename(@projects[:not_empty][:files].first.path)
         end
       end
 
-      it "should have a div for the file's elapsed time" do
-        within 'article#project section#files article.file' do
-          page.should have_selector 'div.elapsed'
+      it "should have a span for the file's elapsed time" do
+        within 'article#project section#files li.file' do
+          page.should have_selector 'span.elapsed_time'
         end
       end
 
       it "should display the file's elaped time" do
-        within 'article#project section#files article.file div.elapsed' do
+        within 'article#project section#files li.file span.elapsed_time' do
           page.should have_content @projects[:not_empty][:files].first.elapsed_time.to_s
-        end
-      end
-
-      it "should display an image under each file's name to categorize percentage" do
-        within 'article#project section#files article.file' do
-          page.should have_selector '.percentage_img_container > .percentage > img'
         end
       end
 
@@ -180,6 +212,18 @@ module Server
         within 'article#project section#files' do
           page.should_not have_content @projects[:not_empty][:files].last.path
         end
+      end
+
+      it "should display No files available for the selected date range if there are no files" do
+        @projects[:not_empty][:project].files.delete_all
+        visit "/project/#{@projects[:not_empty][:project].id}"
+        page.should have_content "No files available for the selected date range."
+      end
+
+      it "should display No files available for the selected date range if projects exist but date range is way off" do
+        params = ['from_date=10/01/2001', 'to_date=10/10/2001']
+        visit "/project/#{@projects[:not_empty][:project].id}?#{params.join('&')}"
+        page.should have_content "No files available for the selected date range."
       end
     end
   end

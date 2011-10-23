@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 require 'sinatra-snap'
 
 module WatchTower
@@ -8,6 +10,7 @@ module WatchTower
       # Sinatra helpers
       autoload :ImprovedPartials
       autoload :Asset
+      autoload :Presenters
     end
   end
 end

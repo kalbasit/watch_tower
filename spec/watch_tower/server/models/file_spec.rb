@@ -229,44 +229,25 @@ module Server
         File.worked_on.should_not include(@files.last)
       end
     end
-  end
 
-  describe "Methods" do
-    before(:each) do
-      @project = FactoryGirl.create :project
-      @files = []
-      2.times do
-        @files << FactoryGirl.create(:file, project: @project)
-        2.times do
-          FactoryGirl.create :time_entry, file: @files.last
-        end
-      end
-    end
-
-    describe "one project" do
-      describe "#sum_elapsed_time" do
-        it "should return the sum of all elapsed times of all the files for the same project" do
-          @project.files.sum_elapsed_time.should == @files.inject(0) {|s, f| s += f.elapsed_time }
-        end
+    describe "Methods" do
+      it "should respond_to sum_elapsed_time" do
+        File.should respond_to(:sum_elapsed_time)
       end
 
-      describe "#percent" do
-        it "should return 50" do
-          @project.files.first.percent.should == 50
-        end
-      end
-    end
+      it { should respond_to :percent }
 
-    describe "two projects" do
-      before(:each) do
-        @other_files = []
-        2.times do
-          @other_files << FactoryGirl.create(:file)
+      describe "one project" do
+        before(:each) do
+          @project = FactoryGirl.create :project
+          @files = []
           2.times do
-            FactoryGirl.create :time_entry, file: @other_files.last
+            @files << FactoryGirl.create(:file, project: @project)
+            2.times do
+              FactoryGirl.create :time_entry, file: @files.last
+            end
           end
         end
-
         describe "#sum_elapsed_time" do
           it "should return the sum of all elapsed times of all the files for the same project" do
             @project.files.sum_elapsed_time.should == @files.inject(0) {|s, f| s += f.elapsed_time }
@@ -277,6 +258,87 @@ module Server
           it "should return 50" do
             @project.files.first.percent.should == 50
           end
+        end
+      end
+
+      describe "two projects" do
+        before(:each) do
+          @project = FactoryGirl.create :project
+          @files = []
+          2.times do
+            @files << FactoryGirl.create(:file, project: @project)
+            2.times do
+              FactoryGirl.create :time_entry, file: @files.last
+            end
+          end
+
+          @other_files = []
+          2.times do
+            @other_files << FactoryGirl.create(:file)
+            2.times do
+              FactoryGirl.create :time_entry, file: @other_files.last
+            end
+          end
+
+          describe "#sum_elapsed_time" do
+            it "should return the sum of all elapsed times of all the files for the same project" do
+              @project.files.sum_elapsed_time.should == @files.inject(0) {|s, f| s += f.elapsed_time }
+            end
+          end
+
+          describe "#percent" do
+            it "should return 50" do
+              @project.files.first.percent.should == 50
+            end
+          end
+        end
+      end
+
+      describe "#date_range" do
+        before(:each) do
+          @tw_files = []
+          @lw_files = []
+          @project = FactoryGirl.create(:project)
+          # Freeze the time to this week
+          Timecop.freeze(Time.now)
+          # Create a bunch of files
+          2.times do
+            @tw_files << FactoryGirl.create(:file, project: @project)
+            2.times do |n|
+              FactoryGirl.create(:time_entry, file: @tw_files.last)
+            end
+          end
+          # Freeze the time to last week
+          Timecop.freeze(Time.now - 7.days)
+          # Create a bunch of files
+          2.times do
+            @lw_files << FactoryGirl.create(:file, project: @project)
+            2.times do |n|
+              FactoryGirl.create(:time_entry, file: @lw_files.last)
+            end
+          end
+          # Return the frozen time to now
+          Timecop.freeze(Time.now + 7.days)
+        end
+
+        subject { File }
+
+        it { should respond_to :date_range }
+
+        it "should return an active relation object" do
+          from = (Time.now - 6.days).strftime '%m/%d/%Y'
+          to = Time.now.strftime '%m/%d/%Y'
+
+          q = subject.date_range from, to
+          q.should be_instance_of ActiveRecord::Relation
+        end
+
+        it "should not return project's of last week" do
+          from = (Time.now - 6.days).strftime '%m/%d/%Y'
+          to = Time.now.strftime '%m/%d/%Y'
+
+          q = subject.date_range from, to
+          @lw_files.each {|p| q.should_not include(p)}
         end
       end
     end

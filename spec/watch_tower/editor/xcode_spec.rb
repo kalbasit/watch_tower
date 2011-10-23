@@ -4,6 +4,12 @@ module Editor
   describe Xcode do
     it { should respond_to :current_path }
 
+    it { should respond_to :name }
+    pending(:name) { should_not raise_error NotImplementedError }
+
+    it { should respond_to :version }
+    pending(:version) { should_not raise_error NotImplementedError }
+
     describe "#is_running?" do
       it { should respond_to :is_running? }
 

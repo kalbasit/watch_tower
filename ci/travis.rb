@@ -1,11 +1,14 @@
 #!/usr/bin/env ruby
+# -*- encoding: utf-8 -*-
 # This file has been taken from rails
 # https://github.com/rails/rails/blob/master/ci/travis.rb
 require 'fileutils'
 include FileUtils
 
 commands = [
+  'mysql -e "drop database if exists watch_tower_test;"',
   'mysql -e "create database watch_tower_test;"',
+  'psql  -c "drop database if exists watch_tower_test;" -U postgres',
   'psql  -c "create database watch_tower_test;" -U postgres'
 ]
 
@@ -97,6 +100,6 @@ if failures.empty?
 else
   puts
   puts "WatchTower build FAILED"
-  puts "Failed adapters: #{failures.join(', ')}"
+  puts "Failed adapters: #{failures.keys.join(', ')}"
   exit(false)
 end

@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module WatchTower
   module Server
     extend ::ActiveSupport::Autoload
@@ -9,7 +11,7 @@ module WatchTower
     autoload :TimeEntry, ::File.join(MODELS_PATH, 'time_entry.rb')
     autoload :Helpers
     autoload :Configurations
-    autoload :Decorator
+    autoload :Presenters
     autoload :App
 
     # Start the server
@@ -45,6 +47,10 @@ module WatchTower
         WatchTower.threads[:web_server] = Thread.new do
           LOG.debug("#{__FILE__}:#{__LINE__}: Starting a new Thread for the web server.")
 
+          # Signal handling
+          Signal.trap("INT")  { exit }
+          Signal.trap("TERM") { exit }
+
           begin
             LOG.debug("#{__FILE__}:#{__LINE__}: Starting the web server in the new Thread.")
 
@@ -52,6 +58,7 @@ module WatchTower
             App.run!(options)
 
             LOG.debug("#{__FILE__}:#{__LINE__}: The server has stopped.")
+            exit
           rescue Exception => e
             LOG.fatal "#{__FILE__}:#{__LINE__ - 4}: #{e}"
             raise e

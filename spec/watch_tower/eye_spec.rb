@@ -9,12 +9,15 @@ describe Eye do
     @file_path = '/home/user/Code/OpenSource/watch_tower/lib/watch_tower/server/models/time_entries.rb'
     @project_path = '/home/user/Code/OpenSource/watch_tower'
     @project_name = 'watch_tower'
+    ::File.stubs(:exists?).with(@file_path).returns(true)
 
     # Mock the editor
     @editor = mock
     @editor.stubs(:new).returns(@editor)
     @editor.stubs(:is_running?).returns(true)
     @editor.stubs(:current_paths).returns([@file_path])
+    @editor.stubs(:name).returns("Textmate")
+    @editor.stubs(:version).returns("1.5.10")
     Editor.stubs(:editors).returns([@editor])
 
     # Mock the project
@@ -65,6 +68,12 @@ describe Eye do
       subject.start
     end
 
+    it "should call File.exists?" do
+      ::File.expects(:exists?).with(@file_path).returns(true).once
+
+      subject.start
+    end
+
     it "should get the file's hash from Digest::SHA1" do
       Digest::SHA1.expects(:file).with(@file_path).returns(@file_hash).once
 
@@ -96,6 +105,18 @@ describe Eye do
     it "should ask the file for mtime" do
       @file_stat.expects(:mtime).returns(Time.now).once
       ::File.expects(:stat).with(@file_path).returns(@file_stat)
+
+      subject.start
+    end
+
+    it "should ask the editor for the name" do
+      @editor.expects(:name).returns("Textmate").once
+
+      subject.start
+    end
+
+    it "should ask the editor for the version" do
+      @editor.expects(:version).returns("1.5.10").once
 
       subject.start
     end

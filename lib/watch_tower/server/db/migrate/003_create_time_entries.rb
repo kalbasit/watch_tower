@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 class CreateTimeEntries < ActiveRecord::Migration
   def change
     create_table :time_entries do |t|

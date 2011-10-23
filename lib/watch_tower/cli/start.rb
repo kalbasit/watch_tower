@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 module WatchTower
   module CLI
     module Start
@@ -40,7 +42,7 @@ module WatchTower
               desc: "Set the server's port."
             def start
               if Config[:enabled] &&
-                (!options[:bootloader] || (options(:bootloader) && Config[:launch_on_boot]))
+                (!options[:bootloader] || (options[:bootloader] && Config[:launch_on_boot]))
                 LOG.info "Starting WatchTower."
                 start!
               else
