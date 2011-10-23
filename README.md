@@ -51,7 +51,8 @@ is self explanatory.
 It is important to run
 
 ```bash
-$ watchtower load_bootloader
+$ watchtower install_bootloader
+$ watchtower reload_bootloader
 ```
 
 because the path to watchtower binary file is hardcoded in the boot loader.
