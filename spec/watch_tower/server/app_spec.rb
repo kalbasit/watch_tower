@@ -17,7 +17,7 @@ module Server
         5.times do
           @projects[:not_empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:not_empty][:files].first)
         end
-        @projects[:not_empty][:duration] = FactoryGirl.create(:duration, file: @projects[:not_empty][:files].first)
+        @projects[:not_empty][:durations] = @projects[:not_empty][:project].durations
         Timecop.freeze(Time.now + 2.days)
       end
       Timecop.return
@@ -27,7 +27,7 @@ module Server
         @projects[:empty][:files] << FactoryGirl.create(:file, project: @projects[:empty][:project])
       end
       @projects[:empty][:time_entries] << FactoryGirl.create(:time_entry, file: @projects[:empty][:files].first)
-      @projects[:empty][:duration] = FactoryGirl.create(:duration, file: @projects[:empty][:files].first)
+      @projects[:empty][:durations] = @projects[:empty][:project].durations
     end
 
     after(:each) do

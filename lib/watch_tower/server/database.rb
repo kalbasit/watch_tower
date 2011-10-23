@@ -65,9 +65,8 @@ module WatchTower
         end
 
         # Disconnect from the database
-        # TODO: Implement this function
         def disconnect!
-          raise NotImplementedError
+          ActiveRecord::Base.remove_connection
         end
 
         # Migrate the database

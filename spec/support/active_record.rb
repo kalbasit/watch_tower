@@ -20,11 +20,6 @@ RSpec::configure do |config|
     :file_path => config.escaped_path(%w[spec watch_tower server models])
   }
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = true
-
   # This is a hack to empty up the database before each test
   # I wasn't able to replicate what Rails / RSpec does for the test suite
   # I'd appreciate any hints to speed up the test suite.
@@ -40,5 +35,10 @@ RSpec::configure do |config|
   # Start the server before all examples
   config.before(:all) do
     WatchTower::Server::Database.start!
+  end
+
+  # Stop the server after all examples
+  config.after(:all) do
+    WatchTower::Server::Database.stop!
   end
 end
