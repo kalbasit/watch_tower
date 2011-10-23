@@ -225,6 +225,13 @@ module Server
         visit "/project/#{@projects[:not_empty][:project].id}?#{params.join('&')}"
         page.should have_content "No files available for the selected date range."
       end
+
+      it "should display the project with elapsed time with the date range" do
+        params = [(Time.now + 1.day).strftime('%m/%d/%Y'), (Time.now + 3.days).strftime('%m/%d/%Y')]
+        visit "/project/#{@projects[:not_empty][:project].id}?#{params.join('&')}"
+        # save_and_open_page
+        page.should have_content '8 seconds'
+      end
     end
   end
 end
