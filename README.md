@@ -8,7 +8,7 @@ WatchTower helps you track how much time you spend on all of your projects, at t
 
 Did you ever want to keep track of how much time you _really_ spend on all of your projects?
 Sure, you can try to remember to keep running estimates of your time in the hope that you can aggregate 
-those estimates later into some meaningfull data. But sometimes you forget, or an error creeps into your estimate.
+those estimates later into some meaningful data. But sometimes you forget, or an error creeps into your estimate.
 And those errors add up. Quickly.
 
 You can try some tracking software that depends on you to start and stop timers. But what happens if you forget to 
@@ -101,10 +101,10 @@ in mind for the project
 
 # Credits
 
-This projects is heavily inspired by
+This project is heavily inspired by
 [timetap](https://github.com/elia/timetap) created by [Elia
 Schito](https://github.com/elia), it also uses a number of open source
-projects including but not limited to:
+projects including, but not limited to:
 
 - [rb-appscript](http://appscript.sourceforge.net/)
 - [activesupport](https://github.com/rails/rails)
