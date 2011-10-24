@@ -33,19 +33,22 @@ statistics about each project and each file.
 
 - Mac OS X
 
-# Installation
 
-The installation has been made as simple as possible, here's the steps required:
+# Getting Started
 
-```bash
-$ gem install watch_tower --pre
-$ watchtower install
-$ watchtower load_bootloader
-```
+1. Install the Transmuter gem:
 
-This creates a configuration file which you __should__ review before invoking
-__WatchTower__, located at __~/.watch_tower/config.yml__ the configuration file
-is self explanatory.
+    ```bash
+    $ gem install watch_tower --pre
+    ```
+2. Followed by:
+
+    ```bash
+    $ watchtower install
+    $ watchtower load_bootloader
+    ```
+
+3. __Review the configuration file__ located at __~/.watch_tower/config.yml__ and make any changes necessary.
 
 # Update
 
