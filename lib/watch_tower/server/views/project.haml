@@ -5,6 +5,8 @@
   %article#project
     %header
       %h1.project_name= presenter.name.camelcase
+      .approximate_elapsed= "(about #{presenter.approximate_elapsed})"
+      .clearfix
       %h2.project_path= presenter.path
     %section#files
       - if @files.any?

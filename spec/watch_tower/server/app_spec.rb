@@ -166,6 +166,12 @@ module Server
         end
       end
 
+      it "should display an approximate time for the project" do
+        within 'article#project' do
+          page.should have_content '(about 1 minute)'
+        end
+      end
+
       it "should have the an h2 for the project's path" do
         within 'article#project' do
           page.should have_selector 'header > h2.project_path'

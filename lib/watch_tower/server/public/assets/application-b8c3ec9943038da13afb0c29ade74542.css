@@ -384,6 +384,13 @@ body {
 #projects .project .elapsed {
   float: left; }
 
+#project header .project_name {
+  float: left; }
+#project header .approximate_elapsed {
+  float: left;
+  color: #898989;
+  margin: 20px 0 0 10px;
+  font-size: 1.5em; }
 #project #files header .path {
   font-size: 20px;
   text-decoration: underline;
