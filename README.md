@@ -17,14 +17,35 @@ WatchTower runs in the background and keeps track of the time spent editing each
 supported editors (listed below). Since WatchTower keeps track of the time spent on each file, and it knows which
 project each file belongs to, you can view details and statistics on each project, right down to the file level.
 
+# Screenshots
+
+## Home Page
+
+From the WatchTower home page, you can see how much time you've invested in all of your projects, and select a project to view in more detail.
+
+[![Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
+
+## Project Detail Page
+
+After selecting a project from the WatchTower home page, you'll be presented with a detailed report for the project, including 
+time summaries at the project, directory, and file levels.
+
+[![Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
+
+
 # Features
 
-- Track editors (see Supported Editors) and record all files tracked under
-  git or placed under __code_path__ defined in the config file.
-- Display all projects on the home page that has been worked on the current
-  month, the date range can be changed using the date picker on the home page
-- For each project, a detailed overview of each file with the elapsed time
-  within the selected date range
+- Tracks the supported editors (listed below) and records the time spent on all files as specified 
+  via the customized configuration file (git and  __code_path__ are supported.
+
+- Generates a WatchTower Home Page that displays the time spent on all watched projects, and a total summary.
+  The default display includes all projects worked on during the current month, but the page includes a date picker for 
+  easy selection.
+
+- Generates a WatchTower Project Detail Page that displays the time spent on the project,
+  each directory within the project, and each file. 
+  The default display includes all files worked on during the current month, but the page includes a date picker for
+  easy selection.
 
 # Supported Editors
 
@@ -49,38 +70,28 @@ project each file belongs to, you can view details and statistics on each projec
     $ watchtower load_bootloader
     ```
 
-3. __Review the configuration file__ located at __~/.watch_tower/config.yml__ and make any changes necessary.
+3. __Review the self-explanatory configuration file__ located at __~/.watch_tower/config.yml__ and make any changes necessary.
 
 # Update
 
-It is important to run
+Run 
 
 ```bash
 $ watchtower install_bootloader
 $ watchtower reload_bootloader
 ```
 
-because the path to watchtower binary file is hardcoded in the boot loader.
+to update the path to the WatchTower binary in the boot loader.
 
 # Usage
 
-The installation process should create a launcher on login which starts
-__WatchTower__ you can open the web interface by going to
-http://localhost:9282 or using the command
+The installation process creates a launcher on login that starts __WatchTower__.
+You can view your WatchTower Home Page via the web interface by going to http://localhost:9282, 
+or from the command line:
 
 ```bash
 $ watchtower open
 ```
-
-# Screenshots
-
-## Home page
-
-[![Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
-
-## Project page
-
-[![Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
 
 # Contributing
 
