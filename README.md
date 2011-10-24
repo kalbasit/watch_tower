@@ -103,7 +103,9 @@ in mind for the project
 
 This project is heavily inspired by
 [timetap](https://github.com/elia/timetap) created by [Elia
-Schito](https://github.com/elia), it also uses a number of open source
+Schito](https://github.com/elia).
+
+It also uses a number of open source
 projects including, but not limited to:
 
 - [rb-appscript](http://appscript.sourceforge.net/)
