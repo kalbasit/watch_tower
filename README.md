@@ -2,7 +2,7 @@
 
 [![Click here to lend your support to: Open Source Projects and make a donation at www.pledgie.com !](http://www.pledgie.com/campaigns/16123.png?skin_name=chrome)](http://www.pledgie.com/campaigns/16123)
 
-WatchTower not only helps you track how much time is spent on all of your projects, it even tells you how much time is spent on each file in every project.
+WatchTower helps you track how much time you spend on all of your projects, at the project, directory, and file level.
 
 # Introduction
 
