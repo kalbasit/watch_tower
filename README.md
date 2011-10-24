@@ -11,6 +11,10 @@ Sure, you can try to remember to keep running estimates of your time in the hope
 those estimates later into some meaningfull data. But sometimes you forget, or an error creeps into your estimate.
 And those errors add up. Quickly.
 
+You can try some tracking software that depends on you to start and stop timers. But what happens if you forget to start or stop a timer?
+
+What you need is a passive system that will take care of all of this for you, so you can focue on the actual work.
+
 Watch Tower comes to the rescue.
 
 WatchTower runs in the background and keeps track of the time spent editing each file with one of the 
