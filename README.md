@@ -14,7 +14,7 @@ And those errors add up. Quickly.
 You can try some tracking software that depends on you to start and stop timers. But what happens if you forget to 
 start or stop one of those timers?
 
-What you need is a passive system that will take care of all of this for you, so you can focue on the actual work.
+What you need is a passive system that will take care of all of this for you, so you can focus on the actual work.
 
 Watch Tower comes to the rescue.
 
