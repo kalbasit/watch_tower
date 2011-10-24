@@ -286,7 +286,8 @@ aside#date {
     .file_tree .nested_folder {
       margin-left: 15px; }
 h1 {
-  font-size: 2em; }
+  font-size: 2em;
+  margin: 15px 0; }
 
 h2 {
   font-size: 1em; }
@@ -307,6 +308,19 @@ h2 {
 
 .clearfix {
   clear: both; }
+
+.back {
+  margin-bottom: 2em; }
+  .back a {
+    background-color: #222222;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    border-radius: 0.5em;
+    color: white;
+    padding: 0.5em;
+    text-decoration: none; }
+    .back a:hover {
+      background-color: #444444; }
 
 a {
   color: +#b36c6c;
@@ -370,6 +384,13 @@ body {
 #projects .project .elapsed {
   float: left; }
 
+#project header .project_name {
+  float: left; }
+#project header .approximate_elapsed {
+  float: left;
+  color: #898989;
+  margin: 20px 0 0 10px;
+  font-size: 1.5em; }
 #project #files header .path {
   font-size: 20px;
   text-decoration: underline;

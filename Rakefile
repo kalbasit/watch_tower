@@ -4,7 +4,12 @@ require "bundler/gem_tasks"
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
-# Monky patch bundler
+# Monkey patch Bundler::GemHelper
+#
+# Git flow create the tag after finishing a release however this breaks
+# <b>rake release</b> because it expects that no tag for the current version
+# is present, this patch overrides this behaviour to skip version tagging if
+# the tag already exists instead of raising an exception
 Bundler::GemHelper.class_eval <<-END, __FILE__, __LINE__ + 1
   # Tag the current version
   def tag_version
@@ -19,7 +24,7 @@ Bundler::GemHelper.class_eval <<-END, __FILE__, __LINE__ + 1
     raise
   end
 
-  # The original method raises an exception, we should overwrites it
+  # The original method raises an exception, we should override it
   def guard_already_tagged
   end
 

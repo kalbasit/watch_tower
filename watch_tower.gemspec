@@ -8,9 +8,20 @@ Gem::Specification.new do |s|
   s.version     = WatchTower.version
   s.authors     = ["Wael Nasreddine"]
   s.email       = ["wael.nasreddine@gmail.com"]
-  s.homepage    = ""
-  s.summary     = "Unobtrusive time-tracking for TextMate."
-  s.description = "WatchTower helps you track the time you spend on each project."
+  s.homepage    = "https://github.com/TechnoGate/watch_tower"
+  s.summary     = <<-MSG
+WatchTower helps you track the time you spend on each project and on each file
+in the projects.
+MSG
+  s.description = <<-MSG
+Did you ever wonder how much each of your projects really costs? Watch Tower
+comes to the rescue.
+
+WatchTower runs in the background and monitors your editors and records the
+time you spend on each file and thus on the project in total. Using a simple
+but powerful web interface, you can view details and statistics about each
+project and each file.
+MSG
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
