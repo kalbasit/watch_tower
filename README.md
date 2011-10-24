@@ -20,13 +20,11 @@ project each file belongs to, you can view details and statistics on each projec
 # Features
 
 - Tracks the supported editors (listed below) and records the time spent on all files as specified 
-  via the customized configuration file (git and  __code_path__ are supported.
+  via the customized configuration file (Git and  __code_path__ are supported.
 
 - A WatchTower Home Page where you can see how much time you've spent on all watched projects, 
   as well as a total summary. The default display includes all projects worked on during the current month, but the page includes a date picker for 
   easy selection. You can select a project to view the project's Detail Page.
-
-From the WatchTower home page, you can see how much time you've invested in all of your projects, and select a project to view in more detail.
 
 [![Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
 
