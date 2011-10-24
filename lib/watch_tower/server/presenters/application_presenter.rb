@@ -52,6 +52,22 @@ module WatchTower
           humanize_time elapsed_time
         end
 
+        # Returns an approximate elapsed time
+        #
+        # @param [Integer] elapsed_time
+        # @return [String] The approximate elapsed time
+        def approximate_elapsed(elapsed_time = nil)
+          return "" if elapsed_time.nil? && !model.respond_to?(:elapsed_time)
+          elapsed_time ||= model.elapsed_time
+
+          if elapsed_time > 60.seconds
+            elapsed_time = (elapsed_time / 60).to_i * 60
+            elapsed(elapsed_time)
+          else
+            '1 minute'
+          end
+        end
+
         protected
           def pluralize(num, word)
             if num > 1
