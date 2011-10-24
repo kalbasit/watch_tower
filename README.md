@@ -2,18 +2,20 @@
 
 [![Click here to lend your support to: Open Source Projects and make a donation at www.pledgie.com !](http://www.pledgie.com/campaigns/16123.png?skin_name=chrome)](http://www.pledgie.com/campaigns/16123)
 
-WatchTower helps you track the time you spend on each project and on each file
-in the projects.
+WatchTower not only helps you track how much time is spent on all of your projects, it even tells you how much time is spent on each file in every project.
 
 # Introduction
 
-Did you ever wonder how much each of your projects really costs? Watch Tower
-comes to the rescue.
+Did you ever want to keep track of how much time you _really_ spend on all of your projects?
+Sure, you can try to remember to keep running estimates of your time in the hope that you can aggregate 
+those estimates later into some meaningfull data. But sometimes you forget, or an error creeps into your estimate.
+And those errors add up. Quickly.
 
-WatchTower runs in the background and monitors your editors (see Supported
-Editors) and records the time you spend on each file and thus on the project
-in total. Using a simple but powerful web interface, you can view details and
-statistics about each project and each file.
+Watch Tower comes to the rescue.
+
+WatchTower runs in the background and keeps track of the time spent editing each file with one of the 
+supported editors (listed below). Since WatchTower keeps track of the time spent on each file, and it knows which
+project each file belongs to, you can view details and statistics on each project, right down to the file level.
 
 # Features
 
@@ -32,7 +34,6 @@ statistics about each project and each file.
 # Supported Operating Systems
 
 - Mac OS X
-
 
 # Getting Started
 
