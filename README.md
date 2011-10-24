@@ -17,35 +17,25 @@ WatchTower runs in the background and keeps track of the time spent editing each
 supported editors (listed below). Since WatchTower keeps track of the time spent on each file, and it knows which
 project each file belongs to, you can view details and statistics on each project, right down to the file level.
 
-# Screenshots
-
-## Home Page
-
-From the WatchTower home page, you can see how much time you've invested in all of your projects, and select a project to view in more detail.
-
-[![Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
-
-## Project Detail Page
-
-After selecting a project from the WatchTower home page, you'll be presented with a detailed report for the project, including 
-time summaries at the project, directory, and file levels.
-
-[![Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
-
-
 # Features
 
 - Tracks the supported editors (listed below) and records the time spent on all files as specified 
   via the customized configuration file (git and  __code_path__ are supported.
 
-- Generates a WatchTower Home Page that displays the time spent on all watched projects, and a total summary.
-  The default display includes all projects worked on during the current month, but the page includes a date picker for 
-  easy selection.
+- A WatchTower Home Page where you can see how much time you've spent on all watched projects, 
+  as well as a total summary. The default display includes all projects worked on during the current month, but the page includes a date picker for 
+  easy selection. You can select a project to view the project's Detail Page.
 
-- Generates a WatchTower Project Detail Page that displays the time spent on the project,
+From the WatchTower home page, you can see how much time you've invested in all of your projects, and select a project to view in more detail.
+
+[![Home page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
+
+- A WatchTower Project Detail Page that displays a detailed report of the time spent on the project,
   each directory within the project, and each file. 
   The default display includes all files worked on during the current month, but the page includes a date picker for
   easy selection.
+
+[![Project page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
 
 # Supported Editors
 
