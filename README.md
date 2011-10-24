@@ -1,6 +1,6 @@
 # Watch Tower [![Build Status](http://travis-ci.org/TechnoGate/watch_tower.png)](http://travis-ci.org/TechnoGate/watch_tower) [![Still Maintained](http://stillmaintained.com/TechnoGate/watch_tower.png)](http://stillmaintained.com/TechnoGate/watch_tower)
 
-[![Click here to lend your support to: Open Source Projects and make a donation at www.pledgie.com !](http://www.pledgie.com/campaigns/16123.png?skin_name=chrome)](http://www.pledgie.com/campaigns/16123)
+[![Click here to lend your support to: Open Source Projects and make a donation at www.pledgie.com!](http://www.pledgie.com/campaigns/16123.png?skin_name=chrome)](http://www.pledgie.com/campaigns/16123)
 
 WatchTower helps you track how much time you spend on all of your projects, at the project, directory, and file level.
 
@@ -11,7 +11,8 @@ Sure, you can try to remember to keep running estimates of your time in the hope
 those estimates later into some meaningfull data. But sometimes you forget, or an error creeps into your estimate.
 And those errors add up. Quickly.
 
-You can try some tracking software that depends on you to start and stop timers. But what happens if you forget to start or stop a timer?
+You can try some tracking software that depends on you to start and stop timers. But what happens if you forget to 
+start or stop one of those timers?
 
 What you need is a passive system that will take care of all of this for you, so you can focue on the actual work.
 
