@@ -39,6 +39,35 @@ module Server
           subject.approximate_elapsed(time).should == '10 minutes'
         end
 
+        it "should return 1 day for elapsed_times equal to 1 day and 2 hours" do
+          time = 1.day + 2.hours
+          subject.approximate_elapsed(time).should == '1 day'
+        end
+
+        it "should return 1 day and a half for elapsed_times equal to 1 day and 5 hours" do
+          time = 1.day + 7.hours
+          subject.approximate_elapsed(time).should == '1 day and a half'
+        end
+
+        it "should return 1 hour for elapsed_times equal to 1 hour and 2 minutes" do
+          time = 1.hour + 2.minutes
+          subject.approximate_elapsed(time).should == '1 hour'
+        end
+
+        it "should return 1 hour and a half for elapsed_times equal to 1 hour and 25 minutes" do
+          time = 1.hour + 25.minutes
+          subject.approximate_elapsed(time).should == '1 hour and a half'
+        end
+
+        it "should display 2 hours if elapsed_times equal 1 hour and 50 minutes" do
+          time = 1.hour + 50.minutes
+          subject.approximate_elapsed(time).should == '2 hours'
+        end
+
+        it "should display 2 days if elapsed_times equal 1 day and 20 hours" do
+          time = 1.day + 20.hours
+          subject.approximate_elapsed(time).should == '2 days'
+        end
       end
 
 
