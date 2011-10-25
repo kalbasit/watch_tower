@@ -38,7 +38,7 @@ project each file belongs to, you can view details and statistics on each projec
   The default display includes all files worked on during the current month, but the page includes a date picker for
   easy selection.
 
-  [![Example: Project Detail Page](http://f.cl.ly/items/3T263A350w261b0b2U1x/project_page.png)]http://f.cl.ly/items/3T263A350w261b0b2U1x/project_page.png)
+  [![Example: Project Detail Page](http://f.cl.ly/items/3T263A350w261b0b2U1x/project_page.png)](http://f.cl.ly/items/3T263A350w261b0b2U1x/project_page.png)
 
 # Supported Editors
 
