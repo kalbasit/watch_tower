@@ -1,0 +1,71 @@
+require 'spec_helper'
+
+module Editor
+  describe Vim do
+    before(:each) do
+        Vim.any_instance.stubs(:systemu).with("/usr/bin/vim --help").returns([0, "", ""])
+        Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --help").returns([0, "--remote server", ""])
+        WatchTower.stubs(:which).with('vim').returns('/usr/bin/vim')
+        WatchTower.stubs(:which).with('gvim').returns('/usr/bin/gvim')
+        WatchTower.stubs(:which).with('mvim').returns(nil)
+
+      Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --version").
+        returns [0, <<-EOV, '']
+VIM - Vi IMproved 7.3 (2010 Aug 15)
+Included patches: 1-202, 204-222, 224-322
+Compiled by 'http://www.opensuse.org/'
+Huge version without GUI.  Features included (+) or not (-):
++arabic +autocmd -balloon_eval -browse ++builtin_terms +byte_offset +cindent
+-clientserver -clipboard +cmdline_compl +cmdline_hist +cmdline_info +comments
++conceal +cryptv +cscope +cursorbind +cursorshape +dialog_con +diff +digraphs
+-dnd -ebcdic +emacs_tags +eval +ex_extra +extra_search +farsi +file_in_path
++find_in_path +float +folding -footer +fork() +gettext -hangul_input +iconv
++insert_expand +jumplist +keymap +langmap +libcall +linebreak +lispindent
++listcmds +localmap -lua +menu +mksession +modify_fname +mouse -mouseshape
++mouse_dec -mouse_gpm -mouse_jsbterm +mouse_netterm -mouse_sysmouse
++mouse_xterm +multi_byte +multi_lang -mzscheme +netbeans_intg +path_extra -perl
+ +persistent_undo +postscript +printer +profile -python -python3 +quickfix
++reltime +rightleft -ruby +scrollbind +signs +smartindent +sniff +startuptime
++statusline -sun_workshop +syntax +tag_binary +tag_old_static -tag_any_white
+-tcl +terminfo +termresponse +textobjects +title -toolbar +user_commands
++vertsplit +virtualedit +visual +visualextra +viminfo +vreplace +wildignore
++wildmenu +windows +writebackup -X11 -xfontset -xim -xsmp -xterm_clipboard
+-xterm_save
+   system vimrc file: "/etc/vimrc"
+     user vimrc file: "$HOME/.vimrc"
+      user exrc file: "$HOME/.exrc"
+  fall-back for $VIM: "/etc"
+ f-b for $VIMRUNTIME: "/usr/share/vim/current"
+Compilation: gcc -c -I. -Iproto -DHAVE_CONFIG_H   -I/usr/local/include  -fmessage-length=0 -O2 -Wall -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -g -Wall -pipe -fno-strict-aliasing -fstack-protector-all
+Linking: gcc   -L/usr/local/lib -Wl,--as-needed -o vim       -lm -lnsl  -lncurses -lacl -lattr -ldl
+EOV
+    end
+
+    it { should respond_to :current_paths }
+
+    it { should respond_to :name }
+    its(:name) { should_not raise_error NotImplementedError }
+    its(:name) { should_not be_empty }
+
+    it { should respond_to :version }
+    its(:version) { should_not raise_error NotImplementedError }
+    its(:version) { should_not be_empty }
+    its(:version) { should == '7.3' }
+
+    describe "#supported_vims" do
+      it { should respond_to :supported_vims }
+
+      it "should return gvim" do
+        Vim.any_instance.expects(:systemu).with("/usr/bin/vim --help").returns([0, "", ""]).once
+        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --help").returns([0, "--remote server", ""]).once
+        WatchTower.expects(:which).with('vim').returns('/usr/bin/vim').once
+        WatchTower.expects(:which).with('gvim').returns('/usr/bin/gvim').once
+        WatchTower.expects(:which).with('mvim').returns(nil).once
+
+        subject.send :supported_vims
+        subject.instance_variable_get('@vims').should == ['/usr/bin/gvim']
+      end
+    end
+
+  end
+end
