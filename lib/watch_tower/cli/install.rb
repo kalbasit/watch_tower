@@ -61,22 +61,6 @@ module WatchTower
             end
 
             protected
-              # Taken from hub
-              # https://github.com/defunkt/hub/blob/master/lib/hub/context.rb#L186
-              # Cross-platform way of finding an executable in the $PATH.
-              #
-              # which('ruby') #=> /usr/bin/ruby
-              def which(cmd)
-                exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
-                ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
-                  exts.each { |ext|
-                    exe = "\#{path}/\#{cmd}\#{ext}"
-                    return exe if File.executable? exe
-                  }
-                end
-                return nil
-              end
-
               # Install the configuration file
               def install_config_file
                 self.class.source_root(TEMPLATE_PATH)
@@ -98,7 +82,7 @@ module WatchTower
               def install_bootloader_on_mac
                 self.class.source_root(TEMPLATE_PATH)
                 create_file bootloader_path_on_mac, force: options[:force] do
-                  ruby_binary = which('ruby')
+                  ruby_binary = WatchTower.which('ruby')
                   watch_tower_binary = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'bin', 'watchtower'))
                   template = File.expand_path(find_in_source_paths('watchtower.plist.erb'))
                   ERB.new(File.read(template)).result(binding)
