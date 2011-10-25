@@ -94,6 +94,12 @@ by going to http://localhost:9282, or from the command line:
 $ watchtower open
 ```
 
+# Commands
+
+For more information on available commands, you can take a look at the
+[WatchTower Command Line wiki
+page](https://github.com/TechnoGate/watch_tower/wiki/WatchTower-Command-Line).
+
 # Contributing
 
 Please feel free to fork and send pull requests, but please follow the
