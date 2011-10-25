@@ -4,7 +4,11 @@ Gemfile.lock
 pkg/*
 .rbx
 .rvmrc
+tmp
 
 # Tranmuter output
 README.pdf
 README.html
+
+# Sass
+.sass-cache
