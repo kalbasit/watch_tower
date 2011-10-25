@@ -17,9 +17,8 @@ You can try some tracking software that depends on you to start and stop
 timers. But what happens if you forget to start or stop one of those timers?
 
 What you need is a passive system that will take care of all of this for you,
-so you can focus on the actual work.
-
-Watch Tower comes to the rescue.
+so you can focus on the actual work, which is where WatchTower comes into
+play.
 
 WatchTower runs in the background and keeps track of the time spent editing
 each file with one of the supported editors (listed below). Since WatchTower
