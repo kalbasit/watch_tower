@@ -6,9 +6,11 @@ module Editor
 
     it { should respond_to :name }
     its(:name) { should_not raise_error NotImplementedError }
+    its(:name) { should_not be_empty }
 
     it { should respond_to :version }
     its(:version) { should_not raise_error NotImplementedError }
+    its(:version) { should_not be_empty }
 
     describe "#is_running?" do
       it { should respond_to :is_running? }

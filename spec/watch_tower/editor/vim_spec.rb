@@ -3,12 +3,21 @@ require 'spec_helper'
 module Editor
   describe Vim do
     before(:each) do
-        Vim.any_instance.stubs(:systemu).with("/usr/bin/vim --help").returns([0, "", ""])
-        Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --help").returns([0, "--remote server", ""])
-        WatchTower.stubs(:which).with('vim').returns('/usr/bin/vim')
-        WatchTower.stubs(:which).with('gvim').returns('/usr/bin/gvim')
-        WatchTower.stubs(:which).with('mvim').returns(nil)
+      # Stubs which
+      WatchTower.stubs(:which).with('vim').returns('/usr/bin/vim')
+      WatchTower.stubs(:which).with('gvim').returns('/usr/bin/gvim')
+      WatchTower.stubs(:which).with('mvim').returns(nil)
 
+      # Stub systemu
+      Vim.any_instance.stubs(:systemu).with("/usr/bin/vim --help").returns([0, "", ""])
+      Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --help").returns([0, "--remote server", ""])
+      Vim::VIM_EXTENSIONS.each do |ext|
+        extension_path = File.join(Vim::VIM_EXTENSIONS_PATH, "#{ext}.vim")
+        Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr ':source #{extension_path}'")
+      end
+      Vim.any_instance.stubs(:systemu).with('/usr/bin/gvim --serverlist').returns([0, <<-EOC, ''])
+VIM
+EOC
       Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --version").
         returns [0, <<-EOV, '']
 VIM - Vi IMproved 7.3 (2010 Aug 15)
@@ -41,8 +50,6 @@ Linking: gcc   -L/usr/local/lib -Wl,--as-needed -o vim       -lm -lnsl  -lncurse
 EOV
     end
 
-    it { should respond_to :current_paths }
-
     it { should respond_to :name }
     its(:name) { should_not raise_error NotImplementedError }
     its(:name) { should_not be_empty }
@@ -64,6 +71,46 @@ EOV
 
         subject.send :supported_vims
         subject.instance_variable_get('@vims').should == ['/usr/bin/gvim']
+      end
+    end
+
+    describe "#editor" do
+      it { should respond_to :editor }
+
+      it "should return /usr/bin/gvim" do
+        subject.send(:editor).should == '/usr/bin/gvim'
+      end
+    end
+
+    describe "#servers" do
+      it { should respond_to :servers }
+
+      it "should return VIM" do
+        Vim.any_instance.expects(:systemu).with('/usr/bin/gvim --serverlist').returns([0, <<-EOC, '']).once
+VIM
+EOC
+        subject.send(:servers).should == ['VIM']
+      end
+    end
+
+    describe "#send_extensions_to_vim" do
+      it { should respond_to :send_extensions_to_vim }
+
+      it "should send the extensions to vim" do
+        Vim::VIM_EXTENSIONS.each do |ext|
+          extension_path = File.join(Vim::VIM_EXTENSIONS_PATH, "#{ext}.vim")
+          Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr ':source #{extension_path}<CR>'").once
+
+          subject.send :send_extensions_to_vim
+        end
+      end
+    end
+
+    describe "#is_running?" do
+      it { should respond_to :is_running? }
+
+      it "should return true if ViM is running" do
+        subject.is_running?.should be_true
       end
     end
 

@@ -22,6 +22,7 @@ TEMPLATE_PATH = File.join(LIB_PATH, 'templates')
 USER_PATH = File.expand_path(File.join(ENV['HOME'], '.watch_tower'))
 DATABASE_PATH = File.join(USER_PATH, 'databases')
 LOG_PATH = File.join(USER_PATH, 'log')
+EDITOR_EXTENSIONS_PATH = File.join(LIB_PATH, 'editor', 'extensions')
 
 # Define the environment by default set to development
 ENV['WATCH_TOWER_ENV'] ||= 'development'

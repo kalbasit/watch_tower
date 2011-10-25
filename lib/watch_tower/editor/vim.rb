@@ -6,6 +6,9 @@ module WatchTower
     class Vim
       include BasePs
 
+      VIM_EXTENSIONS = ['ls']
+      VIM_EXTENSIONS_PATH = File.join(EDITOR_EXTENSIONS_PATH, 'vim')
+
       def initialize
         # Get the list of supported vims
         supported_vims
@@ -27,6 +30,20 @@ module WatchTower
         stdout.scan(/^VIM - Vi IMproved (\d+\.\d+).*/).first.first
       end
 
+      # Is it running ?
+      #
+      # @return [Boolean] Is ViM running ?
+      def is_running?
+        servers.any?
+      end
+
+      # Return the open documents of all vim servers
+      #
+      # @return [Array] Absolute paths to all open documents
+      def current_paths
+
+      end
+
       protected
       # Return a list of supported vim commands
       #
@@ -43,6 +60,31 @@ module WatchTower
           #       empty for gvim
           vim_path && (vim == 'gvim' || stdout =~ %r(--remote) ) ? vim_path : nil
         end.reject { |vim| vim.nil? }
+      end
+
+      # Return the editor
+      #
+      # @return [String|nil] The editor command
+      def editor
+        @vims.any? && @vims.first
+      end
+
+      # Returns the running servers
+      #
+      # @return [Array] Name of running ViM Servers
+      def servers
+        status, stdout, stderr = systemu "#{editor} --serverlist"
+        stdout.split("\n")
+      end
+
+      # Send WatchTower extensions to vim
+      def send_extensions_to_vim
+        servers.each do |server|
+          VIM_EXTENSIONS.each do |ext|
+            extension_path = File.join(VIM_EXTENSIONS_PATH, "#{ext}.vim")
+            systemu "#{editor} --servername #{server} --remote-expr ':source #{extension_path}<CR>'"
+          end
+        end
       end
     end
   end
