@@ -12,6 +12,9 @@ module Editor
       Vim.any_instance.stubs(:systemu).with("/usr/bin/vim --help").returns([0, "", ""])
       Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --help").returns([0, "--remote server", ""])
       Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-send ':source #{Vim::VIM_EXTENSION_PATH}'")
+        Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()<CR>'").returns(<<-EOS)
+(1) /path/to/file.rb
+EOS
       Vim.any_instance.stubs(:systemu).with('/usr/bin/gvim --serverlist').returns([0, <<-EOC, ''])
 VIM
 EOC
@@ -107,5 +110,33 @@ EOC
         subject.is_running?.should be_true
       end
     end
+
+    describe "#current_paths" do
+      it { should respond_to :current_paths }
+
+      it "should call is_running?" do
+        Vim.any_instance.expects(:is_running?).returns(false).once
+
+        subject.current_paths
+      end
+
+      it "should be nil if is_running? is false" do
+        Vim.any_instance.stubs(:is_running?).returns(false)
+
+        subject.current_paths.should be_nil
+      end
+
+      it "should be able to parse ls output" do
+        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([0, <<-EOS, '']).once
+(1) /path/to/file.rb
+(15) /path/to/file2.rb
+EOS
+
+        documents = subject.current_paths
+        documents.should include("/path/to/file.rb")
+        documents.should include("/path/to/file2.rb")
+      end
+    end
+
   end
 end

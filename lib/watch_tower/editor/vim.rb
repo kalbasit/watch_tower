@@ -36,6 +36,24 @@ module WatchTower
         servers.any?
       end
 
+      # Return the open documents of all vim servers
+      #
+      # @return [Array] Absolute paths to all open documents
+      def current_paths
+        if is_running?
+          documents = []
+          servers.each do |server|
+            status, stdout, stderr = systemu "#{editor} --servername #{server} --remote-expr 'watchtower#ls()'"
+
+            stdout.split("\n").each do |doc|
+              documents << doc.scan(/^\(\d+\)\s+(.*)$/).first.first
+            end
+          end
+
+          documents
+        end
+      end
+
       protected
       # Return a list of supported vim commands
       #
