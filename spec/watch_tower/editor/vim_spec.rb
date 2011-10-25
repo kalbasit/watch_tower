@@ -11,10 +11,7 @@ module Editor
       # Stub systemu
       Vim.any_instance.stubs(:systemu).with("/usr/bin/vim --help").returns([0, "", ""])
       Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --help").returns([0, "--remote server", ""])
-      Vim::VIM_EXTENSIONS.each do |ext|
-        extension_path = File.join(Vim::VIM_EXTENSIONS_PATH, "#{ext}.vim")
-        Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr ':source #{extension_path}'")
-      end
+      Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-send ':source #{Vim::VIM_EXTENSION_PATH}'")
       Vim.any_instance.stubs(:systemu).with('/usr/bin/gvim --serverlist').returns([0, <<-EOC, ''])
 VIM
 EOC
@@ -93,16 +90,13 @@ EOC
       end
     end
 
-    describe "#send_extensions_to_vim" do
-      it { should respond_to :send_extensions_to_vim }
+    describe "#send_extensions_to_editor" do
+      it { should respond_to :send_extensions_to_editor }
 
       it "should send the extensions to vim" do
-        Vim::VIM_EXTENSIONS.each do |ext|
-          extension_path = File.join(Vim::VIM_EXTENSIONS_PATH, "#{ext}.vim")
-          Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr ':source #{extension_path}<CR>'").once
+        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-send ':source #{Vim::VIM_EXTENSION_PATH}<CR>'").once
 
-          subject.send :send_extensions_to_vim
-        end
+        subject.send :send_extensions_to_editor
       end
     end
 
@@ -113,6 +107,5 @@ EOC
         subject.is_running?.should be_true
       end
     end
-
   end
 end

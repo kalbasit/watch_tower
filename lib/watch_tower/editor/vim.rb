@@ -6,8 +6,7 @@ module WatchTower
     class Vim
       include BasePs
 
-      VIM_EXTENSIONS = ['ls']
-      VIM_EXTENSIONS_PATH = File.join(EDITOR_EXTENSIONS_PATH, 'vim')
+      VIM_EXTENSION_PATH = File.join(EDITOR_EXTENSIONS_PATH, 'watchtower.vim')
 
       def initialize
         # Get the list of supported vims
@@ -35,13 +34,6 @@ module WatchTower
       # @return [Boolean] Is ViM running ?
       def is_running?
         servers.any?
-      end
-
-      # Return the open documents of all vim servers
-      #
-      # @return [Array] Absolute paths to all open documents
-      def current_paths
-
       end
 
       protected
@@ -78,12 +70,9 @@ module WatchTower
       end
 
       # Send WatchTower extensions to vim
-      def send_extensions_to_vim
+      def send_extensions_to_editor
         servers.each do |server|
-          VIM_EXTENSIONS.each do |ext|
-            extension_path = File.join(VIM_EXTENSIONS_PATH, "#{ext}.vim")
-            systemu "#{editor} --servername #{server} --remote-expr ':source #{extension_path}<CR>'"
-          end
+          systemu "#{editor} --servername #{server} --remote-send ':source #{VIM_EXTENSION_PATH}<CR>'"
         end
       end
     end
