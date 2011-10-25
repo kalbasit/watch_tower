@@ -30,13 +30,15 @@ project each file belongs to, you can view details and statistics on each projec
 - A WatchTower Home Page where you can see how much time you've spent on all watched projects, 
   as well as a total summary. The default display includes all projects worked on during the current month, but the page includes a date picker for 
   easy selection. You can select a project to view the project's Detail Page.
-  [![Example: WatchTower Home Page](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/home_page.png)
+
+  [![Example: WatchTower Home Page](http://f.cl.ly/items/1C0W1W0V2L3s3k2o313f/home_page.png)](http://f.cl.ly/items/1C0W1W0V2L3s3k2o313f/home_page.png)
 
 - A Project Detail Page that displays a detailed report of the time spent on the project,
   each directory within the project, and each file. 
   The default display includes all files worked on during the current month, but the page includes a date picker for
   easy selection.
-  [![Example: Project Detail Page](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)](http://cloud.github.com/downloads/TechnoGate/watch_tower/project_page.png)
+
+  [![Example: Project Detail Page]http://f.cl.ly/items/3T263A350w261b0b2U1x/project_page.png)]http://f.cl.ly/items/3T263A350w261b0b2U1x/project_page.png)
 
 # Supported Editors
 
