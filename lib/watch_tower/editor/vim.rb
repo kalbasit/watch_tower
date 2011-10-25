@@ -45,9 +45,7 @@ module WatchTower
           servers.each do |server|
             status, stdout, stderr = systemu "#{editor} --servername #{server} --remote-expr 'watchtower#ls()'"
 
-            stdout.split("\n").each do |doc|
-              documents << doc.scan(/^\(\d+\)\s+(.*)$/).first.first
-            end
+            documents += stdout.split("\n")
           end
 
           documents

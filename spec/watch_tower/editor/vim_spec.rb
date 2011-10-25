@@ -13,7 +13,7 @@ module Editor
       Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --help").returns([0, "--remote server", ""])
       Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-send ':source #{Vim::VIM_EXTENSION_PATH}'")
         Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()<CR>'").returns(<<-EOS)
-(1) /path/to/file.rb
+/path/to/file.rb
 EOS
       Vim.any_instance.stubs(:systemu).with('/usr/bin/gvim --serverlist').returns([0, <<-EOC, ''])
 VIM
@@ -128,8 +128,8 @@ EOC
 
       it "should be able to parse ls output" do
         Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([0, <<-EOS, '']).once
-(1) /path/to/file.rb
-(15) /path/to/file2.rb
+/path/to/file.rb
+/path/to/file2.rb
 EOS
 
         documents = subject.current_paths
