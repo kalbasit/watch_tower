@@ -2,41 +2,49 @@
 
 [![Click here to lend your support to: Open Source Projects and make a donation at www.pledgie.com!](http://pledgie.com/campaigns/16123.png?skin_name=chrome)](http://www.pledgie.com/campaigns/16123)
 
-WatchTower helps you track how much time you spend on all of your projects, at the project, directory, and file level.
+WatchTower helps you track how much time you spend on all of your projects, at
+the project, directory, and file level.
 
 # Introduction
 
-Did you ever want to keep track of how much time you _really_ spend on all of your projects?
-Sure, you can try to remember to keep running estimates of your time in the hope that you can aggregate 
-those estimates later into some meaningful data. But sometimes you forget, or an error creeps into your estimate.
-And those errors add up. Quickly.
+Did you ever want to keep track of how much time you _really_ spend on all of
+your projects? Sure, you can try to remember to keep running estimates of your
+time in the hope that you can aggregate those estimates later into some
+meaningful data. But sometimes you forget, or an error creeps into your
+estimate. And those errors add up. Quickly.
 
-You can try some tracking software that depends on you to start and stop timers. But what happens if you forget to 
-start or stop one of those timers?
+You can try some tracking software that depends on you to start and stop
+timers. But what happens if you forget to start or stop one of those timers?
 
-What you need is a passive system that will take care of all of this for you, so you can focus on the actual work.
+What you need is a passive system that will take care of all of this for you,
+so you can focus on the actual work.
 
 Watch Tower comes to the rescue.
 
-WatchTower runs in the background and keeps track of the time spent editing each file with one of the 
-supported editors (listed below). Since WatchTower keeps track of the time spent on each file, and it knows which
-project each file belongs to, you can view details and statistics on each project, right down to the file level.
+WatchTower runs in the background and keeps track of the time spent editing
+each file with one of the supported editors (listed below). Since WatchTower
+keeps track of the time spent on each file, and it knows which project each
+file belongs to, you can view details and statistics on each project, right
+down to the file level.
 
 # Features
 
-- Tracks the supported editors (listed below) and records the time spent on all files as specified 
-  via the customized configuration file (Git and  __code_path__ are supported).
+- Tracks the supported editors (listed below) and records the time spent on
+  all files as specified via the customized configuration file (Git and
+  __code_path__ are supported).
 
-- A WatchTower Home Page where you can see how much time you've spent on all watched projects, 
-  as well as a total summary. The default display includes all projects worked on during the current month, but the page includes a date picker for 
-  easy selection. You can select a project to view the project's Detail Page.
+- A WatchTower Home Page where you can see how much time you've spent on all
+  watched projects, as well as a total summary. The default display includes
+  all projects worked on during the current month, but the page includes a
+  date picker for easy selection. You can select a project to view the
+  project's Detail Page.
 
   [![Example: WatchTower Home Page](http://f.cl.ly/items/1C0W1W0V2L3s3k2o313f/home_page.png)](http://f.cl.ly/items/1C0W1W0V2L3s3k2o313f/home_page.png)
 
-- A Project Detail Page that displays a detailed report of the time spent on the project,
-  each directory within the project, and each file. 
-  The default display includes all files worked on during the current month, but the page includes a date picker for
-  easy selection.
+- A Project Detail Page that displays a detailed report of the time spent on
+  the project, each directory within the project, and each file. The default
+  display includes all files worked on during the current month, but the page
+  includes a date picker for easy selection.
 
   [![Example: Project Detail Page](http://f.cl.ly/items/3T263A350w261b0b2U1x/project_page.png)](http://f.cl.ly/items/3T263A350w261b0b2U1x/project_page.png)
 
@@ -63,7 +71,8 @@ project each file belongs to, you can view details and statistics on each projec
     $ watchtower load_bootloader
     ```
 
-3. __Review the self-explanatory configuration file__ located at __~/.watch_tower/config.yml__ and make any changes necessary.
+3. __Review the self-explanatory configuration file__ located at
+__~/.watch_tower/config.yml__ and make any changes necessary.
 
 # Update
 
@@ -78,9 +87,9 @@ to update the path to the WatchTower binary in the boot loader.
 
 # Usage
 
-The installation process creates a launcher on login that starts __WatchTower__.
-You can view your WatchTower Home Page via the web interface by going to http://localhost:9282, 
-or from the command line:
+The installation process creates a launcher on login that starts
+__WatchTower__. You can view your WatchTower Home Page via the web interface
+by going to http://localhost:9282, or from the command line:
 
 ```bash
 $ watchtower open
