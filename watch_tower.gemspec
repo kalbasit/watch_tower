@@ -69,6 +69,9 @@ MSG
   s.add_dependency 'sass', '~>3.1.10'
   s.add_dependency 'sprockets', '~>2.0.2'
 
+  # System commands
+  s.add_dependency 'systemu', '~>2.4.0'
+
   ####
   # Development dependencies
   ####

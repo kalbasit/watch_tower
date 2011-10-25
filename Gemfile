@@ -30,6 +30,7 @@ platforms :ruby do
     if RbConfig::CONFIG['target_os'] =~ /linux/i
       gem 'rb-inotify', require: false
       gem 'libnotify', require: false
+      gem 'therubyracer', require: false
     end
   end
 end
