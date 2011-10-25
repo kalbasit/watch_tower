@@ -51,10 +51,12 @@ down to the file level.
 
 - TextMate
 - Xcode
+- ViM (gVim and MacVim are also supported)
 
 # Supported Operating Systems
 
 - Mac OS X
+- Linux
 
 # Getting Started
 
