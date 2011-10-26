@@ -2,6 +2,7 @@ window.date_filtering =
   handleResponse: (response, textStatus, jqXHR) ->
     ($ '.page').html(response)
     percentage.applyPercentage()
+    file_tree.bind_event_on_buttons()
 
   updateMetaTags: (dates) ->
     ($ 'meta[name="date_filtering_from"]').attr 'content', $.datepick.formatDate(dates[0])
