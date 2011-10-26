@@ -151,6 +151,7 @@ projects including, but not limited to:
 - [timecop](https://github.com/jtrupiano/timecop)
 - [pry](https://github.com/pry/pry)
 - [systemu](https://github.com/ahoward/systemu)
+- [cronedit](http://cronedit.rubyforge.org)
 
 # License
 
