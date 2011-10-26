@@ -25,14 +25,27 @@ module WatchTower
       #
       # @return [String] The editor's version
       def version
-        version = nil
+        return if @version
+
+        @version = nil
         if is_running?
-          Open3.popen2 "#{editor} --version" do |stdin, stdout, wait_thr|
-            version = stdout.read.scan(/^VIM - Vi IMproved (\d+\.\d+).*/).first.first
+          editor_command = editor
+          begin
+            Open3.popen2 "#{editor_command} --version" do |stdin, stdout, wait_thr|
+              parsed_stdout = stdout.read.scan(/^VIM - Vi IMproved (\d+\.\d+).*/)
+              LOG.info "#{__FILE__}:#{__LINE__ - 1}: Parsed vim --version: #{parsed_stdout.inspect}"
+              @version = parsed_stdout.try(:first).try(:first)
+            end
+
+            raise VimVersionNotPrinted if @version.nil?
+          rescue VimVersionNotPrinted
+            if editor_command =~ /gvim|mvim/
+              editor_command = WatchTower.which('vim')
+              retry
+            end
           end
         end
-
-        version
+        @version
       end
 
       # Is it running ?

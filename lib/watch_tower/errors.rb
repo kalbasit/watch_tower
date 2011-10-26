@@ -19,6 +19,8 @@ module WatchTower
   EditorError = Class.new WatchTowerError
   TextmateError = Class.new EditorError
   XcodeError = Class.new EditorError
+  VimError = Class.new EditorError
+  VimVersionNotPrinted = Class.new VimError
 
   # Exceptions raised by the Server module
   ServerError = Class.new WatchTowerError

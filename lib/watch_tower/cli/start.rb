@@ -40,7 +40,15 @@ module WatchTower
               aliases: "-p",
               default: 9282,
               desc: "Set the server's port."
+            method_option :debug,
+              type: :boolean,
+              required: false,
+              aliases: "-d",
+              default: false,
+              desc: "Run in debug mode."
             def start
+              # Set the logger to debug mode if necessary
+              LOG.level = Logger::DEBUG if options[:debug]
               if Config[:enabled] &&
                 (!options[:bootloader] || (options[:bootloader] && Config[:launch_on_boot]))
                 LOG.info "Starting WatchTower."
@@ -62,16 +70,24 @@ module WatchTower
                 else
                   LOG.debug "#{__FILE__}:#{__LINE__}: Running WatchTower in the background."
                   pid = fork do
-                    # Try to replace ruby with WatchTower in the command line (for ps)
-                    $0 = 'watchtower' unless $0 == 'watchtower'
+                    begin
+                      # Try to replace ruby with WatchTower in the command line (for ps)
+                      $0 = 'watchtower' unless $0 == 'watchtower'
 
-                    # Tell ruby that we are a daemon
-                    Process.daemon
+                      # Tell ruby that we are a daemon
+                      Process.daemon
 
-                    # Start WatchTower
-                    start_watch_tower
+                      # Start WatchTower
+                      start_watch_tower
 
-                    LOG.debug "#{__FILE__}:#{__LINE__}: WatchTower has finished."
+                      LOG.debug "#{__FILE__}:#{__LINE__}: WatchTower has finished."
+                    rescue => e
+                      LOG.fatal "#{__FILE__}:#{__LINE__ - 2}: The process raised an exception \#{e.message}"
+                      LOG.fatal "#{__FILE__}:#{__LINE__ - 3}: ==== Backtrace ===="
+                      e.backtrace.each do |trace|
+                        LOG.fatal "#{__FILE__}:#{__LINE__ - 5}: \#{trace}"
+                      end
+                    end
                   end
                 end
               end
