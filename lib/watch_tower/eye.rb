@@ -30,8 +30,10 @@ module WatchTower
             # Iterate over the files to fill the database
             files_paths.each do |file_path|
               begin
-                next unless file_path && File.exists?(file_path)
                 next if file_path =~ IGNORED_PATHS
+                next unless file_path
+                next unless File.exists?(file_path)
+                next unless File.file?(file_path)
                 # Get the file_hash of the file
                 file_hash = Digest::SHA1.file(file_path).hexdigest
                 # Create a project from the file_path

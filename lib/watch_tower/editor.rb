@@ -8,6 +8,7 @@ module WatchTower
     autoload :BasePs
     autoload :Textmate
     autoload :Xcode
+    autoload :Vim
 
     def self.editors
       Editor.constants.                                     # Collect the defined constants

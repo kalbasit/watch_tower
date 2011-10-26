@@ -22,6 +22,7 @@ TEMPLATE_PATH = File.join(LIB_PATH, 'templates')
 USER_PATH = File.expand_path(File.join(ENV['HOME'], '.watch_tower'))
 DATABASE_PATH = File.join(USER_PATH, 'databases')
 LOG_PATH = File.join(USER_PATH, 'log')
+EDITOR_EXTENSIONS_PATH = File.join(LIB_PATH, 'editor', 'extensions')
 
 # Define the environment by default set to development
 ENV['WATCH_TOWER_ENV'] ||= 'development'
@@ -33,6 +34,8 @@ FileUtils.mkdir_p LOG_PATH
 
 # module WatchTower
 module WatchTower
+  # Make sure all the methods are available as both Class and Instance methods.
+  extend self
 
   # Create a logger
   LOG = Logger.new(File.join(LOG_PATH, "#{ENV['WATCH_TOWER_ENV']}.log"))
@@ -44,22 +47,39 @@ module WatchTower
   # Returh the threads
   #
   # @return [Hash] Threads
-  def self.threads
+  def threads
     @@threads
   end
 
   # Get WatchTower's environment
   #
   # @return [String] The current environment
-  def self.env
+  def env
     ENV['WATCH_TOWER_ENV']
   end
 
   # Set WatchTower's environment
   #
   # @param [String] The environment
-  def self.env=(environment)
+  def env=(environment)
     ENV['WATCH_TOWER_ENV'] = environment
+  end
+
+  # Cross-platform way of finding an executable in the $PATH.
+  #
+  # Taken from hub
+  # https://github.com/defunkt/hub/blob/master/lib/hub/context.rb#L186
+  #
+  # which('ruby') #=> /usr/bin/ruby
+  def which(cmd)
+    exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
+    ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+      exts.each { |ext|
+        exe = "#{path}/#{cmd}#{ext}"
+        return exe if File.executable? exe
+      }
+    end
+    return nil
   end
 end
 
