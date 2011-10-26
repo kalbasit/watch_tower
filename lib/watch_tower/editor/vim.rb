@@ -1,5 +1,20 @@
 # -*- encoding: utf-8 -*-
-require 'systemu'
+
+# Somehow on my laptop, the systemu command works well for vim but does not
+# work at all for gvim, in fact calling systemu just returns an empty stdout.
+# TODO: Figure out if it's a problem on my box or systemu's bug
+
+# require 'systemu'
+class Object
+  # This method returns the output of a system command
+  # much like the original systemu method
+  #
+  # @param [String] cmd: The command to run.
+  # @return [Array] formed of status, stdout, stderr
+  def systemu(cmd)
+    [0, `#{cmd}`, '']
+  end
+end
 
 module WatchTower
   module Editor
@@ -41,6 +56,9 @@ module WatchTower
       # @return [Array] Absolute paths to all open documents
       def current_paths
         if is_running?
+          # Make sure All servers has loaded our function
+          send_extensions_to_editor
+          # Init documents
           documents = []
           servers.each do |server|
             status, stdout, stderr = systemu "#{editor} --servername #{server} --remote-expr 'watchtower#ls()'"
