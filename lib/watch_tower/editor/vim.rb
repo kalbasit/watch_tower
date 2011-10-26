@@ -1,21 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-# Somehow on my laptop, the systemu command works well for vim but does not
-# work at all for gvim, in fact calling systemu just returns an empty stdout.
-# TODO: Figure out if it's a problem on my box or systemu's bug
-
-# require 'systemu'
-class Object
-  # This method returns the output of a system command
-  # much like the original systemu method
-  #
-  # @param [String] cmd: The command to run.
-  # @return [Array] formed of status, stdout, stderr
-  def systemu(cmd)
-    cmd_out = `#{cmd} 2>&1`
-    [0, cmd_out, cmd_out]
-  end
-end
+require 'open3'
 
 module WatchTower
   module Editor
@@ -40,18 +25,21 @@ module WatchTower
       #
       # @return [String] The editor's version
       def version
+        version = nil
         if is_running?
-          status, stdout, stderr = systemu "#{editor} --version"
-
-          stdout.scan(/^VIM - Vi IMproved (\d+\.\d+).*/).first.first
+          Open3.popen2 "#{editor} --version" do |stdin, stdout, wait_thr|
+            version = stdout.read.scan(/^VIM - Vi IMproved (\d+\.\d+).*/).first.first
+          end
         end
+
+        version
       end
 
       # Is it running ?
       #
       # @return [Boolean] Is ViM running ?
       def is_running?
-        servers.any?
+        servers && servers.any?
       end
 
       # Return the open documents of all vim servers
@@ -62,16 +50,21 @@ module WatchTower
           # Init documents
           documents = []
           servers.each do |server|
-            status, stdout, stderr = systemu "#{editor} --servername #{server} --remote-expr 'watchtower#ls()'"
+            stdin, stdout, stderr, wait_thr = Open3.popen3 "#{editor} --servername #{server} --remote-expr 'watchtower#ls()'"
 
-            if stderr =~ /Invalid expression received: Send expression failed/i
+            if stderr.read =~ /Invalid expression received: Send expression failed/i
+              # Close the pipes
+              [stdin, stdout, stderr].each { |p| p.try(:close) }
               # Send the extenstion to the ViM server
               send_extensions_to_editor
               # Ask ViM for the documents again
-              status, stdout, stderr = systemu "#{editor} --servername #{server} --remote-expr 'watchtower#ls()'"
+              stdin, stdout, stderr, wait_thr = Open3.popen3 "#{editor} --servername #{server} --remote-expr 'watchtower#ls()'"
             end
 
-            documents += stdout.split("\n")
+            documents += stdout.read.split("\n")
+
+            # Close the pipes
+            [stdin, stdout, stderr].each { |p| p.try(:close) }
           end
 
           documents.uniq
@@ -87,9 +80,12 @@ module WatchTower
           # Get the absolute path of the command
           vim_path = WatchTower.which(vim)
           # Print the help of the command
-          status, stdout, stderr = systemu "#{vim_path} --help" if vim_path
+          stdin, stdout, wait_thr = Open3.popen2 "#{vim_path} --help" if vim_path
           # This command is compatible if it exists and if it respond to --remote
-          vim_path && stdout =~ %r(--remote) ? vim_path : nil
+          r = vim_path && (vim != 'vim' || stdout.read =~ %r(--remote)) ? vim_path : nil
+          # Close the pipes
+          [stdin, stdout].each { |p| p.try(:close) }
+          r
         end.reject { |vim| vim.nil? }
       end
 
@@ -97,21 +93,29 @@ module WatchTower
       #
       # @return [String|nil] The editor command
       def editor
-        @vims.any? && @vims.first
+        @vims && @vims.any? && @vims.first
       end
 
       # Returns the running servers
       #
       # @return [Array] Name of running ViM Servers
       def servers
-        status, stdout, stderr = systemu "#{editor} --serverlist"
-        stdout.split("\n")
+        servers = nil
+        # Tell vim to print the server list
+        Open3.popen2 "#{editor} --serverlist" do |stdin, stdout, wait_thr|
+          # Read the server list
+          servers = stdout.read.split("\n")
+        end
+        servers
       end
 
       # Send WatchTower extensions to vim
       def send_extensions_to_editor
         servers.each do |server|
-          systemu "#{editor} --servername #{server} --remote-send '<ESC>:source #{VIM_EXTENSION_PATH}<CR>'"
+          # Tell vim to source the extensions
+          stdin, stdout, wait_thr = Open3.popen2 "#{editor} --servername #{server} --remote-send '<ESC>:source #{VIM_EXTENSION_PATH}<CR>'"
+          # Close the pipes
+          [stdin, stdout].each { |p| p.try(:close) }
         end
       end
     end

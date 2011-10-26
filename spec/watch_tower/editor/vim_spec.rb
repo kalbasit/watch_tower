@@ -1,5 +1,12 @@
 require 'spec_helper'
 
+def mock_pipe(out)
+  pipe = mock
+  pipe.stubs(:read).returns(out)
+  pipe.stubs(:close)
+  pipe
+end
+
 module Editor
   describe Vim do
     before(:each) do
@@ -9,17 +16,17 @@ module Editor
       WatchTower.stubs(:which).with('mvim').returns(nil)
 
       # Stub systemu
-      Vim.any_instance.stubs(:systemu).with("/usr/bin/vim --help").returns([0, "", ""])
-      Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --help").returns([0, "--remote server", ""])
-      Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-send ':source #{Vim::VIM_EXTENSION_PATH}<CR>'")
-      Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([0, <<-EOS, ''])
+      Open3.stubs(:popen2).with("/usr/bin/vim --help").returns([mock_pipe(""), mock_pipe(""), mock_pipe("")])
+      Open3.stubs(:popen2).with("/usr/bin/gvim --help").returns([mock_pipe(""), mock_pipe("--remote-send"), mock_pipe("")])
+      Open3.stubs(:popen2).with("/usr/bin/gvim --servername VIM --remote-send ':source #{Vim::VIM_EXTENSION_PATH}<CR>'").returns([mock_pipe(""), mock_pipe(""), mock_pipe("")])
+      Open3.stubs(:popen3).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([mock_pipe(""), mock_pipe(<<-EOS), mock_pipe('')])
 /path/to/file.rb
 EOS
-      Vim.any_instance.stubs(:systemu).with('/usr/bin/gvim --serverlist').returns([0, <<-EOC, ''])
+      Open3.stubs(:popen2).with('/usr/bin/gvim --serverlist').yields([mock_pipe(""), mock_pipe(<<-EOC), mock_pipe('')])
 VIM
 EOC
-      Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --version").
-        returns [0, <<-EOV, '']
+      Open3.stubs(:popen2).with("/usr/bin/gvim --version").
+        yields [mock_pipe(""), mock_pipe(<<-EOV), mock_pipe('')]
 VIM - Vi IMproved 7.3 (2010 Aug 15)
 Included patches: 1-202, 204-222, 224-322
 Compiled by 'http://www.opensuse.org/'
@@ -63,11 +70,11 @@ EOV
       it { should respond_to :supported_vims }
 
       it "should return gvim" do
-        Vim.any_instance.expects(:systemu).with("/usr/bin/vim --help").returns([0, "", ""]).once
-        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --help").returns([0, "--remote server", ""]).once
         WatchTower.expects(:which).with('vim').returns('/usr/bin/vim').once
         WatchTower.expects(:which).with('gvim').returns('/usr/bin/gvim').once
         WatchTower.expects(:which).with('mvim').returns(nil).once
+        Open3.expects(:popen2).with("/usr/bin/vim --help").returns([mock_pipe(""), mock_pipe(""), mock_pipe("")]).once
+        Open3.expects(:popen2).with("/usr/bin/gvim --help").returns([mock_pipe(""), mock_pipe("--remote-send"), mock_pipe("")]).once
 
         subject.send :supported_vims
         subject.instance_variable_get('@vims').should == ['/usr/bin/gvim']
@@ -86,7 +93,7 @@ EOV
       it { should respond_to :servers }
 
       it "should return VIM" do
-        Vim.any_instance.expects(:systemu).with('/usr/bin/gvim --serverlist').returns([0, <<-EOC, '']).once
+        Open3.expects(:popen2).with('/usr/bin/gvim --serverlist').yields([mock_pipe(""), mock_pipe(<<-EOC), mock_pipe('')]).once
 VIM
 EOC
         subject.send(:servers).should == ['VIM']
@@ -97,7 +104,7 @@ EOC
       it { should respond_to :send_extensions_to_editor }
 
       it "should send the extensions to vim" do
-        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-send '<ESC>:source #{Vim::VIM_EXTENSION_PATH}<CR>'").once
+        Open3.expects(:popen2).with("/usr/bin/gvim --servername VIM --remote-send '<ESC>:source #{Vim::VIM_EXTENSION_PATH}<CR>'").once
 
         subject.send :send_extensions_to_editor
       end
@@ -108,6 +115,18 @@ EOC
 
       it "should return true if ViM is running" do
         subject.is_running?.should be_true
+      end
+
+      it "should return false if servers is []" do
+        Vim.any_instance.stubs(:servers).returns([])
+
+        subject.is_running?.should be_false
+      end
+
+      it "should return false if servers is nil" do
+        Vim.any_instance.stubs(:servers).returns(nil)
+
+        subject.is_running?.should be_false
       end
     end
 
@@ -127,7 +146,7 @@ EOC
       end
 
       it "should call send_extensions_to_editor only if the remote did not evaluate the command" do
-        Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([0, '', <<-EOS])
+        Open3.expects(:popen3).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([mock_pipe(""), mock_pipe(""), mock_pipe(<<-EOS)]).twice
 E449: Invalid expression received: Send expression failed.
 EOS
         Vim.any_instance.expects(:send_extensions_to_editor).once
@@ -142,7 +161,7 @@ EOS
       end
 
       it "should be able to parse ls output" do
-        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([0, <<-EOS, '']).once
+        Open3.expects(:popen3).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([mock_pipe(""), mock_pipe(<<-EOS), mock_pipe('')]).once
 /path/to/file.rb
 /path/to/file2.rb
 EOS
@@ -153,7 +172,7 @@ EOS
       end
 
       it "should not return duplicate documents" do
-        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([0, <<-EOS, '']).once
+        Open3.expects(:popen3).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([mock_pipe(""), mock_pipe(<<-EOS), mock_pipe('')]).once
 /path/to/file.rb
 /path/to/file.rb
 /path/to/file.rb
