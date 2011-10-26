@@ -56,6 +56,7 @@ down to the file level.
 # Supported Operating Systems
 
 - Mac OS X
+- Linux
 
 # Getting Started
 
