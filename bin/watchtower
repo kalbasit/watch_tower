@@ -1,10 +1,23 @@
 #!/usr/bin/env ruby
 # -*- encoding: utf-8 -*-
 
+# Verify that mac users have rb-appscript installed
+require 'rbconfig'
+if RbConfig::CONFIG['target_os'] =~ /darwin/i
+  begin
+    require 'rubygems'
+    require 'appscript'
+  rescue LoadError
+    STDERR.puts "Please install 'rb-appscript' to use this gem with Textmate and Xcode"
+    STDERR.puts "gem install rb-appscript"
+    exit
+  end
+end
+# Set the environment to production unless explicitly set
 ENV['WATCH_TOWER_ENV'] ||= 'production'
-
+# Add the lib folder to the load path
 $:.push File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
-
+# Load watch_tower
 require 'watch_tower'
-
+# Start the CLI
 WatchTower::CLI::Runner.start
