@@ -37,4 +37,8 @@ end
 
 platforms :mri do
   gem 'pg'
+
+  if RbConfig::CONFIG['target_os'] =~ /darwin/i
+    gem 'rb-appscript', '~>0.6.1'
+  end
 end
