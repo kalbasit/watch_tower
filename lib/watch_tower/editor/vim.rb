@@ -39,9 +39,11 @@ module WatchTower
       #
       # @return [String] The editor's version
       def version
-        status, stdout, stderr = systemu "#{@vims.first} --version" if @vims.any?
+        if is_running?
+          status, stdout, stderr = systemu "#{editor} --version"
 
-        stdout.scan(/^VIM - Vi IMproved (\d+\.\d+).*/).first.first
+          stdout.scan(/^VIM - Vi IMproved (\d+\.\d+).*/).first.first
+        end
       end
 
       # Is it running ?
@@ -66,7 +68,7 @@ module WatchTower
             documents += stdout.split("\n")
           end
 
-          documents
+          documents.uniq
         end
       end
 

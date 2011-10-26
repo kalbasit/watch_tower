@@ -142,6 +142,20 @@ EOS
         documents.should include("/path/to/file.rb")
         documents.should include("/path/to/file2.rb")
       end
+
+      it "should not return duplicate documents" do
+        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([0, <<-EOS, '']).once
+/path/to/file.rb
+/path/to/file.rb
+/path/to/file.rb
+/path/to/file.rb
+/path/to/file.rb
+EOS
+
+        documents = subject.current_paths
+        documents.should include("/path/to/file.rb")
+        documents.size.should == 1
+      end
     end
 
   end
