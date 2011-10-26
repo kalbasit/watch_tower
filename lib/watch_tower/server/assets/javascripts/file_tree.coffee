@@ -1,4 +1,8 @@
 window.file_tree =
+  bind_event_on_buttons: ->
+    ($ '.collapsed').each (index, element) ->
+      ($ element).bind 'click', ->
+        file_tree.handle_button element
   handle_button: (domId) ->
     if ($ domId).hasClass "collapsed"
       ($ domId).removeClass "collapsed"
@@ -25,6 +29,4 @@ window.file_tree =
       ($ element).hide()
 
 jQuery ($) ->
-  ($ '.collapsed').each (index, element) ->
-    ($ element).bind 'click', ->
-      file_tree.handle_button element
+  file_tree.bind_event_on_buttons()
