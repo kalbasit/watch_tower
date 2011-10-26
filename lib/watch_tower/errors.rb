@@ -12,6 +12,9 @@ module WatchTower
   PathError = Class.new ProjectError
   PathNotUnderCodePath = Class.new PathError
 
+  # Appscript errors
+  AppscriptNotLoadedError = Class.new WatchTowerError
+
   # Exception raised by the Editor module
   EditorError = Class.new WatchTowerError
   TextmateError = Class.new EditorError

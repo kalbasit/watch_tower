@@ -11,8 +11,8 @@ module Editor
       # Stub systemu
       Vim.any_instance.stubs(:systemu).with("/usr/bin/vim --help").returns([0, "", ""])
       Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --help").returns([0, "--remote server", ""])
-      Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-send ':source #{Vim::VIM_EXTENSION_PATH}'")
-        Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()<CR>'").returns(<<-EOS)
+      Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-send ':source #{Vim::VIM_EXTENSION_PATH}<CR>'")
+      Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([0, <<-EOS, ''])
 /path/to/file.rb
 EOS
       Vim.any_instance.stubs(:systemu).with('/usr/bin/gvim --serverlist').returns([0, <<-EOC, ''])
@@ -120,6 +120,12 @@ EOC
         subject.current_paths
       end
 
+      it "should call send_extensions_to_editor" do
+        Vim.any_instance.expects(:send_extensions_to_editor).once
+
+        subject.current_paths
+      end
+
       it "should be nil if is_running? is false" do
         Vim.any_instance.stubs(:is_running?).returns(false)
 
@@ -135,6 +141,20 @@ EOS
         documents = subject.current_paths
         documents.should include("/path/to/file.rb")
         documents.should include("/path/to/file2.rb")
+      end
+
+      it "should not return duplicate documents" do
+        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([0, <<-EOS, '']).once
+/path/to/file.rb
+/path/to/file.rb
+/path/to/file.rb
+/path/to/file.rb
+/path/to/file.rb
+EOS
+
+        documents = subject.current_paths
+        documents.should include("/path/to/file.rb")
+        documents.size.should == 1
       end
     end
 

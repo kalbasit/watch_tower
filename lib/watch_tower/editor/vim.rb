@@ -1,5 +1,20 @@
 # -*- encoding: utf-8 -*-
-require 'systemu'
+
+# Somehow on my laptop, the systemu command works well for vim but does not
+# work at all for gvim, in fact calling systemu just returns an empty stdout.
+# TODO: Figure out if it's a problem on my box or systemu's bug
+
+# require 'systemu'
+class Object
+  # This method returns the output of a system command
+  # much like the original systemu method
+  #
+  # @param [String] cmd: The command to run.
+  # @return [Array] formed of status, stdout, stderr
+  def systemu(cmd)
+    [0, `#{cmd}`, '']
+  end
+end
 
 module WatchTower
   module Editor
@@ -17,16 +32,18 @@ module WatchTower
       #
       # @return [String] The editor's name
       def name
-        "Vim"
+        "ViM"
       end
 
       # Return the version of the editor
       #
       # @return [String] The editor's version
       def version
-        status, stdout, stderr = systemu "#{@vims.first} --version" if @vims.any?
+        if is_running?
+          status, stdout, stderr = systemu "#{editor} --version"
 
-        stdout.scan(/^VIM - Vi IMproved (\d+\.\d+).*/).first.first
+          stdout.scan(/^VIM - Vi IMproved (\d+\.\d+).*/).first.first
+        end
       end
 
       # Is it running ?
@@ -41,6 +58,9 @@ module WatchTower
       # @return [Array] Absolute paths to all open documents
       def current_paths
         if is_running?
+          # Make sure All servers has loaded our function
+          send_extensions_to_editor
+          # Init documents
           documents = []
           servers.each do |server|
             status, stdout, stderr = systemu "#{editor} --servername #{server} --remote-expr 'watchtower#ls()'"
@@ -48,7 +68,7 @@ module WatchTower
             documents += stdout.split("\n")
           end
 
-          documents
+          documents.uniq
         end
       end
 
@@ -63,10 +83,7 @@ module WatchTower
           # Print the help of the command
           status, stdout, stderr = systemu "#{vim_path} --help" if vim_path
           # This command is compatible if it exists and if it respond to --remote
-          # TODO: Remove the mvim/gvim exclusion on stdout comparision
-          #       This does not work on my box (OpenSuse), somehow stdout is
-          #       empty for gvim
-          vim_path && (vim == 'gvim' || stdout =~ %r(--remote) ) ? vim_path : nil
+          vim_path && stdout =~ %r(--remote) ? vim_path : nil
         end.reject { |vim| vim.nil? }
       end
 

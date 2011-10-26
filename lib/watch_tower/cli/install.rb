@@ -73,6 +73,8 @@ module WatchTower
                 case RbConfig::CONFIG['target_os']
                 when /darwin/
                   install_bootloader_on_mac
+                when /linux/
+                  install_bootloader_on_linux
                 else
                   puts bootloader_not_supported_on_current_os
                 end
@@ -82,13 +84,55 @@ module WatchTower
               def install_bootloader_on_mac
                 self.class.source_root(TEMPLATE_PATH)
                 create_file bootloader_path_on_mac, force: options[:force] do
-                  ruby_binary = WatchTower.which('ruby')
-                  watch_tower_binary = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'bin', 'watchtower'))
                   template = File.expand_path(find_in_source_paths('watchtower.plist.erb'))
                   ERB.new(File.read(template)).result(binding)
                 end
 
                 puts "\nCreated. Now run:\n  watchtower load_bootloader\n\n"
+              end
+
+              # Install bootloader on linux
+              def install_bootloader_on_linux
+                require 'cronedit'
+                # Remove any old entries
+                uninstall_bootloader_on_linux
+                # Define the crontab command
+                crontab_command = "\#{ruby_binary} \#{watch_tower_binary} start --bootloader"
+                # Create a crontab instance
+                crontab = CronEdit::Crontab.new
+                # Add the command
+                crontab.add Time.now.strftime('%s'), { minute: "@reboot", hour: '', day: '', month: '', weekday: '', command: crontab_command }
+                # Commit changes
+                crontab.commit
+              end
+
+              # Uninstall bootloader on linux
+              def uninstall_bootloader_on_linux
+                require 'cronedit'
+                # Create a crontab instance
+                crontab = CronEdit::Crontab.new
+                # Iterate over crontab entries and remove any command having watchtower start
+                crontab.list.each_pair do |k, c|
+                  if c =~ /watchtower start/
+                    crontab.remove(k)
+                  end
+                end
+                # Commit changes
+                crontab.commit
+              end
+
+              # Returns the absolute path to the ruby binary
+              #
+              # @return [String] The path to ruby
+              def ruby_binary
+                WatchTower.which('ruby')
+              end
+
+              # Returns the absolute path to the watchtower binary
+              #
+              # @return [String] The path to watch tower binary
+              def watch_tower_binary
+                File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'bin', 'watchtower'))
               end
 
               # Load bootloader
@@ -123,7 +167,6 @@ module WatchTower
                   puts bootloader_not_supported_on_current_os
                 end
               end
-
               # Load the bootloader
               def load_bootloader_on_mac
                 system "launchctl load \#{bootloader_path_on_mac}"

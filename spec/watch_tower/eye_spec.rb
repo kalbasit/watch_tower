@@ -10,6 +10,7 @@ describe Eye do
     @project_path = '/home/user/Code/OpenSource/watch_tower'
     @project_name = 'watch_tower'
     ::File.stubs(:exists?).with(@file_path).returns(true)
+    ::File.stubs(:file?).with(@file_path).returns(true)
 
     # Mock the editor
     @editor = mock
@@ -70,6 +71,12 @@ describe Eye do
 
     it "should call File.exists?" do
       ::File.expects(:exists?).with(@file_path).returns(true).once
+
+      subject.start
+    end
+
+    it "should call File.file?" do
+      ::File.expects(:file?).with(@file_path).returns(true).once
 
       subject.start
     end
