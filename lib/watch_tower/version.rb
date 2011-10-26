@@ -4,7 +4,7 @@ module WatchTower
   MAJOR = 0
   MINOR = 0
   TINY = 1
-  PRE = 'beta7'
+  PRE = 'beta8'
 
   def self.version
     # Init the version
