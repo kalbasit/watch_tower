@@ -69,7 +69,7 @@ MSG
   s.add_dependency 'systemu', '~>2.4.0'
 
   # Crontab editor
-  s.add_dependency 'cronedit', '~>0.3.0' if RbConfig::CONFIG['target_os'] =~ /linux/i
+  s.add_dependency 'cronedit', '~>0.3.0'
 
   ####
   # Development dependencies
