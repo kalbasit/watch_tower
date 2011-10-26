@@ -111,7 +111,7 @@ module WatchTower
       # Send WatchTower extensions to vim
       def send_extensions_to_editor
         servers.each do |server|
-          systemu "#{editor} --servername #{server} --remote-send ':source #{VIM_EXTENSION_PATH}<CR>'"
+          systemu "#{editor} --servername #{server} --remote-send '<ESC>:source #{VIM_EXTENSION_PATH}<CR>'"
         end
       end
     end

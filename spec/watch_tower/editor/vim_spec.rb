@@ -97,7 +97,7 @@ EOC
       it { should respond_to :send_extensions_to_editor }
 
       it "should send the extensions to vim" do
-        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-send ':source #{Vim::VIM_EXTENSION_PATH}<CR>'").once
+        Vim.any_instance.expects(:systemu).with("/usr/bin/gvim --servername VIM --remote-send '<ESC>:source #{Vim::VIM_EXTENSION_PATH}<CR>'").once
 
         subject.send :send_extensions_to_editor
       end
