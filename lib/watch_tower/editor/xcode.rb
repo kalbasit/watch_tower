@@ -15,9 +15,12 @@ module WatchTower
           # https://github.com/apalancat/timetap/blob/editors/lib/time_tap/editors.rb#L25
           pid = app('System Events').processes[its.name.eq('Xcode')].first.unix_id.get
           app.by_pid(pid)
+        rescue AppscriptNotLoadedError
+          # This is expected if appscriot not loaded, on linux for example
         rescue ::FindApp::ApplicationNotFoundError
-        rescue ::Appscript::CommandError
-          nil
+          LOG.debug "#{__FILE__}:#{__LINE__ - 5}: Xcode application can't be found, maybe not installed?"
+        rescue ::Appscript::CommandError => e
+          LOG.error "#{__FILE__}:#{__LINE__ - 7}: Command error #{e}"
         end
     end
   end
