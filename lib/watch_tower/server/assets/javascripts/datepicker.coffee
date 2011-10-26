@@ -8,6 +8,11 @@ window.date_filtering =
     ($ 'meta[name="date_filtering_from"]').attr 'content', $.datepick.formatDate(dates[0])
     ($ 'meta[name="date_filtering_to"]').attr 'content', $.datepick.formatDate(dates[1])
 
+  updateDatePickerDates: ->
+    from_date = ($ 'meta[name="date_filtering_from"]').attr 'content'
+    to_date = ($ 'meta[name="date_filtering_to"]').attr 'content'
+    ($ '#date input').datepick 'setDate', [from_date, to_date]
+
   handleDatePicker: (dates) ->
     options = { from_date:  $.datepick.formatDate(dates[0]), to_date:  $.datepick.formatDate(dates[1]) }
     url = window.location.pathname
@@ -20,3 +25,4 @@ jQuery ->
     monthsToShow: 2,
     alignment: 'bottomRight',
     onClose: date_filtering.handleDatePicker
+  date_filtering.updateDatePickerDates()
