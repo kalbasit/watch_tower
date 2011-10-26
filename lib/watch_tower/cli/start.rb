@@ -75,8 +75,9 @@ module WatchTower
                       LOG.debug "#{__FILE__}:#{__LINE__}: WatchTower has finished."
                     rescue => e
                       LOG.fatal "#{__FILE__}:#{__LINE__ - 2}: The process raised an exception \#{e.message}"
+                      LOG.fatal "#{__FILE__}:#{__LINE__ - 3}: ==== Backtrace ===="
                       e.backtrace.each do |trace|
-                        LOG.fatal "#{__FILE__}:#{__LINE__ - 4}: \#{trace}"
+                        LOG.fatal "#{__FILE__}:#{__LINE__ - 5}: \#{trace}"
                       end
                     end
                   end
