@@ -120,7 +120,16 @@ EOC
         subject.current_paths
       end
 
-      it "should call send_extensions_to_editor" do
+      it "should not call send_extensions_to_editor if the function is already loaded" do
+        Vim.any_instance.expects(:send_extensions_to_editor).never
+
+        subject.current_paths
+      end
+
+      it "should call send_extensions_to_editor only if the remote did not evaluate the command" do
+        Vim.any_instance.stubs(:systemu).with("/usr/bin/gvim --servername VIM --remote-expr 'watchtower#ls()'").returns([0, '', <<-EOS])
+E449: Invalid expression received: Send expression failed.
+EOS
         Vim.any_instance.expects(:send_extensions_to_editor).once
 
         subject.current_paths

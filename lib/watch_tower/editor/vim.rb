@@ -12,7 +12,8 @@ class Object
   # @param [String] cmd: The command to run.
   # @return [Array] formed of status, stdout, stderr
   def systemu(cmd)
-    [0, `#{cmd}`, '']
+    cmd_out = `#{cmd} 2>&1`
+    [0, cmd_out, cmd_out]
   end
 end
 
@@ -58,12 +59,17 @@ module WatchTower
       # @return [Array] Absolute paths to all open documents
       def current_paths
         if is_running?
-          # Make sure All servers has loaded our function
-          send_extensions_to_editor
           # Init documents
           documents = []
           servers.each do |server|
             status, stdout, stderr = systemu "#{editor} --servername #{server} --remote-expr 'watchtower#ls()'"
+
+            if stderr =~ /Invalid expression received: Send expression failed/i
+              # Send the extenstion to the ViM server
+              send_extensions_to_editor
+              # Ask ViM for the documents again
+              status, stdout, stderr = systemu "#{editor} --servername #{server} --remote-expr 'watchtower#ls()'"
+            end
 
             documents += stdout.split("\n")
           end
