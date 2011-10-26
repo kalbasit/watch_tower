@@ -26,14 +26,14 @@ module WatchTower
             #
             # Child class should implement this method
             def name
-              editor.try(:name).try(:get)
+              @name ||= editor.try(:name).try(:get)
             end
 
             # Returns the version of the editor
             #
             # Child class should implement this method
             def version
-              editor.try(:version).try(:get)
+              @version ||= editor.try(:version).try(:get)
             end
 
             # Return the path of the document being edited
