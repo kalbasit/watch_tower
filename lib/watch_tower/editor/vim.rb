@@ -93,7 +93,7 @@ module WatchTower
       #
       # @return [String|nil] The editor command
       def editor
-        @vims && @vims.any? && @vims.first
+        @vims && @vims.any? ? @vims.first : nil
       end
 
       # Returns the running servers

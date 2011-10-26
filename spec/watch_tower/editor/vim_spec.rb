@@ -87,6 +87,18 @@ EOV
       it "should return /usr/bin/gvim" do
         subject.send(:editor).should == '/usr/bin/gvim'
       end
+
+      it "should return nil if @vims is []" do
+        subject.instance_variable_set('@vims', [])
+
+        subject.send(:editor).should == nil
+      end
+
+      it "should return nil if @vims is nil" do
+        subject.instance_variable_set('@vims', nil)
+
+        subject.send(:editor).should == nil
+      end
     end
 
     describe "#servers" do
