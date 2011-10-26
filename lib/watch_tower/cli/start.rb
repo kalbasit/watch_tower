@@ -40,7 +40,15 @@ module WatchTower
               aliases: "-p",
               default: 9282,
               desc: "Set the server's port."
+            method_option :debug,
+              type: :boolean,
+              required: false,
+              aliases: "-d",
+              default: false,
+              desc: "Run in debug mode."
             def start
+              # Set the logger to debug mode if necessary
+              LOG.level = Logger::DEBUG if options[:debug]
               if Config[:enabled] &&
                 (!options[:bootloader] || (options[:bootloader] && Config[:launch_on_boot]))
                 LOG.info "Starting WatchTower."
