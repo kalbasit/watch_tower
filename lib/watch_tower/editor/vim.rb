@@ -17,7 +17,7 @@ module WatchTower
       #
       # @return [String] The editor's name
       def name
-        "Vim"
+        "ViM"
       end
 
       # Return the version of the editor
@@ -63,10 +63,7 @@ module WatchTower
           # Print the help of the command
           status, stdout, stderr = systemu "#{vim_path} --help" if vim_path
           # This command is compatible if it exists and if it respond to --remote
-          # TODO: Remove the mvim/gvim exclusion on stdout comparision
-          #       This does not work on my box (OpenSuse), somehow stdout is
-          #       empty for gvim
-          vim_path && (vim == 'gvim' || stdout =~ %r(--remote) ) ? vim_path : nil
+          vim_path && stdout =~ %r(--remote) ? vim_path : nil
         end.reject { |vim| vim.nil? }
       end
 
