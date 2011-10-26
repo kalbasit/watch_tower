@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
 require "watch_tower/version"
-require 'rbconfig'
 
 Gem::Specification.new do |s|
   s.name        = "watch_tower"
@@ -45,9 +44,6 @@ MSG
   # Run-time dependencies
   ####
 
-  # Appscript
-  s.add_dependency 'rb-appscript', '~>0.6.1' if RbConfig::CONFIG['target_os'] =~ /darwin/i
-
   # Active Support
   s.add_dependency 'activesupport', '~>3.1.1'
   s.add_dependency 'i18n', '~>0.6.0'
@@ -73,7 +69,7 @@ MSG
   s.add_dependency 'systemu', '~>2.4.0'
 
   # Crontab editor
-  s.add_dependency 'cronedit', '~>0.3.0' if RbConfig::CONFIG['target_os'] =~ /linux/i
+  s.add_dependency 'cronedit', '~>0.3.0'
 
   ####
   # Development dependencies
