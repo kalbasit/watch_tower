@@ -19,8 +19,10 @@ module WatchTower
           # This is expected if appscriot not loaded, on linux for example
         rescue ::FindApp::ApplicationNotFoundError
           LOG.debug "#{__FILE__}:#{__LINE__ - 5}: Xcode application can't be found, maybe not installed?"
-        rescue ::Appscript::CommandError => e
-          LOG.error "#{__FILE__}:#{__LINE__ - 7}: Command error #{e}"
+          nil
+        rescue ::Appscript::CommandError
+          LOG.debug "#{__FILE__}:#{__LINE__ - 7}: Xcode is not running."
+          nil
         end
     end
   end
