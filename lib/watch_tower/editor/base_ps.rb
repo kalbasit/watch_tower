@@ -29,7 +29,7 @@ module WatchTower
             #
             # @return [String]
             def to_s
-              "\#{self.class.to_s.split('::').last} Editor"
+              "\#{self.class.to_s.split('::').last} Editor Version \#{version}"
             end
           END
         end
