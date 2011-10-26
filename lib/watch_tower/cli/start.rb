@@ -62,16 +62,23 @@ module WatchTower
                 else
                   LOG.debug "#{__FILE__}:#{__LINE__}: Running WatchTower in the background."
                   pid = fork do
-                    # Try to replace ruby with WatchTower in the command line (for ps)
-                    $0 = 'watchtower' unless $0 == 'watchtower'
+                    begin
+                      # Try to replace ruby with WatchTower in the command line (for ps)
+                      $0 = 'watchtower' unless $0 == 'watchtower'
 
-                    # Tell ruby that we are a daemon
-                    Process.daemon
+                      # Tell ruby that we are a daemon
+                      Process.daemon
 
-                    # Start WatchTower
-                    start_watch_tower
+                      # Start WatchTower
+                      start_watch_tower
 
-                    LOG.debug "#{__FILE__}:#{__LINE__}: WatchTower has finished."
+                      LOG.debug "#{__FILE__}:#{__LINE__}: WatchTower has finished."
+                    rescue => e
+                      LOG.fatal "#{__FILE__}:#{__LINE__ - 2}: The process raised an exception \#{e.message}"
+                      e.backtrace.each do |trace|
+                        LOG.fatal "#{__FILE__}:#{__LINE__ - 4}: \#{trace}"
+                      end
+                    end
                   end
                 end
               end
