@@ -31,5 +31,4 @@ projects including, but not limited to:
 - [factory_girl](https://github.com/thoughtbot/factory_girl)
 - [timecop](https://github.com/jtrupiano/timecop)
 - [pry](https://github.com/pry/pry)
-- [systemu](https://github.com/ahoward/systemu)
 - [cronedit](http://cronedit.rubyforge.org)
