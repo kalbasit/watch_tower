@@ -58,9 +58,11 @@ module WatchTower
             App.run!(options)
 
             LOG.debug("#{__FILE__}:#{__LINE__}: The server has stopped.")
+
+            # Exit this thread immediately
             exit
-          rescue Exception => e
-            LOG.fatal "#{__FILE__}:#{__LINE__ - 4}: #{e}"
+          rescue => e
+            LOG.fatal "#{__FILE__}:#{__LINE__ - 4}: #{e}" unless e.message == 'exit'
             raise e
           end
         end
