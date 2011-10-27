@@ -6,9 +6,6 @@ module WatchTower
   module Config
     extend self
 
-    # Define the config file's path
-    CONFIG_FILE = File.join(USER_PATH, 'config.yml')
-
     # Define the config class variable
     @@config = nil
 
@@ -19,8 +16,17 @@ module WatchTower
     # @raise [Void]
     def [](config)
       ensure_config_file_exists
-      @@config ||= HashWithIndifferentAccess.new(YAML.parse_file(CONFIG_FILE).to_ruby)
-      @@config[:watch_tower].send(:[], config)
+      if config_file && File.exists?(config_file)
+        @@config ||= HashWithIndifferentAccess.new(YAML.parse_file(config_file).to_ruby)
+        @@config[:watch_tower].send(:[], config)
+      end
+    end
+
+    # Get the config file
+    #
+    # @return [String] Absolute path to the config file
+    def config_file
+      File.join(USER_PATH, 'config.yml')
     end
 
     protected
@@ -30,8 +36,8 @@ module WatchTower
       # @return [Void]
       # @raise [Void]
       def ensure_config_file_exists
-        unless File.exists?(CONFIG_FILE)
-          File.open(CONFIG_FILE, 'w') do |f|
+        unless config_file && File.exists?(config_file)
+          File.open(config_file, 'w') do |f|
             f.write(File.read(File.join(TEMPLATE_PATH, 'config.yml')))
           end
         end

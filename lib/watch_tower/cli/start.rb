@@ -54,7 +54,7 @@ module WatchTower
                 LOG.info "Starting WatchTower."
                 start!
               else
-                abort "You need to edit the config file located at #{Config::CONFIG_FILE}."
+                abort "You need to edit the config file located at #{Config.config_file}."
               end
             end
 
