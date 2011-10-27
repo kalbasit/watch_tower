@@ -15,11 +15,12 @@ module WatchTower
     # @return mixed
     # @raise [Void]
     def [](config)
-      ensure_config_file_exists
-      if config_file && File.exists?(config_file)
+      if @@config.nil?
+        check_config_file
         @@config ||= HashWithIndifferentAccess.new(YAML.parse_file(config_file).to_ruby)
-        @@config[:watch_tower].send(:[], config)
       end
+
+      @@config[:watch_tower].send(:[], config)
     end
 
     # Get the config file
@@ -35,12 +36,27 @@ module WatchTower
       # @param [Void]
       # @return [Void]
       # @raise [Void]
-      def ensure_config_file_exists
-        unless config_file && File.exists?(config_file)
-          File.open(config_file, 'w') do |f|
-            f.write(File.read(File.join(TEMPLATE_PATH, 'config.yml')))
-          end
+      def initialize_config_file
+        File.open(config_file, 'w') do |f|
+          f.write(File.read(File.join(TEMPLATE_PATH, 'config.yml')))
         end
+      end
+
+      def check_config_file
+        # Check that config_file is defined
+        raise ConfigNotDefinedError unless config_file
+        # Check that the config file exists
+        initialize_config_file unless config_file_exists?
+        # Check that the config file is readable?
+        raise ConfigNotReadableError unless config_file_readable?
+      end
+
+      def config_file_exists?
+        ::File.exists?(config_file)
+      end
+
+      def config_file_readable?
+        ::File.readable?(config_file)
       end
   end
 end
