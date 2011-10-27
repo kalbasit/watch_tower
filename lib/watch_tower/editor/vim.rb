@@ -9,9 +9,14 @@ module WatchTower
 
       VIM_EXTENSION_PATH = File.join(EDITOR_EXTENSIONS_PATH, 'watchtower.vim')
 
+      # Set the attributes read/write of this class.
+      attr_reader :version
+
       def initialize
         # Get the list of supported vims
         supported_vims
+        # Fetch the version
+        @version ||= fetch_version
       end
 
       # Return the name of the Editor
@@ -19,33 +24,6 @@ module WatchTower
       # @return [String] The editor's name
       def name
         "ViM"
-      end
-
-      # Return the version of the editor
-      #
-      # @return [String] The editor's version
-      def version
-        return if @version
-
-        @version = nil
-        if is_running?
-          editor_command = editor
-          begin
-            Open3.popen2 "#{editor_command} --version" do |stdin, stdout, wait_thr|
-              parsed_stdout = stdout.read.scan(/^VIM - Vi IMproved (\d+\.\d+).*/)
-              LOG.info "#{__FILE__}:#{__LINE__ - 1}: Parsed vim --version: #{parsed_stdout.inspect}"
-              @version = parsed_stdout.try(:first).try(:first)
-            end
-
-            raise VimVersionNotPrinted if @version.nil?
-          rescue VimVersionNotPrinted
-            if editor_command =~ /gvim|mvim/
-              editor_command = WatchTower.which('vim')
-              retry
-            end
-          end
-        end
-        @version
       end
 
       # Is it running ?
@@ -85,6 +63,31 @@ module WatchTower
       end
 
       protected
+      # Fetch the version
+      #
+      # @return [String] The editor's version
+      def fetch_version
+        if editor
+          editor_command = editor
+          begin
+            version = nil
+            Open3.popen2 "#{editor_command} --version" do |stdin, stdout, wait_thr|
+              parsed_stdout = stdout.read.scan(/^VIM - Vi IMproved (\d+\.\d+).*/)
+              LOG.info "#{__FILE__}:#{__LINE__ - 1}: Parsed vim --version: #{parsed_stdout.inspect}"
+              version = parsed_stdout.try(:first).try(:first)
+            end
+
+            raise VimVersionNotPrinted if version.nil?
+          rescue VimVersionNotPrinted
+            if editor_command =~ /gvim|mvim/
+              editor_command = WatchTower.which('vim')
+              retry
+            end
+          end
+        end
+        version || 'Not installed'
+      end
+
       # Return a list of supported vim commands
       #
       # @return [Array] A list of supported vim commands.
