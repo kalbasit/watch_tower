@@ -25,8 +25,7 @@ EOS
       Open3.stubs(:popen2).with('/usr/bin/gvim --serverlist').yields([mock_pipe(""), mock_pipe(<<-EOC), mock_pipe('')])
 VIM
 EOC
-      Open3.stubs(:popen2).with("/usr/bin/gvim --version").
-        yields [mock_pipe(""), mock_pipe(<<-EOV), mock_pipe('')]
+      version_output = <<-EOV
 VIM - Vi IMproved 7.3 (2010 Aug 15)
 Included patches: 1-202, 204-222, 224-322
 Compiled by 'http://www.opensuse.org/'
@@ -55,11 +54,29 @@ Huge version without GUI.  Features included (+) or not (-):
 Compilation: gcc -c -I. -Iproto -DHAVE_CONFIG_H   -I/usr/local/include  -fmessage-length=0 -O2 -Wall -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -g -Wall -pipe -fno-strict-aliasing -fstack-protector-all
 Linking: gcc   -L/usr/local/lib -Wl,--as-needed -o vim       -lm -lnsl  -lncurses -lacl -lattr -ldl
 EOV
+
+      Open3.stubs(:popen2).with("/usr/bin/vim --version").
+        yields [mock_pipe(""), mock_pipe(version_output), mock_pipe('')]
+      Open3.stubs(:popen2).with("/usr/bin/gvim --version").
+        yields [mock_pipe(""), mock_pipe(version_output), mock_pipe('')]
     end
 
     it { should respond_to :name }
     its(:name) { should_not raise_error NotImplementedError }
     its(:name) { should_not be_empty }
+
+    describe "#fetch_version" do
+      it { should respond_to :fetch_version }
+
+      it "should be called on initialize" do
+        Vim.any_instance.expects(:fetch_version).once
+        Vim.new
+      end
+
+      it "should return 7.3" do
+        subject.send(:fetch_version).should == '7.3'
+      end
+    end
 
     it { should respond_to :version }
     its(:version) { should_not raise_error NotImplementedError }

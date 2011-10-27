@@ -30,12 +30,13 @@ module WatchTower
             # Iterate over the files to fill the database
             files_paths.each do |file_path|
               begin
-                next if file_path =~ IGNORED_PATHS
                 next unless file_path
-                next unless File.exists?(file_path)
-                next unless File.file?(file_path)
+                LOG.debug("#{__FILE__}:#{__LINE__}: Ignoring #{file_path}") and next if file_path =~ IGNORED_PATHS
+                LOG.debug("#{__FILE__}:#{__LINE__}: #{file_path} does not exist.") and next unless File.exists?(file_path)
+                LOG.debug("#{__FILE__}:#{__LINE__}: #{file_path} is not a file") and next unless File.file?(file_path)
                 # Get the file_hash of the file
                 file_hash = Digest::SHA1.file(file_path).hexdigest
+                LOG.debug("#{__FILE__}:#{__LINE__ - 1}: The hash of #{file_path} is #{file_hash}.")
                 # Create a project from the file_path
                 project = Project.new_from_path(file_path)
               rescue PathNotUnderCodePath
@@ -49,17 +50,31 @@ module WatchTower
               begin
                 # Create (or fetch) a project
                 project_model = Server::Project.find_or_create_by_name_and_path(project.name, project.path)
+                LOG.debug("#{__FILE__}:#{__LINE__ - 1}: Created (or fetched) the project with the id #{project_model.id}")
 
                 # Create (or fetch) a file
                 file_model = project_model.files.find_or_create_by_path(file_path)
+                LOG.debug("#{__FILE__}:#{__LINE__ - 1}: Created (or fetched) the file with the id #{file_model.id}")
                 begin
                   # Create a time entry
-                  file_model.time_entries.create! mtime: File.stat(file_path).mtime,
+                  time_entry_model =  file_model.time_entries.create! mtime: ::File.stat(file_path).mtime,
                     file_hash: file_hash,
                     editor_name: editor.name,
                     editor_version: editor.version
+                  LOG.debug("#{__FILE__}:#{__LINE__ - 4}: Created a time_entry with the id #{time_entry_model.id}")
                 rescue ActiveRecord::RecordInvalid => e
-                  # This should happen if the mtime is already present
+                  if e.message =~ /Validation failed: Mtime has already been taken/
+                    # This should happen if the mtime is already present
+                    LOG.debug("#{__FILE__}:#{__LINE__ - 8}: The time_entry already exists, nothing were created, error message is #{e.message}")
+                  elsif e.message =~ /Validation failed: /
+                    # This should not happen
+                    LOG.fatal("#{__FILE__}:#{__LINE__ - 11}: The time_entry did not pass validations, #{e.message}.")
+                    $close_eye = true
+                  else
+                    # Some other error happened
+                    LOG.fatal("#{__FILE__}:#{__LINE__ - 15}: An unknown error has been raised while creating the time_entry, #{e.message}")
+                    $close_eye = true
+                  end
                 end
               rescue ActiveRecord::RecordInvalid => e
                 # This should not happen
@@ -77,6 +92,7 @@ module WatchTower
           LOG.debug("#{__FILE__}:#{__LINE__}: Closing eye has been requested, end the loop")
           break
         else
+          # TODO: This should be in the config file, let the user decide how often the loop should start
           sleep 10
         end
       end
