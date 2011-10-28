@@ -51,8 +51,9 @@ module WatchTower
               LOG.level = Logger::DEBUG if options[:debug]
               if Config[:enabled] &&
                 (!options[:bootloader] || (options[:bootloader] && Config[:launch_on_boot]))
-                LOG.info "Starting WatchTower."
+                LOG.info "#{__FILE__}:#{__LINE__}: Starting WatchTower."
                 start!
+                LOG.info "#{__FILE__}:#{__LINE__}: WatchTower has finished."
               else
                 abort "You need to edit the config file located at #{Config::CONFIG_FILE}."
               end
@@ -65,8 +66,6 @@ module WatchTower
 
                   # Start WatchTower
                   start_watch_tower
-
-                  LOG.debug "#{__FILE__}:#{__LINE__}: WatchTower has finished."
                 else
                   LOG.debug "#{__FILE__}:#{__LINE__}: Running WatchTower in the background."
                   pid = fork do
@@ -79,8 +78,6 @@ module WatchTower
 
                       # Start WatchTower
                       start_watch_tower
-
-                      LOG.debug "#{__FILE__}:#{__LINE__}: WatchTower has finished."
                     rescue => e
                       LOG.fatal "#{__FILE__}:#{__LINE__ - 2}: The process raised an exception \#{e.message}"
                       LOG.fatal "#{__FILE__}:#{__LINE__ - 3}: ==== Backtrace ===="

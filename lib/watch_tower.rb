@@ -41,7 +41,7 @@ module WatchTower
   LOG = Logger.new(File.join(LOG_PATH, "#{ENV['WATCH_TOWER_ENV']}.log"))
 
   # Make it by default warn level
-  LOG.level = Logger::WARN
+  LOG.level = Logger::INFO
 
   # Threads
   # Hash
