@@ -35,4 +35,5 @@ module WatchTower
   ConfigNotReadableError = Class.new ConfigError
   ConfigNotFound = Class.new ConfigError
   ConfigNotDefinedError = Class.new ConfigError
+  ConfigNotValidError = Class.new ConfigError
 end

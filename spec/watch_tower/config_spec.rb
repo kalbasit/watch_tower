@@ -5,6 +5,9 @@ describe WatchTower::Config do
     @config = {watch_tower: {enabled: true}}
     @config_path = '/valid/path'
     @invalid_config_path = '/invalid/path'
+    @yaml = mock
+    @yaml.stubs(:to_ruby).returns(@config)
+    Psych.stubs(:parse_file).with(@config_path).returns(@yaml)
     WatchTower::Config.stubs(:config_file).returns(@config_path)
 
     ::File.stubs(:exists?).with(@config_path).returns(true)
@@ -52,14 +55,38 @@ describe WatchTower::Config do
     end
   end
 
+  describe "#parse_config_file" do
+    before(:each) do
+      WatchTower::Config.send(:class_variable_set, :@@config, nil)
+      WatchTower::Config.stubs(:initialize_config_file)
+    end
+
+    it { should respond_to :parse_config_file }
+
+    it "should parse the config file and return an instance of HashWithIndifferentAccess" do
+      subject.send(:parse_config_file).should be_instance_of HashWithIndifferentAccess
+    end
+
+    it "should handle the case where config is not a valid YAML file." do
+      Psych.stubs(:parse_file).with(@config_path).returns(nil)
+
+      -> { subject.send :parse_config_file }.should raise_error ConfigNotValidError
+    end
+
+    it "should handle the case where :watch_tower key does not exist" do
+      config = {}
+      yaml = mock
+      yaml.stubs(:to_ruby).returns(config)
+      Psych.stubs(:parse_file).with(@config_path).returns(yaml)
+
+      -> { subject.send :parse_config_file }.should raise_error ConfigNotValidError
+    end
+  end
+
   describe "#[]" do
     before(:each) do
       WatchTower::Config.send(:class_variable_set, :@@config, nil)
       WatchTower::Config.stubs(:initialize_config_file)
-
-      @yaml = mock
-      @yaml.stubs(:to_ruby).returns(@config)
-      Psych.stubs(:parse_file).with(@config_path).returns(@yaml)
     end
 
     it "should call check_config_file" do
@@ -104,6 +131,21 @@ describe WatchTower::Config do
       ::File.stubs(:readable?).with(@invalid_config_path).returns(false)
 
       -> { subject[:enabled] }.should raise_error ConfigNotReadableError
+    end
+
+    it "should handle the case where config is not a valid YAML file." do
+      Psych.stubs(:parse_file).with(@config_path).returns(nil)
+
+      -> { subject[:enabled] }.should raise_error ConfigNotValidError
+    end
+
+    it "should handle the case where :watch_tower key does not exist" do
+      config = {}
+      yaml = mock
+      yaml.stubs(:to_ruby).returns(config)
+      Psych.stubs(:parse_file).with(@config_path).returns(yaml)
+
+      -> { subject[:enabled] }.should raise_error ConfigNotValidError
     end
   end
 end

@@ -17,7 +17,7 @@ module WatchTower
     def [](config)
       if @@config.nil?
         check_config_file
-        @@config ||= HashWithIndifferentAccess.new(YAML.parse_file(config_file).to_ruby)
+        @@config ||= parse_config_file
       end
 
       @@config[:watch_tower].send(:[], config)
@@ -46,6 +46,20 @@ module WatchTower
         initialize_config_file unless ::File.exists?(config_file)
         # Check that the config file is readable?
         raise ConfigNotReadableError unless ::File.readable?(config_file)
+      end
+
+      # Parse the config file
+      #
+      # @return [HashWithIndifferentAccess] The config
+      def parse_config_file
+        parsed_yaml = YAML.parse_file config_file
+        raise ConfigNotValidError,
+          "#{config_file} is not a valid YAML file." unless parsed_yaml.respond_to?(:to_ruby)
+        config = HashWithIndifferentAccess.new(parsed_yaml.to_ruby)
+        raise ConfigNotValidError,
+          "#{config_file} is not valid." unless config.has_key?(:watch_tower)
+
+        config
       end
   end
 end
