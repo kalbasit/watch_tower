@@ -6,6 +6,12 @@ describe WatchTower::Config do
     @config_path = '/valid/path'
     @invalid_config_path = '/invalid/path'
     WatchTower::Config.stubs(:config_file).returns(@config_path)
+
+    ::File.stubs(:exists?).with(@config_path).returns(true)
+    ::File.stubs(:readable?).with(@config_path).returns(true)
+
+    ::File.stubs(:exists?).with(@invalid_config_path).returns(false)
+    ::File.stubs(:readable?).with(@invalid_config_path).returns(false)
   end
 
   describe "@@config" do
@@ -14,55 +20,21 @@ describe WatchTower::Config do
     end
   end
 
-  describe "#config_file_exists?" do
-    it { should respond_to :config_file_exists? }
-
-    it "should return true if it exists" do
-      ::File.expects(:exists?).with(WatchTower::Config.config_file).returns(true).once
-
-      subject.send(:config_file_exists?).should be_true
-    end
-
-    it "should return false if it doesn't exist" do
-      ::File.expects(:exists?).with(WatchTower::Config.config_file).returns(false).once
-
-      subject.send(:config_file_exists?).should be_false
-    end
-  end
-
-  describe "#config_file_readable?" do
-    it { should respond_to :config_file_readable? }
-
-    it "should return true if it exists" do
-      ::File.expects(:readable?).with(WatchTower::Config.config_file).returns(true).once
-
-      subject.send(:config_file_readable?).should be_true
-    end
-
-    it "should return false if it doesn't exist" do
-      ::File.expects(:readable?).with(WatchTower::Config.config_file).returns(false).once
-
-      subject.send(:config_file_readable?).should be_false
-    end
-  end
-
   describe "#check_config_file" do
     before(:each) do
       WatchTower::Config.stubs(:initialize_config_file)
-      WatchTower::Config.stubs(:config_file_exists?).returns(true)
-      WatchTower::Config.stubs(:config_file_readable?).returns(true)
     end
 
     it { should respond_to :check_config_file }
 
-    it "should call config_file_exists?" do
-      WatchTower::Config.expects(:config_file_exists?).returns(true).once
+    it "should call File.exists?" do
+      ::File.expects(:exists?).with(@config_path).returns(true).once
 
       subject.send(:check_config_file)
     end
 
-    it "should call config_file_readable?" do
-      WatchTower::Config.expects(:config_file_readable?).returns(true).once
+    it "should call File.readable?" do
+      ::File.expects(:readable?).with(@config_path).returns(true).once
 
       subject.send(:check_config_file)
     end
@@ -84,12 +56,6 @@ describe WatchTower::Config do
     before(:each) do
       WatchTower::Config.send(:class_variable_set, :@@config, nil)
       WatchTower::Config.stubs(:initialize_config_file)
-
-      ::File.stubs(:exists?).with(@config_path).returns(true)
-      ::File.stubs(:readable?).with(@config_path).returns(true)
-
-      ::File.stubs(:exists?).with(@invalid_config_path).returns(false)
-      ::File.stubs(:readable?).with(@invalid_config_path).returns(false)
 
       @yaml = mock
       @yaml.stubs(:to_ruby).returns(@config)

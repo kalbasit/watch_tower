@@ -31,32 +31,21 @@ module WatchTower
     end
 
     protected
-      # Ensures config file exists in the user config folder
-      #
-      # @param [Void]
-      # @return [Void]
-      # @raise [Void]
+      # Initialize the configuration file
       def initialize_config_file
         File.open(config_file, 'w') do |f|
           f.write(File.read(File.join(TEMPLATE_PATH, 'config.yml')))
         end
       end
 
+      # Check the config file
       def check_config_file
         # Check that config_file is defined
         raise ConfigNotDefinedError unless config_file
         # Check that the config file exists
-        initialize_config_file unless config_file_exists?
+        initialize_config_file unless ::File.exists?(config_file)
         # Check that the config file is readable?
-        raise ConfigNotReadableError unless config_file_readable?
-      end
-
-      def config_file_exists?
-        ::File.exists?(config_file)
-      end
-
-      def config_file_readable?
-        ::File.readable?(config_file)
+        raise ConfigNotReadableError unless ::File.readable?(config_file)
       end
   end
 end
