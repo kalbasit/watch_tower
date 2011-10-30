@@ -73,7 +73,7 @@ down to the file level.
     ```
 
 3. __Review the self-explanatory configuration file__ located at
-__~/.watch_tower/config.yml__ and make any changes necessary.
+__~/.watch_tower/config.yml__ and make any necessary changes.
 
 # Update
 
