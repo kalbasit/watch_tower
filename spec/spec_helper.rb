@@ -23,4 +23,7 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
   # config.mock_with :rspec
+
+  # Treat symbols as metadata keys with true values
+  config.treat_symbols_as_metadata_keys_with_true_values = true
 end
