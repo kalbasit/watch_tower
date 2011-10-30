@@ -88,6 +88,8 @@ to update the path to the WatchTower binary in the boot loader.
 
 # Usage
 
+## Opening the web interface
+
 The installation process creates a launcher on login that starts
 __WatchTower__. You can view your WatchTower Home Page via the web interface
 by going to http://localhost:9282, or from the command line:
@@ -95,6 +97,14 @@ by going to http://localhost:9282, or from the command line:
 ```bash
 $ watchtower open
 ```
+
+## Rehash
+
+If for some reason, you think that the elapsed time of any of your
+projects is wrong (c.f #9) then you can recalculate the elapsed time of
+all projects and all their files by visiting
+[http://localhost:9282/rehash](http://localhost:9282/rehash), but please
+keep in mind that this can take a long time to process.
 
 # Commands
 
