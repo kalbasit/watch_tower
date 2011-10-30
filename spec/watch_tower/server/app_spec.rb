@@ -1,7 +1,14 @@
 require 'spec_helper'
+require 'rack/test'
 
 module Server
   describe App do
+    include Rack::Test::Methods
+
+    def app
+      Server::App
+    end
+
     before(:each) do
       @projects = {
         empty: {files: [], time_entries:[] },
@@ -230,6 +237,24 @@ module Server
         params = ['from_date=10/01/2001', 'to_date=10/10/2001']
         visit "/project/#{@projects[:not_empty][:project].id}?#{params.join('&')}"
         page.should have_content "No files available for the selected date range."
+      end
+    end
+
+    describe "#rehash" do
+      before(:each) do
+        get '/rehash'
+      end
+
+      it "should send :recalculate_elapsed_time to all projects" do
+        Project.all do |p|
+          p.expects(:recalculate_elapsed_time).once
+        end
+      end
+
+      it "should redirect to the root_path" do
+        last_response.should be_redirect
+        follow_redirect!
+        last_request.url.should =~ /.+\//
       end
     end
   end

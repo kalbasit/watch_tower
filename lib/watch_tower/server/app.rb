@@ -16,6 +16,7 @@ module WatchTower
 
       # Routes
       paths :root => '/'
+      paths :rehash => '/rehash'
       paths :project => '/project/:id'
 
       # Enable sessions
@@ -61,6 +62,20 @@ module WatchTower
         @files = @durations.collect(&:file).uniq
 
         haml :project, layout: (request.xhr? ? false : :layout)
+      end
+
+      # Rehash the elapsed_times
+      get :rehash do
+        # Pause the eye to avoid conflicts
+        $pause_eye = true
+        # Iterate over all projects and recalculate_elapsed_time
+        Project.all.each do |p|
+          p.recalculate_elapsed_time
+        end
+        # Resume the eye
+        $pause_eye = false
+        # Redirect back to the home page.
+        redirect path_to(:root)
       end
     end
   end
