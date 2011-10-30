@@ -3,7 +3,7 @@
 module WatchTower
   MAJOR = 0
   MINOR = 0
-  TINY = 1
+  TINY = 2
   PRE = ''
 
   def self.version
