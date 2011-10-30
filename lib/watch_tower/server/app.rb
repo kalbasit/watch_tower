@@ -49,7 +49,7 @@ module WatchTower
       get :root do
         @title = "Projects"
         @durations = Duration.date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date])
-        @projects = @durations.collect(&:file).collect(&:project).uniq
+        @projects = @durations.collect(&:file).collect(&:project).uniq.sort_by { |p| p.elapsed_time }.reverse
 
         haml :index, layout: (request.xhr? ? false : :layout)
       end
@@ -59,7 +59,7 @@ module WatchTower
         @project = Project.find(params[:id])
         @title = "Project - #{@project.name.camelcase}"
         @durations = @project.durations.date_range(session[:date_filtering][:from_date], session[:date_filtering][:to_date])
-        @files = @durations.collect(&:file).uniq
+        @files = @durations.collect(&:file).uniq.sort_by { |f| f.elapsed_time }.reverse
 
         haml :project, layout: (request.xhr? ? false : :layout)
       end

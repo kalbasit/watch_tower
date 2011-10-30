@@ -57,6 +57,10 @@ module Server
         visit '/'
       end
 
+      it "should assings @durations"
+      it "should assigns @projects"
+      it "should return the projects sorted by their elapsed_time"
+
       it "should render the layout" do
         page.should have_selector :xpath, '//html/head/title'
       end
@@ -144,6 +148,10 @@ module Server
       before(:each) do
         visit "/project/#{@projects[:not_empty][:project].id}"
       end
+
+      it "should assings @durations"
+      it "should assigns @files"
+      it "should return the files sorted by their elapsed_time"
 
       it "should render the layout" do
         page.should have_selector :xpath, '//html/head/title'
