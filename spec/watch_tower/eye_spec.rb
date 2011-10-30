@@ -164,4 +164,20 @@ describe Eye do
       -> { subject.start }.should_not raise_error
     end
   end
+
+  describe "#pause" do
+    before(:each) do
+      Editor.expects(:editors).never
+      $pause_eye = true
+    end
+
+    after(:each) do
+      $pause_eye = false
+    end
+
+    it "should not run if it is paused" do
+
+      subject.start
+    end
+  end
 end

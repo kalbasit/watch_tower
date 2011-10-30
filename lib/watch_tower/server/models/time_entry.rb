@@ -43,7 +43,7 @@ module WatchTower
           if this_time_entry_date == last_time_entry_date
             # Calculate the time
             time_entry_elapsed = this_time_entry.mtime - last_time_entry.mtime rescue 0
-            unless time_entry_elapsed > pause_time
+            if time_entry_elapsed <= pause_time && time_entry_elapsed >= 0
               # Update the file elapsed time
               file.elapsed_time += time_entry_elapsed
               # Update the project's elapsed time

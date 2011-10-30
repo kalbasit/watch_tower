@@ -85,7 +85,7 @@ module WatchTower
           else
             LOG.debug("#{__FILE__}:#{__LINE__}: #{editor.to_s} is not running")
           end
-        end
+        end unless $pause_eye
 
         # If $stop global is set, please stop, otherwise sleep for 10 seconds.
         if $close_eye

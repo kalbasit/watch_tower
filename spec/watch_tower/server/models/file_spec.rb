@@ -184,6 +184,22 @@ module Server
         @file.file_hash.should == t1.file_hash
       end
 
+      it "should not record a negative diff, which can result from a git revert." do
+        # Freeze the time
+        Timecop.freeze(Time.now)
+        # Create two time entries to get an elapsed time
+        FactoryGirl.create :time_entry, file: @file, mtime: Time.now
+        FactoryGirl.create :time_entry, file: @file, mtime: Time.now + 1.minute
+        # Make sure we have the correct elapsed time at this point
+        @file.reload.elapsed_time.should == 1.minute
+        # Travel 1h behind
+        Timecop.travel(Time.now - 1.hour)
+        # Create a new time_entry
+        FactoryGirl.create :time_entry, file: @file, mtime: Time.now
+        # Make sure we did not add a negative elapsed_time
+        @file.reload.elapsed_time.should == 1.minute
+      end
+
     end
 
     describe "scopes" do
