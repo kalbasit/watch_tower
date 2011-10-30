@@ -111,11 +111,23 @@ following guidelines:
   colon and a space, for example 'README: fix a typo' or 'Server/Project: Fix
   a typo'.
 - Include tests.
-- Do not change the version, We will take care of that.
+- __Do not change the version__, We will take care of that.
 
 You can also take a look at the [TODO
 list](https://github.com/TechnoGate/watch_tower/blob/master/TODO) for what's
 in mind for the project
+
+# Contact
+
+For bugs and feature request, please use __Github issues__, for other
+requests, you can contact us:
+
+- [Github private
+  message](https://github.com/inbox/new/eMxyzptlk)
+- Email: [contact@technogate.fr](mailto:contact@technogate.fr)
+
+Don't forget to follow me on [Github](https://github.com/eMxyzptlk) and
+[Twitter](https://twitter.com/eMxyzptlk) for news and updates.
 
 # Credits
 

@@ -21,11 +21,11 @@ module WatchTower
         # Migrate the database
         migrate!
       rescue DatabaseConfigNotFoundError
-        STDERR.puts "Database configurations are missing, please edit #{Config::CONFIG_FILE} and try again."
-        exit(1)
+        raise ConfigNotFound,
+          "Database configurations are missing, please edit #{Config.config_file} and try again."
       rescue ::ActiveRecord::ConnectionNotEstablished => e
-        STDERR.puts "There was an error connecting to the database: #{e}"
-        exit(1)
+        raise DatabaseError,
+          "There was an error connecting to the database: #{error}"
       end
 
       # Stop the database server
@@ -36,11 +36,11 @@ module WatchTower
         # Disconnect from the database
         disconnect!
       rescue DatabaseConfigNotFoundError
-        STDERR.puts "Database configurations are missing, please edit #{Config::CONFIG_FILE} and try again."
-        exit(1)
+        raise ConfigNotFound,
+          "Database configurations are missing, please edit #{Config.config_file} and try again."
       rescue ::ActiveRecord::ConnectionNotEstablished => e
-        STDERR.puts "There was an error connecting to the database: #{e}"
-        exit(1)
+        raise DatabaseError,
+          "There was an error connecting to the database: #{error}"
       end
 
       def is_connected?

@@ -29,4 +29,11 @@ module WatchTower
 
   # Exceptions raised by the Eye module
   EyeError = Class.new WatchTowerError
+
+  # Exceptions raised by the Config module
+  ConfigError = Class.new WatchTowerError
+  ConfigNotReadableError = Class.new ConfigError
+  ConfigNotFound = Class.new ConfigError
+  ConfigNotDefinedError = Class.new ConfigError
+  ConfigNotValidError = Class.new ConfigError
 end
