@@ -63,7 +63,7 @@ down to the file level.
 1. Install the WatchTower gem:
 
     ```bash
-    $ gem install watch_tower --pre
+    $ gem install watch_tower
     ```
 2. Followed by:
 
