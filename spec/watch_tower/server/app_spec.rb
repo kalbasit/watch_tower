@@ -125,8 +125,14 @@ module Server
         end
       end
 
+      # The dependent destroy is not working for some reason
+      # TODO: Remove the File TimeEntry and Duration manual delete once
+      # the issue in spec/watch_tower/server/models/project.rb
       it "should display No projects available for the selected date range if there are no projects" do
         Project.delete_all
+        File.delete_all
+        TimeEntry.delete_all
+        Duration.delete_all
         visit '/'
         page.should have_content "No projects available for the selected date range."
       end
