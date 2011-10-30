@@ -6,9 +6,6 @@ module WatchTower
   module Config
     extend self
 
-    # Define the config file's path
-    CONFIG_FILE = File.join(USER_PATH, 'config.yml')
-
     # Define the config class variable
     @@config = nil
 
@@ -18,23 +15,56 @@ module WatchTower
     # @return mixed
     # @raise [Void]
     def [](config)
-      ensure_config_file_exists
-      @@config ||= HashWithIndifferentAccess.new(YAML.parse_file(CONFIG_FILE).to_ruby)
+      if @@config.nil?
+        check_config_file
+        @@config ||= parse_config_file
+      end
+
       @@config[:watch_tower].send(:[], config)
     end
 
+    # Get the config file
+    #
+    # @return [String] Absolute path to the config file
+    def config_file
+      File.join(USER_PATH, 'config.yml')
+    end
+
     protected
-      # Ensures config file exists in the user config folder
-      #
-      # @param [Void]
-      # @return [Void]
-      # @raise [Void]
-      def ensure_config_file_exists
-        unless File.exists?(CONFIG_FILE)
-          File.open(CONFIG_FILE, 'w') do |f|
-            f.write(File.read(File.join(TEMPLATE_PATH, 'config.yml')))
-          end
+      # Initialize the configuration file
+      def initialize_config_file
+        File.open(config_file, 'w') do |f|
+          f.write(File.read(File.join(TEMPLATE_PATH, 'config.yml')))
         end
+      end
+
+      # Check the config file
+      def check_config_file
+        # Check that config_file is defined
+        raise ConfigNotDefinedError unless config_file
+        # Check that the config file exists
+        initialize_config_file unless ::File.exists?(config_file)
+        # Check that the config file is readable?
+        raise ConfigNotReadableError unless ::File.readable?(config_file)
+      end
+
+      # Parse the config file
+      #
+      # @return [HashWithIndifferentAccess] The config
+      def parse_config_file
+        begin
+          parsed_yaml = YAML.parse_file config_file
+        rescue Psych::SyntaxError => e
+          raise ConfigNotValidError,
+            "Not valid YAML file: #{e.message}."
+        end
+        raise ConfigNotValidError,
+          "Not valid YAML file: The YAML does not respond_to to_ruby." unless parsed_yaml.respond_to?(:to_ruby)
+        config = HashWithIndifferentAccess.new(parsed_yaml.to_ruby)
+        raise ConfigNotValidError,
+          "Not valid YAML file: It doesn't contain watch_tower root key." unless config.has_key?(:watch_tower)
+
+        config
       end
   end
 end

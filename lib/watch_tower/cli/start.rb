@@ -49,13 +49,24 @@ module WatchTower
             def start
               # Set the logger to debug mode if necessary
               LOG.level = Logger::DEBUG if options[:debug]
-              if Config[:enabled] &&
-                (!options[:bootloader] || (options[:bootloader] && Config[:launch_on_boot]))
-                LOG.info "#{__FILE__}:#{__LINE__}: Starting WatchTower."
-                start!
-                LOG.info "#{__FILE__}:#{__LINE__}: WatchTower has finished."
-              else
-                abort "You need to edit the config file located at #{Config::CONFIG_FILE}."
+
+              begin
+                if Config[:enabled] &&
+                  (!options[:bootloader] || (options[:bootloader] && Config[:launch_on_boot]))
+                  LOG.info "#{__FILE__}:#{__LINE__}: Starting WatchTower."
+                  start!
+                  LOG.info "#{__FILE__}:#{__LINE__}: WatchTower has finished."
+                else
+                  abort "You need to edit the config file located at \#{Config.config_file}."
+                end
+              rescue ConfigNotReadableError => e
+                LOG.fatal "#{__FILE__}:#{__LINE__}: The config file is not readable."
+                STDERR.puts "The config file is not readable, please make sure \#{Config.config_file} exists and you have the necessary permissions to read it."
+                exit(1)
+              rescue ConfigNotValidError => e
+                LOG.fatal "#{__FILE__}:#{__LINE__}: The config file is not valid: \#{e.message}."
+                STDERR.puts "The config file \#{Config.config_file} is not valid: \#{e.message}."
+                exit(1)
               end
             end
 
