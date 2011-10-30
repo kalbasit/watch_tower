@@ -290,6 +290,36 @@ module Server
           @projects.first.percent.should == 50
         end
       end
+
+      describe "#recalculate_elapsed_time" do
+        before(:each) do
+          @project = FactoryGirl.create(:project)
+          @files = []
+          Timecop.freeze(Time.now)
+          2.times do
+            @files << FactoryGirl.create(:file, project: @project)
+            2.times do |n|
+              FactoryGirl.create :time_entry, file: @files.last, mtime: Time.now + 2 * n
+            end
+          end
+          Timecop.return
+
+          @project.reload
+          @elapsed_time = @project.elapsed_time
+        end
+
+        subject { @project }
+
+        it { should respond_to(:recalculate_elapsed_time) }
+
+        it "should calculate the correct elapsed_time" do
+          subject.elapsed_time = -56456
+          subject.save
+
+          subject.recalculate_elapsed_time
+          subject.reload.elapsed_time.should == @elapsed_time
+        end
+      end
     end
   end
 end
