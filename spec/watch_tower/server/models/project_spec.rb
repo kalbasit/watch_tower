@@ -306,6 +306,7 @@ module Server
 
           @project.reload
           @elapsed_time = @project.elapsed_time
+          @durations = @files.collect(&:durations).flatten
         end
 
         subject { @project }
@@ -318,6 +319,19 @@ module Server
 
           subject.recalculate_elapsed_time
           subject.reload.elapsed_time.should == @elapsed_time
+        end
+
+        it "should generate the same durations" do
+          subject.elapsed_time = -56454
+          subject.save
+
+          subject.recalculate_elapsed_time
+          subject.reload
+          durations = subject.files.collect(&:durations).flatten
+          durations.each_with_index do |duration, index|
+            duration.date.should == @durations[index].date
+            duration.duration.should == @durations[index].duration
+          end
         end
       end
     end
