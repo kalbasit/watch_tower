@@ -73,7 +73,7 @@ module WatchTower
             version = nil
             Open3.popen2 "#{editor_command} --version" do |stdin, stdout, wait_thr|
               parsed_stdout = stdout.read.scan(/^VIM - Vi IMproved (\d+\.\d+).*/)
-              LOG.info "#{__FILE__}:#{__LINE__ - 1}: Parsed vim --version: #{parsed_stdout.inspect}"
+              LOG.debug "#{__FILE__}:#{__LINE__ - 1}: Parsed vim --version: #{parsed_stdout.inspect}"
               version = parsed_stdout.try(:first).try(:first)
             end
 
