@@ -68,6 +68,12 @@ describe WatchTower::Config do
     end
 
     it "should handle the case where config is not a valid YAML file." do
+      Psych.stubs(:parse_file).raises(Psych::SyntaxError)
+
+      -> { subject.send :parse_config_file }.should raise_error ConfigNotValidError
+    end
+
+    it "should handle the case where Psych returns nil." do
       Psych.stubs(:parse_file).with(@config_path).returns(nil)
 
       -> { subject.send :parse_config_file }.should raise_error ConfigNotValidError

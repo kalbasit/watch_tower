@@ -52,12 +52,17 @@ module WatchTower
       #
       # @return [HashWithIndifferentAccess] The config
       def parse_config_file
-        parsed_yaml = YAML.parse_file config_file
+        begin
+          parsed_yaml = YAML.parse_file config_file
+        rescue Psych::SyntaxError => e
+          raise ConfigNotValidError,
+            "Not valid YAML file: #{e.message}."
+        end
         raise ConfigNotValidError,
-          "#{config_file} is not a valid YAML file." unless parsed_yaml.respond_to?(:to_ruby)
+          "Not valid YAML file: The YAML does not respond_to to_ruby." unless parsed_yaml.respond_to?(:to_ruby)
         config = HashWithIndifferentAccess.new(parsed_yaml.to_ruby)
         raise ConfigNotValidError,
-          "#{config_file} is not valid." unless config.has_key?(:watch_tower)
+          "Not valid YAML file: It doesn't contain watch_tower root key." unless config.has_key?(:watch_tower)
 
         config
       end
