@@ -9,29 +9,10 @@ Gem::Specification.new do |s|
   s.email       = ["wael.nasreddine@gmail.com"]
   s.homepage    = "https://github.com/TechnoGate/watch_tower"
   s.summary     = <<-MSG
-WatchTower helps you track how much time you spend on all of your projects, at
-the project, directory, and file level.
+WatchTower helps you track how much time you spend on all
+of your projects.
 MSG
-  s.description = <<-MSG
-Did you ever want to keep track of how much time you _really_ spend on all of
-your projects? Sure, you can try to remember to keep running estimates of your
-time in the hope that you can aggregate those estimates later into some
-meaningful data. But sometimes you forget, or an error creeps into your
-estimate. And those errors add up. Quickly.
-
-You can try some tracking software that depends on you to start and stop
-timers. But what happens if you forget to start or stop one of those timers?
-
-What you need is a passive system that will take care of all of this for you,
-so you can focus on the actual work, which is where WatchTower comes into
-play.
-
-WatchTower runs in the background and keeps track of the time spent editing
-each file with one of the supported editors (listed below). Since WatchTower
-keeps track of the time spent on each file, and it knows which project each
-file belongs to, you can view details and statistics on each project, right
-down to the file level.
-MSG
+  s.description = s.summary
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
