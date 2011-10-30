@@ -27,7 +27,7 @@ RSpec::configure do |config|
       # Call the example
       example.call
     ensure
-      # Rollback the transaction
+      # Rollback the database transaction
       ActiveRecord::Base.connection.rollback_db_transaction
       # Decrement the number of open transactions
       ActiveRecord::Base.connection.decrement_open_transactions
