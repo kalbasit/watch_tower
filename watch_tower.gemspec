@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.email       = ["wael.nasreddine@gmail.com"]
   s.homepage    = "https://github.com/TechnoGate/watch_tower"
   s.summary     = <<-MSG
-WatchTower helps you track how much time you spend on all of your projects, at
-the project, directory, and file level.
+WatchTower helps you track how much time you spend on all
+of your projects.
 MSG
   s.description = s.summary
 
