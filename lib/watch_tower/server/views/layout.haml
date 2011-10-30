@@ -30,6 +30,12 @@
         .page= yield
 
       %section#footer
+        %a{href: 'https://github.com/TechnoGate/watch_tower', target: '_blank'}
+          WatchTower
+        Version
+        %a{href: "https://github.com/TechnoGate/watch_tower/tree/v#{WatchTower.version}", target: '_blank'}
+          = WatchTower.version
+        %br/
         © Copyright 2011
         %a{href: 'https://github.com/TechnoGate', target: '_blank'}
           TechnoGate
