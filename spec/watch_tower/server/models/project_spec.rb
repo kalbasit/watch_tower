@@ -59,6 +59,21 @@ module Server
         @project.reload.durations.should_not be_empty
         @project.reload.durations.should include(Duration.first)
       end
+
+      # The dependent destroy is not working for some reason
+      # TODO: Fix me
+      pending "should delete all files if all projects wew deleted." do
+        FactoryGirl.create :file, project: @project
+        FactoryGirl.create :file, project: @project
+        FactoryGirl.create :file, project: @project
+
+        File.count.should == 3
+
+        Project.delete_all
+
+
+        File.count.should == 0
+      end
     end
 
     describe "TimeEntries count" do

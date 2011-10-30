@@ -9,9 +9,10 @@ module WatchTower
   module CLI
     class Runner < ::Thor
       # Include cli modules
-      include Install
-      include Open
-      include Start
+      include CLI::Version
+      include CLI::Install
+      include CLI::Open
+      include CLI::Start
     end
   end
 end
