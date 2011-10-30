@@ -101,7 +101,7 @@ $ watchtower open
 ## Rehash
 
 If for some reason, you think that the elapsed time of any of your
-projects is wrong (c.f #9) then you can recalculate the elapsed time of
+projects is wrong ( c.f #9 ) then you can recalculate the elapsed time of
 all projects and all their files by visiting
 [http://localhost:9282/rehash](http://localhost:9282/rehash), but please
 keep in mind that this can take a long time to process.
