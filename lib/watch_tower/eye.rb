@@ -27,6 +27,8 @@ module WatchTower
             LOG.debug("#{__FILE__}:#{__LINE__}: #{editor.to_s} is running")
             # Get the currently being edited file from the editor
             files_paths = editor.current_paths
+            # Do not continue if no files were returned
+            next unless files_paths && files_paths.respond_to?(:each)
             # Iterate over the files to fill the database
             files_paths.each do |file_path|
               begin

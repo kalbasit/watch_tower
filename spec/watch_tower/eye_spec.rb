@@ -69,6 +69,12 @@ describe Eye do
       subject.start
     end
 
+    it "should not explode if file_paths is nil" do
+      @editor.expects(:current_paths).returns(nil).once
+
+      -> { subject.start }.should_not raise_error
+    end
+
     it "should call File.exists?" do
       ::File.expects(:exists?).with(@file_path).returns(true).once
 
