@@ -7,24 +7,25 @@ the project, directory, and file level.
 
 # Introduction
 
-Did you ever want to keep track of how much time you _really_ spend on all of
-your projects? Sure, you can try to remember to keep running estimates of your
-time in the hope that you can aggregate those estimates later into some
-meaningful data. But sometimes you forget, or an error creeps into your
-estimate. And those errors add up. Quickly.
+Did you ever want to keep track of how much time you _really_ spend on
+all of your projects? Sure, you can try to remember to keep running
+estimates of your time in the hope that you can aggregate those
+estimates later into some meaningful data. But sometimes you forget, or
+an error creeps into your estimate. And those errors add up. Quickly.
 
 You can try some tracking software that depends on you to start and stop
-timers. But what happens if you forget to start or stop one of those timers?
+timers. But what happens if you forget to start or stop one of those
+timers?
 
-What you need is a passive system that will take care of all of this for you,
-so you can focus on the actual work, which is where WatchTower comes into
-play.
+What you need is a passive system that will take care of all of this
+for you, so you can focus on the actual work, which is where WatchTower
+comes into play.
 
-WatchTower runs in the background and keeps track of the time spent editing
-each file with one of the supported editors (listed below). Since WatchTower
-keeps track of the time spent on each file, and it knows which project each
-file belongs to, you can view details and statistics on each project, right
-down to the file level.
+WatchTower runs in the background and keeps track of the time spent
+editing each file with one of the supported editors (listed below).
+Since WatchTower keeps track of the time spent on each file, and it
+knows which project each file belongs to, you can view details and
+statistics on each project, right down to the file level.
 
 # Features
 
@@ -100,11 +101,12 @@ $ watchtower open
 
 ## Rehash
 
-If for some reason, you think that the elapsed time of any of your
-projects is wrong ( c.f [#9](https://github.com/TechnoGate/watch_tower/issues/9) ) then you can recalculate the elapsed time of
-all projects and all their files by visiting
-[http://localhost:9282/rehash](http://localhost:9282/rehash), but please
-keep in mind that this can take a long time to process.
+If for some reason, you think that the elapsed
+time of any of your projects is wrong ( c.f
+[#9](https://github.com/TechnoGate/watch_tower/issues/9) ) then you can
+recalculate the elapsed time of all projects and all their files by
+visiting [http://localhost:9282/rehash](http://localhost:9282/rehash),
+but please keep in mind that this can take a long time to process.
 
 # Commands
 
@@ -142,8 +144,8 @@ Don't forget to follow me on [Github](https://github.com/eMxyzptlk) and
 # Credits
 
 Please see the
-[CREDITS.md](https://github.com/TechnoGate/watch_tower/blob/master/CREDITS.md) file.
-
+[CREDITS.md](https://github.com/TechnoGate/watch_tower/blob/master/CREDI
+TS.md) file.
 
 # License
 
@@ -159,13 +161,13 @@ distribute, sublicense, and/or sell copies of the Software, and to
 permit persons to whom the Software is furnished to do so, subject to
 the following conditions:
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
