@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
 # -*- encoding: utf-8 -*-
 
+# Set the environment to production unless explicitly set
+ENV['WATCH_TOWER_ENV'] ||= 'production'
+# Add the lib folder to the load path
+$:.push File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
+# Load watch_tower
+require 'watch_tower'
 # Verify that mac users have rb-appscript installed
 require 'rbconfig'
 if RbConfig::CONFIG['target_os'] =~ /darwin/i
@@ -13,11 +19,5 @@ if RbConfig::CONFIG['target_os'] =~ /darwin/i
     exit
   end
 end
-# Set the environment to production unless explicitly set
-ENV['WATCH_TOWER_ENV'] ||= 'production'
-# Add the lib folder to the load path
-$:.push File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
-# Load watch_tower
-require 'watch_tower'
 # Start the CLI
 WatchTower::CLI::Runner.start

@@ -1,15 +1,18 @@
 # -*- encoding: utf-8 -*-
 
-# RubyGems is needed at first
+# RubyGems is needed.
 require 'rubygems'
 
+# Require bundler and setup load pathes
+require "bundler/setup"
+
 # Require daemon from active_support's core_ext allows us to fork really quickly
-require 'active_support/core_ext/process/daemon'
+require "active_support/core_ext/process/daemon"
 
 # External requirements
-require 'fileutils'
-require 'logger'
-require 'active_record'
+require "fileutils"
+require "logger"
+require "active_record"
 
 # Define a few pathes
 ROOT_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..'))
