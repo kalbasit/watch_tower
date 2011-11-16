@@ -144,8 +144,7 @@ Don't forget to follow me on [Github](https://github.com/eMxyzptlk) and
 # Credits
 
 Please see the
-[CREDITS.md](https://github.com/TechnoGate/watch_tower/blob/master/CREDI
-TS.md) file.
+[CREDITS.md](https://github.com/TechnoGate/watch_tower/blob/master/CREDITS.md) file.
 
 # License
 
