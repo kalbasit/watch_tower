@@ -25,6 +25,9 @@ MSG
   # Run-time dependencies
   ####
 
+  # Thor
+  s.add_dependency 'thor', '~>0.14.6'
+
   # Active Support
   s.add_dependency 'activesupport', '~>3.1.1'
   s.add_dependency 'i18n', '~>0.6.0'
