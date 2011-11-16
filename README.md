@@ -132,7 +132,7 @@ in mind for the project
 # Contact
 
 For bugs and feature request, please use __Github issues__, for other
-requests, you can contact me:
+requests, you may use:
 
 - [Google Groups](http://groups.google.com/group/watch-tower)
 - [Github private message](https://github.com/inbox/new/eMxyzptlk)
