@@ -132,10 +132,10 @@ in mind for the project
 # Contact
 
 For bugs and feature request, please use __Github issues__, for other
-requests, you can contact us:
+requests, you can contact me:
 
-- [Github private
-  message](https://github.com/inbox/new/eMxyzptlk)
+- [Google Groups](http://groups.google.com/group/watch-tower)
+- [Github private message](https://github.com/inbox/new/eMxyzptlk)
 - Email: [contact@technogate.fr](mailto:contact@technogate.fr)
 
 Don't forget to follow me on [Github](https://github.com/eMxyzptlk) and
